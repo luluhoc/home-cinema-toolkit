@@ -1,5 +1,6 @@
 # HCT - Home Cinema Toolkit
 ![hct](https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/hct.png?raw=true)
+![hct2](https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/ss2.png?raw=true)
 
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Please keep in mind that this is in early beta stage.`
 
