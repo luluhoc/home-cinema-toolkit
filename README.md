@@ -28,7 +28,6 @@ From radarr-mass-delete
 
 *The Script fetches all the movies, you have in the database, then fetches rating from IMDB for every movie, and compares *the movie rating with the rating set up by User.*
 
-
 *I recommend running this script every month if you wish to have movies based on real IMDB rating in your collection.*
 
 How to install and use?
