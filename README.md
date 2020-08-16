@@ -2,11 +2,11 @@
 
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Please keep in mind that this is in early beta stage.`
 
-It is an early beta of a project that will be growing in future.
+ It is an early beta of a project that will be growing in the future.
 
 It will be a toolkit with several useful tools for home server enthusiasts.
 
-For now you can get movies from radarr and delete them according to the imdb ratings.
+For now, you can get movies from radarr and delete them according to the IMDB ratings.
 
 To install with docker
 -------
@@ -24,9 +24,9 @@ From radarr-mass-delete
 
 *The Script will clean up your library from shitty movies based on the IMDB Rating.*
 
-*The Script fetches all the movies, you have in the database, then fetches rating from IMDB for every movie and compares the movie rating with the rating set up by User.*
+*The Script fetches all the movies, you have in the database, then fetches rating from IMDB for every movie, and compares *the movie rating with the rating set up by User.*
 
-*I've created this script because I had many lists in my Radarr with rating from `8` for auto-add and monitor, but Radarr rating is very misleading so I've ended up with many shitty movies in my collection.*
+*I've created this script because I had many lists in my Radarr with a rating from 8 for auto-add and monitor, but Radarr rating is very misleading so I've ended up with many shitty movies in my collection.*
 
 *I recommend running this script every month if you wish to have movies based on real IMDB rating in your collection.*
 
