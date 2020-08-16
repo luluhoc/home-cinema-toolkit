@@ -40,7 +40,7 @@ How to install and use?
 
 4. When you are in the terminal and you are in the script folder run `npm install`
 
-5. When it will finish installing run `node app.js` then open http://localhost:12400/ and start using.
+5. When it will finish installing run `node start.js` then open http://localhost:12400/ and start using.
 
 > Or just install it with docker it is the best way to use it.
 
