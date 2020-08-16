@@ -1,0 +1,53 @@
+include ./partials/header.pug
+settings
+  .container.mt-5
+    .row
+      .col-12
+        div#form()
+          .md-form
+            label(for='radarr-url') Radarr Url
+            input#radarr-url.form-control(type='url' placeholder='https://YOURDOMAIN.com/api/movie/' name='radarrUrl' value='https://YOURDOMAIN.com/api/movie/')
+          .md-form
+            label(for='radarr-api') Radarr Api
+            input#radarr-api.form-control(type='text' placeholder='Radarr Api' name='radarrApi')
+          .md-form
+            label(for='keyOmdb') Key to OMDB
+            input#keyOmdb.form-control(type='text' placeholder='OMDB' name='keyOmdb')
+          .md-form
+            label(for='desiredRating') Rating
+            input#desiredRating.form-control(type='number' placeholder='Rating' name='desiredRating' min='1' max='10' step='0.1' required)
+            small min=1 max=10 step=0.1
+        button#send.btn.btn-primary() Search
+delete
+  #deleting.container.mt-5.no-display
+    .row
+      .col-12
+        #NumberToBeDeleted
+      .col-12
+        .custom-control.custom-checkbox
+          input#addExclusion.custom-control-input(type='checkbox' value='' checked name='addExclusion')
+          label.custom-control-label(for='addExclusion')
+            | Add Exclusions
+        .custom-control.custom-checkbox
+          input#deleteFiles.custom-control-input(type='checkbox' value='' checked name='deleteFiles')
+          label.custom-control-label(for='deleteFiles')
+            | Delete Files
+        button.btn.btn-danger(onclick='deleteMovies()') Delete Selected Movies
+movies
+  .container.mt-5
+    .row
+      table.table.table-hover
+        thead
+          tr
+            th(scope='col') #
+            th(scope='col') Poster
+            th(scope='col') Title
+            th(scope='col') IMDB Link
+            th(scope='col') IMDB VOTES
+            th(scope='col') IMDB Rating
+            th(scope='col')
+              span Select All 
+              input#selectAll(type="checkbox", name="" onclick='selectAll()')
+        tbody#movies
+
+include ./partials/footer.pug

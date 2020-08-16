@@ -1,0 +1,33 @@
+{
+  "name": "radarr-toolkit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js",
+    "test": "testcafe chrome test/test.ts --app 'node start.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.plexlulu.com/lulu/radarr-toolkit.git"
+  },
+  "author": "Lucjan Grzesik",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0",
+    "normalize-url": "^5.1.0",
+    "pug": "^2.0.4",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "testcafe": "^1.9.1"
+  }
+}
