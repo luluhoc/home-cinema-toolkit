@@ -1,5 +1,5 @@
 {
-  "name": "radarr-toolkit",
+  "name": "home-cinema-toolkit",
   "version": "1.0.0",
   "description": "",
   "main": "start.js",
@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.plexlulu.com/lulu/radarr-toolkit.git"
+    "url": "https://github.com/luluhoc/home-cinema-toolkit.git"
   },
-  "author": "Lucjan Grzesik",
+  "author": "Lulu",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
