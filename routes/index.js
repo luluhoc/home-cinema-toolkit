@@ -129,10 +129,10 @@ router.post('/delete-movies', async (req, res) => {
     console.log(`Deleting ${selectedArr.length} movies`);
     for (let index = 0; index < selectedArr.length; index++) {
       const createUrl = `${radarrUrl}/${selectedArr[index]}?deleteFiles=${deleteFiles}&addExclusion=${addExclusion}`;
-      console.log(createUrl);
+      const url = normalizeUrl(createUrl);
       const options = {
         method: 'DELETE',
-        uri: createUrl,
+        uri: url,
         headers: {
           'User-Agent': 'request',
           'X-Api-Key': radarrApi,
