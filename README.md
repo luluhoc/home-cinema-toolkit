@@ -1,4 +1,5 @@
 # HCT - Home Cinema Toolkit
+<a href="https://www.buymeacoffee.com/lulu45" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 ![hct](https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/hct.png?raw=true)
 ![hct2](https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/ss2.png?raw=true)
 
