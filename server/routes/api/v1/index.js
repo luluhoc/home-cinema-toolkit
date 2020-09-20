@@ -47,7 +47,6 @@ router.post('/', async (req, res) => {
   db.set('movies', []).write();
 
   try {
-    console.log(keyOmdb);
     const moviesFromRadarr = await axios(radarrGet);
     movies = moviesFromRadarr.data;
     console.log('Got movies from radarr...');
