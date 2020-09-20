@@ -1,0 +1,6 @@
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
+
+export const FIND_MOVIES = 'FIND_MOVIES';
+export const START_MOVIES_SEARCH = 'START_MOVIES_SEARCH';
+export const DELETE_MOVIE = 'DELETE_MOVIE';
