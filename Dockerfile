@@ -18,7 +18,6 @@ WORKDIR /usr/src/app/server
 RUN yarn install --production=true
 
 WORKDIR /usr/src/app
-EXPOSE 12399
-EXPOSE 3000
+EXPOSE 12400
 
 CMD [ "yarn", "run", "server" ]
