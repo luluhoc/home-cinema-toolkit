@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 const TableRating = ({
-  movies, isLoading, deleteMovie,
+  movies, isLoading, deleteMovie, formValues,
 }) => {
   const classes = useStyles();
   const renderImage = (value, meta, update) => (
@@ -28,7 +28,7 @@ const TableRating = ({
     </div>
   );
   const on = (rows) => {
-    deleteMovie(rows);
+    deleteMovie(rows, formValues);
   };
   const columns = [
     {
@@ -99,6 +99,7 @@ const TableRating = ({
 const mapStateToProps = (state) => ({
   movies: state.rating.movies,
   isLoading: state.rating.isLoading,
+  formValues: state?.form?.rating?.values,
 });
 
 export default connect(mapStateToProps, { deleteMovie })(TableRating);

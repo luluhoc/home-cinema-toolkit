@@ -1,5 +1,7 @@
 import update from 'immutability-helper';
-import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE } from '../actions/types.actions';
+import {
+  FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES,
+} from '../actions/types.actions';
 
 const initialState = {
   isLoading: true,
@@ -26,6 +28,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         movies: state.movies.filter((m, index) => index !== payload.dataIndex),
+      };
+    case DELETE_MOVIES:
+      return {
+        ...state,
+        movies: state.movies.filter((m) => {
+          for (let i = 0; i < payload.length; i++) {
+            const e = payload[i];
+            if (m === undefined || m.rId === e) { return false; }
+          }
+          return true;
+        }),
       };
     default:
       return state;

@@ -114,4 +114,37 @@ router.post('/', async (req, res) => {
   }
 });
 
+// @route POST api/movies/delete
+// @desc DELETE MOVIES
+// @access Public for users
+
+router.post('/delete', async (req, res) => {
+  const {
+    radarrApi, addExclusion, deleteFiles, selectedArr, radarrUrl,
+  } = req.body;
+  try {
+    const promises = [];
+    console.log(`Deleting ${selectedArr.length} movies`);
+    for (let index = 0; index < selectedArr.length; index++) {
+      const createUrl = `${radarrUrl}/${selectedArr[index]}?deleteFiles=${deleteFiles}&addExclusion=${addExclusion}`;
+      const url = normalizeUrl(createUrl);
+      const options = {
+        method: 'DELETE',
+        url: url,
+        headers: {
+          'User-Agent': 'request',
+          'X-Api-Key': radarrApi,
+        },
+      };
+      promises.push(axios(options));
+    }
+    const deleted = await Promise.all(promises);
+    res.json({ deleted: deleted.length });
+  } catch (error) {
+    console.log(error);
+    return res.json(error);
+  }
+});
+
+
 module.exports = router;
