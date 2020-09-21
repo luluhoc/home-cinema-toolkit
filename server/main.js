@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const app = express();
 
-const PORT = process.env.PORT || 12399;
+const PORT = process.env.PORT || 12400;
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
