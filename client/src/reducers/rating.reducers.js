@@ -4,7 +4,7 @@ import {
 } from '../actions/types.actions';
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   movies: [],
 };
 
