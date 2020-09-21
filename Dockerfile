@@ -11,7 +11,6 @@ RUN yarn install --production=true
 
 WORKDIR /usr/src/app/client
 RUN yarn
-RUN rm -R build
 RUN yarn run build
 
 WORKDIR /usr/src/app/server
