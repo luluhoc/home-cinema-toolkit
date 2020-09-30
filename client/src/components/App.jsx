@@ -52,7 +52,20 @@ const lightTheme = {
     },
   },
   typography: {
-    fontFamily: '"Manrope", serif',
+    fontFamily: '"Kumbh Sans", serif',
+  },
+  overrides: {
+    MuiOutlinedInput: {
+      input: {
+        '&:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 100px #071c2b inset',
+          WebkitTextFillColor: '#fff',
+        },
+        '&:-webkit-calendar-picker-indicator': {
+          filter: 'invert',
+        },
+      },
+    },
   },
 };
 
