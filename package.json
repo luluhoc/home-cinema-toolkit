@@ -11,9 +11,12 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "nodemonConfig": {
-    "ignore": ["./server/*.json"]
+    "ignore": [
+      "./server/*.json"
+    ]
   },
   "dependencies": {
+    "eslint-config-airbnb-base": "^14.2.0",
     "esm": "^3.2.25"
   },
   "devDependencies": {

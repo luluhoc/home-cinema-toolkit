@@ -90,18 +90,12 @@ const renderCheckbox = ({
 };
 
 const SettingsForm = ({
-  change, handleSubmit, onSubmit, initialize, settings,
+  change, handleSubmit, onSubmit, initialize,
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    if (settings) {
-      initialize({
-        radarrUrl: settings.radarrUrl,
-          : settings.radarrUrl,
-
-      })
-    }
-  }, [settings]);
+    initialize({ addExclusion: true, deleteFiles: true });
+  }, []);
   return (
     <>
       <div className={classes.paper}>
@@ -110,6 +104,9 @@ const SettingsForm = ({
           <Field name="radarrApi" id="radarrApi" label="Radarr API" autoFocus component={renderField} />
           <Field name="v3" defaultValue="true" id="v3" label="API v3" autoFocus component={renderCheckbox} />
           <Field name="keyOmdb" id="keyOmdb" label="OMDB Key" autoFocus component={renderField} />
+          <Field name="desiredRating" type="number" id="desiredRating" label="Desired Rating" autoFocus component={renderField} />
+          <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
+          <Field name="deleteFiles" defaultValue="true" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />
           <Button
             type="submit"
             fullWidth
@@ -117,7 +114,7 @@ const SettingsForm = ({
             color="secondary"
             className={classes.submit}
           >
-            Submit
+            Search
           </Button>
         </form>
       </div>
@@ -134,8 +131,4 @@ const redForm = reduxForm({
   destroyOnUnmount: false,
 })(SettingsForm);
 
-const mapStateToProps = (state) => ({
-  settings: state.settings,
-});
-
-export default connect(mapStateToProps)(redForm);
+export default connect(null)(redForm);

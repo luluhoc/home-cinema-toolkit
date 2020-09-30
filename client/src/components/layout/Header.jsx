@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -32,7 +33,8 @@ const Header = () => {
           <Typography variant="h6" className={classes.title}>
             HCT
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" to="/" component={Link}>Rating</Button>
+          <Button color="inherit" to="/settings" component={Link}>Settings</Button>
         </Toolbar>
       </AppBar>
     </div>

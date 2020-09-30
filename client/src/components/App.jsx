@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -15,6 +15,11 @@ import Header from './layout/Header';
 // Delete by Rating
 
 import DeleteByRating from './rating/Page';
+
+// Settings
+
+import Settings from './settings/Page';
+import { getSettings } from '../actions/settings.actions';
 
 const darkTheme = {
   palette: {
@@ -71,9 +76,11 @@ const lightTheme = {
 
 toast.configure();
 
-const App = () => {
+const App = ({ getSettings }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
+  useEffect(() => {
+    getSettings();
+  }, [getSettings]);
   const theme = useMemo(
     () => createMuiTheme(
       prefersDarkMode ? darkTheme : lightTheme,
@@ -90,6 +97,7 @@ const App = () => {
           <Header />
           <Switch>
             <Route path="/" exact component={DeleteByRating} />
+            <Route path="/settings" exact component={Settings} />
           </Switch>
         </ThemeProvider>
       </Router>
@@ -97,4 +105,6 @@ const App = () => {
   );
 };
 
-export default connect(null)(App);
+export default connect(null, {
+  getSettings,
+})(App);

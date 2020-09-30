@@ -15,7 +15,8 @@ app.use(urlencoded({
 app.use(json());
 app.use('/public', express.static(`${__dirname}/public`));
 
-app.use('/api/movies', require('./routes/api/v1/index'));
+app.use('/api/movies', require('./routes/api/v1/rating'));
+app.use('/api/settings', require('./routes/api/v1/settings'));
 
 app.use('*', function (req, res) {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));

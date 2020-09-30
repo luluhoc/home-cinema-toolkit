@@ -20,11 +20,7 @@ function sleep(ms) {
 }
 
 router.post('/', async (req, res) => {
-  db.defaults({
-    movies: [],
-    count: 0,
-  })
-    .write();
+  db.read()
   console.log('Start');
   const {
     radarrUrl, radarrApi, keyOmdb, v3,
