@@ -8,7 +8,7 @@ const Alert = ({ alerts }) => (
 );
 
 Alert.propTypes = {
-  alerts: PropTypes.array.isRequired,
+  alerts: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({

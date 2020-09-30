@@ -27,14 +27,14 @@ router.post('/', async (req, res) => {
     .write();
   console.log('Start');
   const {
-    radarrUrl, radarrApi, keyOmdb,
+    radarrUrl, radarrApi, keyOmdb, v3,
   } = req.body;
-
+  const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`)
   const desiredRating = Number(req.body.desiredRating);
 
   const radarrGet = {
     method: 'get',
-    url: `${radarrUrl}`,
+    url: `${apiUrl}`,
     headers: {
       'User-Agent': 'request',
       'X-Api-Key': radarrApi,
@@ -119,17 +119,16 @@ router.post('/', async (req, res) => {
 
 router.post('/delete', async (req, res) => {
   const {
-    radarrApi, addExclusion, deleteFiles, selectedArr, radarrUrl,
+    radarrApi, addExclusion, deleteFiles, selectedArr, radarrUrl,v3
   } = req.body;
   try {
     const promises = [];
     console.log(`Deleting ${selectedArr.length} movies`);
     for (let index = 0; index < selectedArr.length; index++) {
-      const createUrl = `${radarrUrl}/${selectedArr[index]}?deleteFiles=${deleteFiles}&addExclusion=${addExclusion}`;
-      const url = normalizeUrl(createUrl);
+      const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}/${selectedArr[index]}?deleteFiles=${deleteFiles}&${v3 ? 'addImportExclusion=' : 'addExclusion='}${addExclusion}`)
       const options = {
         method: 'DELETE',
-        url: url,
+        url: apiUrl,
         headers: {
           'User-Agent': 'request',
           'X-Api-Key': radarrApi,

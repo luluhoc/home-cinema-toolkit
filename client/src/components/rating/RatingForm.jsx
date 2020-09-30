@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 
+import validate from './validate';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const renderField = ({
-  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max,
+  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max, placeholder,
 }) => {
   if (meta.error && meta.touched) {
     return (
@@ -42,9 +44,9 @@ const renderField = ({
         required
         fullWidth
         {...input}
+        placeholder={placeholder}
         label={label}
         id="outlined-error-helper-text"
-        defaultValue="Hello World"
         helperText={meta.error}
         multiline={multiline}
         rows={rows}
@@ -59,6 +61,7 @@ const renderField = ({
       fullWidth
       {...input}
       id={id}
+      placeholder={placeholder}
       label={label}
       autoFocus={autoFocus}
       autoComplete={autoComplete}
@@ -99,12 +102,13 @@ const RatingForm = ({
     <>
       <div className={classes.paper}>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Field name="radarrUrl" id="radarrUrl" label="Radarr URL" autoFocus component={renderField} />
+          <Field name="radarrUrl" id="radarrUrl" label="Radarr URL" placeholder="https://radarr.domain.com" autoFocus component={renderField} />
           <Field name="radarrApi" id="radarrApi" label="Radarr API" autoFocus component={renderField} />
+          <Field name="v3" defaultValue="true" id="v3" label="API v3" autoFocus component={renderCheckbox} />
           <Field name="keyOmdb" id="keyOmdb" label="OMDB Key" autoFocus component={renderField} />
           <Field name="desiredRating" type="number" id="desiredRating" label="Desired Rating" autoFocus component={renderField} />
-          <Field name="addExclusion" defaultValue="true" type="number" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
-          <Field name="deleteFiles" defaultValue="true" type="number" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />
+          <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
+          <Field name="deleteFiles" defaultValue="true" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />
           <Button
             type="submit"
             fullWidth
@@ -126,6 +130,7 @@ RatingForm.propTypes = {
 
 const redForm = reduxForm({
   form: 'rating',
+  validate,
   destroyOnUnmount: false,
 })(RatingForm);
 
