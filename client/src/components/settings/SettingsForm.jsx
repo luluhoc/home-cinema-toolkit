@@ -97,9 +97,8 @@ const SettingsForm = ({
     if (settings) {
       initialize({
         radarrUrl: settings.radarrUrl,
-          : settings.radarrUrl,
 
-      })
+      });
     }
   }, [settings]);
   return (
