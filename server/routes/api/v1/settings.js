@@ -22,14 +22,16 @@ router.post('/', async (req, res) => {
 
   try {
     db.read();
-    const settings = db.set('settings', {
+    await db.set('settings', {
       radarrUrl,
       radarrApi,
       keyOmdb,
       v3
     }).write();
-    console.log(settings)
-    res.json(settings);
+    const settings = db.get('settings').value();
+    if (settings) {
+      return res.json(settings);
+    }
   } catch (error) {
     console.log(error);
   }

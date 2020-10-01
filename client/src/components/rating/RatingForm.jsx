@@ -102,10 +102,6 @@ const RatingForm = ({
     <>
       <div className={classes.paper}>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Field name="radarrUrl" id="radarrUrl" label="Radarr URL" placeholder="https://radarr.domain.com" autoFocus component={renderField} />
-          <Field name="radarrApi" id="radarrApi" label="Radarr API" autoFocus component={renderField} />
-          <Field name="v3" defaultValue="true" id="v3" label="API v3" autoFocus component={renderCheckbox} />
-          <Field name="keyOmdb" id="keyOmdb" label="OMDB Key" autoFocus component={renderField} />
           <Field name="desiredRating" type="number" id="desiredRating" label="Desired Rating" autoFocus component={renderField} />
           <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
           <Field name="deleteFiles" defaultValue="true" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />

@@ -2,14 +2,29 @@ import axios from 'axios';
 import setAlert from './alert.actions';
 import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES } from './types.actions';
 
+import returnStoreAndPersistor from '../store';
+
+const { store } = returnStoreAndPersistor();
+
 export const findMovies = (formValues) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-
-  const body = JSON.stringify(formValues);
+  const { settings } = store.getState();
+  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+    return dispatch(setAlert('You must enter the settings', 'error'))
+  }
+  const body = JSON.stringify({
+    radarrUrl: settings.radarrUrl,
+    radarrApi: settings.radarrApi,
+    keyOmdb: settings.keyOmdb,
+    v3: settings.v3,
+    desiredRating: formValues.desiredRating,
+    addExclusions: formValues.addExclusions,
+    deleteFiles: formValues.deleteFiles
+  });
   try {
     dispatch({
       type: START_MOVIES_SEARCH,

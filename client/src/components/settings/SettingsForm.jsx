@@ -97,7 +97,9 @@ const SettingsForm = ({
     if (settings) {
       initialize({
         radarrUrl: settings.radarrUrl,
-
+        radarrApi: settings.radarrApi,
+        v3: settings.v3,
+        keyOmdb: settings.keyOmdb,
       });
     }
   }, [settings]);
@@ -116,7 +118,7 @@ const SettingsForm = ({
             color="secondary"
             className={classes.submit}
           >
-            Submit
+            Save
           </Button>
         </form>
       </div>
