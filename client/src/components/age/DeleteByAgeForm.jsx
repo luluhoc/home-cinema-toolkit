@@ -41,7 +41,7 @@ const DeleteByAgeForm = ({
     <>
       <div className={classes.paper}>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Field name="beforeDate" id="beforeDate" label="Radarr URL" placeholder="https://radarr.domain.com" autoFocus component={DateField} />
+          {/* <Field name="beforeDate" id="beforeDate" label="Radarr URL" placeholder="https://radarr.domain.com" autoFocus component={DateField} /> */}
           <Button
             type="submit"
             fullWidth
