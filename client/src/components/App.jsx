@@ -21,6 +21,8 @@ import DeleteByRating from './rating/Page';
 import Settings from './settings/Page';
 import { getSettings } from '../actions/settings.actions';
 
+import DeleteByAge from './age/Page';
+
 const darkTheme = {
   palette: {
     type: 'dark',
@@ -97,6 +99,7 @@ const App = ({ getSettings }) => {
           <Header />
           <Switch>
             <Route path="/" exact component={DeleteByRating} />
+            <Route path="/age" exact component={DeleteByAge} />
             <Route path="/settings" exact component={Settings} />
           </Switch>
         </ThemeProvider>

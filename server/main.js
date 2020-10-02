@@ -17,6 +17,7 @@ app.use('/public', express.static(`${__dirname}/public`));
 
 app.use('/api/movies', require('./routes/api/v1/rating'));
 app.use('/api/settings', require('./routes/api/v1/settings'));
+app.use('/api/by-age', require('./routes/api/v1/byAge'));
 
 app.use('*', function (req, res) {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
