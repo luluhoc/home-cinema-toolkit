@@ -22,7 +22,7 @@ export const findMovies = (formValues) => async (dispatch) => {
     keyOmdb: settings.keyOmdb,
     v3: settings.v3,
     desiredRating: formValues.desiredRating,
-    addExclusions: formValues.addExclusions,
+    addExclusion: formValues.addExclusions,
     deleteFiles: formValues.deleteFiles
   });
   try {
@@ -50,17 +50,23 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
       'Content-Type': 'application/json',
     },
   };
+  const { settings } = store.getState();
   try {
     console.log(movies);
     if (movies?.data?.length === 1) {
-      console.log('1')
-      console.log(movies.data)
-      console.log(getState()?.rating?.movies[movies?.data?.[0]?.dataIndex])
-      const deleteData = {
-        ...formValues,
-        selectedArr: [getState()?.rating?.movies[movies?.data?.[0]?.dataIndex]?.rId],
+      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+        return dispatch(setAlert('You must enter the settings', 'error'))
       }
-      const body = JSON.stringify(deleteData);
+      const body = JSON.stringify({
+        radarrUrl: settings.radarrUrl,
+        radarrApi: settings.radarrApi,
+        keyOmdb: settings.keyOmdb,
+        v3: settings.v3,
+        desiredRating: formValues.desiredRating,
+        addExclusion: formValues.addExclusion,
+        deleteFiles: formValues.deleteFiles,
+        selectedArr: [getState()?.rating?.movies[movies?.data?.[0]?.dataIndex]?.rId],
+      });
       const deletedData = await axios.post('/api/movies/delete', body, config)
       dispatch({
         type: DELETE_MOVIE,
@@ -75,12 +81,19 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         const e = movies?.data[i];
         selectedArr.push(getState()?.rating?.movies[e?.dataIndex]?.rId)
       }
-      console.log(selectedArr)
-      const deleteData = {
-        ...formValues,
-        selectedArr,
+      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+        return dispatch(setAlert('You must enter the settings', 'error'))
       }
-      const body = JSON.stringify(deleteData);
+      const body = JSON.stringify({
+        radarrUrl: settings.radarrUrl,
+        radarrApi: settings.radarrApi,
+        keyOmdb: settings.keyOmdb,
+        v3: settings.v3,
+        desiredRating: formValues.desiredRating,
+        addExclusions: formValues.addExclusion,
+        deleteFiles: formValues.deleteFiles,
+        selectedArr
+      });
       const deletedData = await axios.post('/api/movies/delete', body, config)
       console.log(deletedData)
       dispatch({
