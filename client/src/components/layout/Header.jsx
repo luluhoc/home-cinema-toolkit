@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,9 @@ const Header = () => {
             HCT
           </Typography>
           <Button color="inherit" to="/" component={Link}>Rating</Button>
-          <Button color="inherit" to="/settings" component={Link}>Settings</Button>
+          <IconButton aria-label="delete" color="inherit" to="/settings" component={Link}>
+            <SettingsIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>
