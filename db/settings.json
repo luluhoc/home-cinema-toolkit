@@ -1,8 +1,0 @@
-{
-  "settings": {
-    "radarrUrl": "radarr.plexlulu.com",
-    "radarrApi": "09a6057453a94b11960f1833c76997ed",
-    "keyOmdb": "thewdb",
-    "v3": true
-  }
-}
