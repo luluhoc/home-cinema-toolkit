@@ -1,37 +1,37 @@
+/* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import setAlert from './alert.actions';
-import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES } from './types.actions';
+import {
+  START_BY_AGE, FIND_MOVIES_BY_AGE, DELETE_MOVIE, DELETE_MOVIES
+} from './types.actions';
 
 import returnStoreAndPersistor from '../store';
 
 const { store } = returnStoreAndPersistor();
 
-export const findMovies = (formValues, settings) => async (dispatch) => {
+export const findByDate = (formValues, settings) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  console.log(settings)
+  dispatch({
+    type: START_BY_AGE,
+  });
   if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
-    return dispatch(setAlert('You must enter the settings', 'error'))
+    return dispatch(setAlert('You must enter the settings', 'error'));
   }
   const body = JSON.stringify({
     radarrUrl: settings.radarrUrl,
     radarrApi: settings.radarrApi,
     keyOmdb: settings.keyOmdb,
     v3: settings.v3,
-    desiredRating: formValues.desiredRating,
-    addExclusion: formValues.addExclusions,
-    deleteFiles: formValues.deleteFiles
+    date: formValues.date,
   });
   try {
+    const res = await axios.post('/api/by-age', body, config);
     dispatch({
-      type: START_MOVIES_SEARCH,
-    });
-    const res = await axios.post('/api/movies', body, config);
-    dispatch({
-      type: FIND_MOVIES,
+      type: FIND_MOVIES_BY_AGE,
       payload: res.data,
     });
   } catch (err) {
@@ -62,10 +62,9 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
         v3: settings.v3,
-        desiredRating: formValues.desiredRating,
         addExclusion: formValues.addExclusion,
-        deleteFiles: formValues.deleteFiles,
-        selectedArr: [getState()?.rating?.movies[movies?.data?.[0]?.dataIndex]?.rId],
+        deleteFiles: true,
+        selectedArr: [getState()?.byage?.movies[movies?.data?.[0]?.dataIndex]?.id],
       });
       const deletedData = await axios.post('/api/movies/delete', body, config)
       dispatch({
@@ -79,7 +78,7 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
       const selectedArr = [];
       for (let i = 0; i < movies?.data.length; i++) {
         const e = movies?.data[i];
-        selectedArr.push(getState()?.rating?.movies[e?.dataIndex]?.rId)
+        selectedArr.push(getState()?.byage?.movies[e?.dataIndex]?.id)
       }
       if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
         return dispatch(setAlert('You must enter the settings', 'error'))
@@ -89,9 +88,8 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
         v3: settings.v3,
-        desiredRating: formValues.desiredRating,
         addExclusions: formValues.addExclusion,
-        deleteFiles: formValues.deleteFiles,
+        deleteFiles: true,
         selectedArr
       });
       const deletedData = await axios.post('/api/movies/delete', body, config)

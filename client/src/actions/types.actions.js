@@ -9,3 +9,6 @@ export const DELETE_MOVIES = 'DELETE_MOVIES';
 export const SET_SETTINGS = 'SET_SETTINGS';
 export const GET_SETTINGS = 'GET_SETTINGS';
 export const NO_SETTINGS = 'NO_SETTINGS';
+
+export const FIND_MOVIES_BY_AGE = 'FIND_MOVIES_BY_AGE';
+export const START_BY_AGE = 'START_BY_AGE';

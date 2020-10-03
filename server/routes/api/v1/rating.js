@@ -2,8 +2,8 @@ import express from 'express';
 import axios from 'axios';
 import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
-// DB CONFIG
 
+// DB CONFIG
 const FileSync = require('lowdb/adapters/FileSync');
 
 const adapter = new FileSync('db/rating.json');
@@ -20,7 +20,6 @@ function sleep(ms) {
 }
 
 router.post('/', async (req, res) => {
-  db.read()
   console.log('Start');
   const {
     radarrUrl, radarrApi, keyOmdb, v3,
@@ -48,7 +47,10 @@ router.post('/', async (req, res) => {
     console.log('Got movies from radarr...');
   } catch (error) {
     console.log(error);
-    return res.json(error);
+    if (error.response.status === 401) {
+      return res.status(401).json({ errors: [{ msg: error.response.statusText }] });
+    }
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 
   for (let index = 0; index < movies.length; index++) {
@@ -78,7 +80,7 @@ router.post('/', async (req, res) => {
     console.log('Parsing Data from OMDB');
   } catch (error) {
     console.log(error);
-    return res.json(error);
+    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 
   for (let index = 0; index < data.length; index++) {
@@ -105,7 +107,7 @@ router.post('/', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.json(error);
+    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 });
 
@@ -136,7 +138,7 @@ router.post('/delete', async (req, res) => {
     res.json({ deleted: deleted.length });
   } catch (error) {
     console.log(error);
-    return res.json(error);
+    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 });
 

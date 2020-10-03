@@ -3,9 +3,11 @@ import { reducer as formReducer } from 'redux-form';
 
 import rating from './rating.reducers';
 import settings from './settings.reducers';
+import byage from './byage.reducers';
 
 export default combineReducers({
   rating,
   settings,
+  byage,
   form: formReducer,
 });

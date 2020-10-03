@@ -132,7 +132,6 @@ SettingsForm.propTypes = {
 
 const redForm = reduxForm({
   form: 'settings',
-  destroyOnUnmount: false,
 })(SettingsForm);
 
 const mapStateToProps = (state) => ({

@@ -5,8 +5,11 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
-import DateField from './DateField';
+import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import DateFnsAdapter from '@material-ui/pickers/adapter/date-fns'; // choose your lib
+import {
+  DatePicker, LocalizationProvider,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,18 +33,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const renderCheckbox = ({
+  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max,
+}) => {
+  if (meta.error && meta.touched) {
+    return (
+      <FormControlLabel
+        control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
+        label={label}
+      />
+    );
+  }
+  return (
+    <FormControlLabel
+      control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
+      label={label}
+    />
+  );
+};
+
 const DeleteByAgeForm = ({
   change, handleSubmit, onSubmit, initialize,
 }) => {
   const classes = useStyles();
+  const [selectedDate, handleDateChange] = React.useState(new Date());
   useEffect(() => {
-    initialize({ addExclusion: true, deleteFiles: true });
+    initialize({ addExclusion: true, date: selectedDate });
   }, []);
+  const formSub = (formValues) => {
+    change('date', selectedDate);
+    onSubmit(formValues);
+  };
   return (
     <>
       <div className={classes.paper}>
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-          {/* <Field name="beforeDate" id="beforeDate" label="Radarr URL" placeholder="https://radarr.domain.com" autoFocus component={DateField} /> */}
+        <form className={classes.form} onSubmit={handleSubmit(formSub)} noValidate>
+          <LocalizationProvider dateAdapter={DateFnsAdapter}>
+            <DatePicker
+              label="Before"
+              renderInput={(props) => <TextField label fullWidth {...props} />}
+              value={selectedDate}
+              onChange={(date) => { handleDateChange(date); }}
+            />
+          </LocalizationProvider>
+          <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
           <Button
             type="submit"
             fullWidth

@@ -44,10 +44,10 @@ router.post('/', async (req, res) => {
   db.read()
   console.log('Start');
   const {
-    radarrUrl, radarrApi, v3,
+    radarrUrl, radarrApi, v3, date
   } = req.body;
   const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`);
-
+  console.log(date)
   const radarrGet = {
     method: 'get',
     url: `${apiUrl}`,
@@ -58,20 +58,21 @@ router.post('/', async (req, res) => {
   };
 
   let movies;
-  const moviesOmdb = [];
   db.unset('movies').write();
   db.set('movies', []).write();
 
   try {
     const moviesFromRadarr = await axios(radarrGet);
     movies = moviesFromRadarr.data;
-    db.set('movies', movies);
-    console.log(movies[5].added);
-    const newArr = movies.sortBy(function(o){ return o.added });
-    console.log(newArr[0])
+    const a = movies.filter(m => m.added < date)
+    const newArr = a.sortBy(function(o){ return o.added });
+    res.json({movies: newArr})
   } catch (error) {
     console.log(error);
-    return res.json(error);
+    if (error.response.status === 401) {
+      return res.status(401).json({ errors: [{ msg: error.response.statusText }] });
+    }
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
   console.log('Sending movies to Frontend');
 
@@ -100,7 +101,7 @@ router.post('/diskspace', async (req, res) => {
     console.log(diskspace)
   } catch (error) {
     console.log(error);
-    return res.json(error);
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
   console.log('Sending movies to Frontend');
 

@@ -5,14 +5,14 @@
   "license": "MIT",
   "scripts": {
     "start": "node server",
-    "server": "nodemon start.js --prefix server --ignore *.json",
+    "server": "nodemon start.js --prefix server --ignore db/ --verbose",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "nodemonConfig": {
     "ignore": [
-      "./server/*.json"
+      "./db/*.json"
     ]
   },
   "dependencies": {

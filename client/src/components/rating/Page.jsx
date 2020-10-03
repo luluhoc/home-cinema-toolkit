@@ -6,9 +6,9 @@ import Table from './Table';
 import { findMovies } from '../../actions/rating.actions';
 import Copyright from '../layout/Copyright';
 
-const Page = ({ findMovies }) => {
+const Page = ({ findMovies, settings }) => {
   const onSubmit = (formValues) => {
-    findMovies(formValues);
+    findMovies(formValues, settings);
   };
   return (
     <Container maxWidth="lg" style={{ marginTop: 5 }}>
@@ -18,8 +18,11 @@ const Page = ({ findMovies }) => {
         <Copyright />
       </Box>
     </Container>
-
   );
 };
 
-export default connect(null, { findMovies })(Page);
+const mapStateToProps = (state) => ({
+  settings: state.settings,
+});
+
+export default connect(mapStateToProps, { findMovies })(Page);
