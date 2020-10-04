@@ -9,6 +9,7 @@ import rootReducer from './reducers/index.reducers';
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['settings', 'rating', 'byage', 'alert', 'form'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -17,5 +18,6 @@ export default () => {
   const store = createStore(persistedReducer,
     composeWithDevTools(applyMiddleware(thunk)));
   const persistor = persistStore(store);
+  persistor.pause();
   return { store, persistor };
 };

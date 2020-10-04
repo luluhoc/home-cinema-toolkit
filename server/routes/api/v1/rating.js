@@ -12,13 +12,14 @@ const db = low(adapter);
 // router
 const router = express.Router();
 
-// @route POST api/movies/
-// @desc FIND MOVIES
-// @access Public for users
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+
+// @route POST api/movies/
+// @desc FIND MOVIES
+// @access Public for users
 router.post('/', async (req, res) => {
   console.log('Start');
   const {

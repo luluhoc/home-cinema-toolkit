@@ -1,6 +1,7 @@
-import { Box, Container } from '@material-ui/core';
+import { Box, Container, Typography } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Line, Circle } from 'rc-progress';
 import DeleteByAgeForm from './DeleteByAgeForm';
 import Copyright from '../layout/Copyright';
 import Table from './Table';
@@ -12,6 +13,8 @@ const Page = ({ findByDate, settings }) => {
   };
   return (
     <Container maxWidth="lg" style={{ marginTop: 5 }}>
+      <Typography>Free Space</Typography>
+      <Line percent="50" strokeWidth="1" strokeColor="#FF0000" />
       <DeleteByAgeForm onSubmit={onSubmit} />
       <Table />
       <Box mt={8}>

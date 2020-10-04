@@ -16,6 +16,7 @@ export const setSettings = (formValues) => async (dispatch) => {
       type: SET_SETTINGS,
       payload: res.data,
     });
+    dispatch(setAlert('Settings Saved', 'success'))
   } catch (err) {
     console.log(err);
     const { errors } = err?.response?.data;

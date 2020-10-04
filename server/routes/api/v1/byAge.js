@@ -47,7 +47,6 @@ router.post('/', async (req, res) => {
     radarrUrl, radarrApi, v3, date
   } = req.body;
   const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`);
-  console.log(date)
   const radarrGet = {
     method: 'get',
     url: `${apiUrl}`,
@@ -75,7 +74,6 @@ router.post('/', async (req, res) => {
     return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
   console.log('Sending movies to Frontend');
-
 });
 
 router.post('/diskspace', async (req, res) => {
@@ -104,7 +102,6 @@ router.post('/diskspace', async (req, res) => {
     return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
   console.log('Sending movies to Frontend');
-
 });
 
 module.exports = router;

@@ -9,6 +9,16 @@ import returnStoreAndPersistor from '../store';
 
 const { store } = returnStoreAndPersistor();
 
+export const getFreeSpace = (settings) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+    return dispatch(setAlert('You must enter the settings', 'error'));
+  }
+}
 export const findByDate = (formValues, settings) => async (dispatch) => {
   const config = {
     headers: {

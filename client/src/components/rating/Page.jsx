@@ -8,6 +8,7 @@ import Copyright from '../layout/Copyright';
 
 const Page = ({ findMovies, settings }) => {
   const onSubmit = (formValues) => {
+    console.log('findMovies');
     findMovies(formValues, settings);
   };
   return (

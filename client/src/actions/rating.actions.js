@@ -12,7 +12,6 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  console.log(settings)
   if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
     return dispatch(setAlert('You must enter the settings', 'error'))
   }
