@@ -11,12 +11,15 @@ db.read()
 
 const scheduleJob = () => {
   const jobs = db.get('jobs').value()
-  const a = schedule.scheduleJob(jobs[0].time, function(){
-    console.log(jobs[0].job);
-  });
-  const b = schedule.scheduleJob('*/1 * * * *', function(){
-    console.log('Time for tea2!');
-  });
+  if (jobs) {
+    const a = schedule.scheduleJob(jobs[0].time, function(){
+      console.log(jobs[0].job);
+    });
+    const b = schedule.scheduleJob('*/1 * * * *', function(){
+      console.log('Time for tea2!');
+    });
+  }
+  
 }
 workerpool.worker({
   scheduleJob,

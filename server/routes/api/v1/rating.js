@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
         rId: movies[index].id,
         imdbId: movies[index].imdbId,
       };
-      db.get('movies')
+      await db.get('movies')
         .push(movie)
         .write();
     }
