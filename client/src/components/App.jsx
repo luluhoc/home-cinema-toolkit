@@ -23,6 +23,8 @@ import { getSettings } from '../actions/settings.actions';
 
 import DeleteByAge from './age/Page';
 
+import Tasks from './tasks/Tasks';
+
 const darkTheme = {
   palette: {
     type: 'dark',
@@ -101,6 +103,7 @@ const App = ({ getSettings }) => {
             <Route path="/" exact component={DeleteByRating} />
             <Route path="/age" exact component={DeleteByAge} />
             <Route path="/settings" exact component={Settings} />
+            <Route path="/tasks" exact component={Tasks} />
           </Switch>
         </ThemeProvider>
       </Router>

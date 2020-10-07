@@ -2,6 +2,8 @@ import express from 'express';
 import axios from 'axios';
 import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
+const {spawn} = require('child_process');
+
 import workerpool from 'workerpool'
 // DB CONFIG
 
@@ -21,7 +23,7 @@ const pool = workerpool.pool('./server/workers/worker.js');
     await worker.scheduleJob();
     console.log(pool.stats());
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 })()
 
@@ -30,11 +32,15 @@ const pool = workerpool.pool('./server/workers/worker.js');
 // @access Public for users
 
 router.post('/', async (req, res) => {
-  db.defaults({ jobs: []})
-  .write()
-  db.get('jobs')
-  .push({ id: 1, time: {hour: 17, minute: 16, dayOfWeek: null}, job: 'CONSOLE'})
-  .write()
+  const { jobType, time, variable } = req.body;
+  if (jobType && (jobType === 'rating' || jobType === 'byAge')) {
+
+    db.defaults({ jobs: []})
+    .write()
+    db.get('jobs')
+    .push({ time, jobType, variable })
+    .write()
+  }
 })
 
 module.exports = router;

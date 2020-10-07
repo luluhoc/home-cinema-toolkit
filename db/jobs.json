@@ -1,0 +1,36 @@
+{
+  "jobs": [
+    {
+      "time": {
+        "hour": "17",
+        "minute": "00"
+      },
+      "jobType": "rating",
+      "variable": "6"
+    },
+    {
+      "time": {
+        "hour": "17",
+        "minute": "03"
+      },
+      "jobType": "byAge",
+      "variable": "date"
+    },
+    {
+      "time": {
+        "hour": "17",
+        "minute": "09"
+      },
+      "jobType": "byAge",
+      "variable": "date"
+    },
+    {
+      "time": {
+        "hour": "17",
+        "minute": "11"
+      },
+      "jobType": "byAge",
+      "variable": "date"
+    }
+  ]
+}
