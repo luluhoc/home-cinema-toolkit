@@ -2,8 +2,9 @@ import express from 'express';
 import axios from 'axios';
 import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
+import fs from 'fs';
 const {spawn} = require('child_process');
-
+import path from 'path'
 import workerpool from 'workerpool'
 // DB CONFIG
 
@@ -16,7 +17,6 @@ const db = low(adapter);
 const router = express.Router();
 
 const pool = workerpool.pool('./server/workers/worker.js');
-
 (async () => {
   try {
     const worker = await pool.proxy();
@@ -34,7 +34,7 @@ const pool = workerpool.pool('./server/workers/worker.js');
 router.post('/', async (req, res) => {
   const { jobType, time, variable } = req.body;
   if (jobType && (jobType === 'rating' || jobType === 'byAge')) {
-
+    db.read()
     db.defaults({ jobs: []})
     .write()
     db.get('jobs')

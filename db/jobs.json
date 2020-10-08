@@ -10,27 +10,11 @@
     },
     {
       "time": {
-        "hour": "17",
-        "minute": "03"
+        "hour": "12",
+        "minute": "07"
       },
       "jobType": "byAge",
-      "variable": "date"
-    },
-    {
-      "time": {
-        "hour": "17",
-        "minute": "09"
-      },
-      "jobType": "byAge",
-      "variable": "date"
-    },
-    {
-      "time": {
-        "hour": "17",
-        "minute": "11"
-      },
-      "jobType": "byAge",
-      "variable": "date"
+      "variable": "newVar"
     }
   ]
 }
