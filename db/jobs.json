@@ -2,11 +2,14 @@
   "jobs": [
     {
       "time": {
-        "hour": "17",
-        "minute": "00"
+        "hour": "23",
+        "minute": "05"
       },
       "jobType": "rating",
-      "variable": "6"
+      "variable": "6",
+      "on": "false",
+      "exTime": 11659,
+      "deleted": 0
     },
     {
       "time": {
@@ -14,7 +17,8 @@
         "minute": "07"
       },
       "jobType": "byAge",
-      "variable": "newVar"
+      "variable": "newVar",
+      "on": "false"
     }
   ]
 }

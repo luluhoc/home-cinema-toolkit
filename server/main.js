@@ -24,4 +24,4 @@ app.use('*', function (req, res) {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
-app.listen(PORT, () => console.log(`Radarr Toolkit Server Has Started on ${PORT}!`)); '';
+app.listen(PORT, () => console.log(`Home Cinema Toolkit has started on ${PORT}!`)); '';

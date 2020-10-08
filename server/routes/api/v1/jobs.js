@@ -21,7 +21,6 @@ const pool = workerpool.pool('./server/workers/worker.js');
   try {
     const worker = await pool.proxy();
     await worker.scheduleJob();
-    console.log(pool.stats());
   } catch (error) {
     console.log(error);
   }
