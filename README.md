@@ -1,6 +1,6 @@
 # HCT - Home Cinema Toolkit; MAJOR UPDATE REACT FRONT-END
 <a href="https://www.buymeacoffee.com/lulu45" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
-![hct](https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/ss.png?raw=true)
+<img src="https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/ss.png?raw=true" style="width: 100%;" alt="HOME CINEMA TOOLKIT"/>
 
 - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Please keep in mind that this is in early beta stage.`
 
