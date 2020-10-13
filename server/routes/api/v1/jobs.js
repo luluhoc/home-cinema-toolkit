@@ -24,7 +24,7 @@ const pool = workerpool.pool('./server/workers/worker.js');
   } catch (error) {
     console.log(error);
   }
-})()
+})
 
 // @route POST api/jobs/
 // @desc ADD NEW JOB

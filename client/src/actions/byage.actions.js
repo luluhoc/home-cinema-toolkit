@@ -15,7 +15,7 @@ export const getFreeSpace = (settings) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
+  if (!settings || !settings.radarrUrl || !settings.radarrApi) {
     return dispatch(setAlert('You must enter the settings', 'error'));
   }
 }
@@ -28,7 +28,7 @@ export const findByDate = (formValues, settings) => async (dispatch) => {
   dispatch({
     type: START_BY_AGE,
   });
-  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
+  if (!settings || !settings.radarrUrl || !settings.radarrApi) {
     return dispatch(setAlert('You must enter the settings', 'error'));
   }
   const body = JSON.stringify({
@@ -64,7 +64,7 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
   try {
     console.log(movies);
     if (movies?.data?.length === 1) {
-      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
+      if (!settings || !settings.radarrUrl || !settings.radarrApi) {
         return dispatch(setAlert('You must enter the settings', 'error'))
       }
       const body = JSON.stringify({

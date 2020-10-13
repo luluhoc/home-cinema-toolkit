@@ -48,7 +48,10 @@ router.post('/', async (req, res) => {
     console.log('Got movies from radarr...');
   } catch (error) {
     console.log(error);
-    if (error.response.status === 401) {
+    if (error && error.code === 'ETIMEDOUT') {
+      return res.status(408).json({ errors: [{ msg: error.code }] });
+    }
+    if (error && error.response && error.response.status === 401) {
       return res.status(401).json({ errors: [{ msg: error.response.statusText }] });
     }
     return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
