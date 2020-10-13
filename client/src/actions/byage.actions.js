@@ -15,7 +15,7 @@ export const getFreeSpace = (settings) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
     return dispatch(setAlert('You must enter the settings', 'error'));
   }
 }
@@ -28,14 +28,14 @@ export const findByDate = (formValues, settings) => async (dispatch) => {
   dispatch({
     type: START_BY_AGE,
   });
-  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
     return dispatch(setAlert('You must enter the settings', 'error'));
   }
   const body = JSON.stringify({
     radarrUrl: settings.radarrUrl,
     radarrApi: settings.radarrApi,
     keyOmdb: settings.keyOmdb,
-    v3: settings.v3,
+    v3: settings?.v3,
     date: formValues.date,
   });
   try {
@@ -64,14 +64,14 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
   try {
     console.log(movies);
     if (movies?.data?.length === 1) {
-      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
         return dispatch(setAlert('You must enter the settings', 'error'))
       }
       const body = JSON.stringify({
         radarrUrl: settings.radarrUrl,
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
-        v3: settings.v3,
+        v3: settings?.v3,
         addExclusion: formValues.addExclusion,
         deleteFiles: true,
         selectedArr: [getState()?.byage?.movies[movies?.data?.[0]?.dataIndex]?.id],
@@ -90,14 +90,14 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         const e = movies?.data[i];
         selectedArr.push(getState()?.byage?.movies[e?.dataIndex]?.id)
       }
-      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
         return dispatch(setAlert('You must enter the settings', 'error'))
       }
       const body = JSON.stringify({
         radarrUrl: settings.radarrUrl,
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
-        v3: settings.v3,
+        v3: settings?.v3,
         addExclusions: formValues.addExclusion,
         deleteFiles: true,
         selectedArr

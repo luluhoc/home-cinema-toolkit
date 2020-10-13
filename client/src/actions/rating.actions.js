@@ -60,7 +60,7 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         radarrUrl: settings.radarrUrl,
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
-        v3: settings.v3,
+        v3: settings?.v3,
         desiredRating: formValues.desiredRating,
         addExclusion: formValues.addExclusion,
         deleteFiles: formValues.deleteFiles,
@@ -80,14 +80,14 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         const e = movies?.data[i];
         selectedArr.push(getState()?.rating?.movies[e?.dataIndex]?.rId)
       }
-      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
         return dispatch(setAlert('You must enter the settings', 'error'))
       }
       const body = JSON.stringify({
         radarrUrl: settings.radarrUrl,
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
-        v3: settings.v3,
+        v3: settings?.v3,
         desiredRating: formValues.desiredRating,
         addExclusions: formValues.addExclusion,
         deleteFiles: formValues.deleteFiles,
