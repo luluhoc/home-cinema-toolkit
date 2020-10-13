@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
     if (error && error.response && error.response.status === 401) {
       return res.status(401).json({ errors: [{ msg: error.response.statusText }] });
     }
-    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+    return res.status(500).json({ errors: [{ msg: 'Server Error - Getting Movies from Radarr' }] });
   }
 
   for (let index = 0; index < movies.length; index++) {
@@ -84,7 +84,7 @@ router.post('/', async (req, res) => {
     console.log('Parsing Data from OMDB');
   } catch (error) {
     console.log(error);
-    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+    res.status(500).json({ errors: [{ msg: 'Server Error - Fetching OMDB' }] });
   }
 
   for (let index = 0; index < data.length; index++) {
@@ -111,7 +111,7 @@ router.post('/', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+    res.status(500).json({ errors: [{ msg: 'Server Error - Sending To FrontEnd' }] });
   }
 });
 
@@ -142,7 +142,7 @@ router.post('/delete', async (req, res) => {
     res.json({ deleted: deleted.length });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+    res.status(500).json({ errors: [{ msg: 'Server Error - Deleting' }] });
   }
 });
 
