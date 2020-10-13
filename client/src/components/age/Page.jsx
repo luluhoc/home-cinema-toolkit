@@ -13,8 +13,6 @@ const Page = ({ findByDate, settings }) => {
   };
   return (
     <Container maxWidth="lg" style={{ marginTop: 5 }}>
-      <Typography>Free Space</Typography>
-      <Line percent="50" strokeWidth="1" strokeColor="#FF0000" />
       <DeleteByAgeForm onSubmit={onSubmit} />
       <Table />
       <Box mt={8}>
