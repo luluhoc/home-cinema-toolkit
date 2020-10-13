@@ -12,14 +12,14 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
     return dispatch(setAlert('You must enter the settings', 'error'))
   }
   const body = JSON.stringify({
     radarrUrl: settings.radarrUrl,
     radarrApi: settings.radarrApi,
     keyOmdb: settings.keyOmdb,
-    v3: settings.v3,
+    v3: settings?.v3,
     desiredRating: formValues.desiredRating,
     addExclusion: formValues.addExclusions,
     deleteFiles: formValues.deleteFiles
@@ -53,7 +53,7 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
   try {
     console.log(movies);
     if (movies?.data?.length === 1) {
-      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || !settings.v3) {
+      if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
         return dispatch(setAlert('You must enter the settings', 'error'))
       }
       const body = JSON.stringify({
