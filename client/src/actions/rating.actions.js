@@ -43,15 +43,13 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
   }
 };
 
-export const deleteMovie = (movies, formValues) => async (dispatch, getState) => {
+export const deleteMovie = (movies, formValues, settings) => async (dispatch, getState) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  const { settings } = store.getState();
   try {
-    console.log(movies);
     if (movies?.data?.length === 1) {
       if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
         return dispatch(setAlert('You must enter the settings', 'error'))
