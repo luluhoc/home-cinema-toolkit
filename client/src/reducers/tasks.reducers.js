@@ -1,4 +1,4 @@
-import { GET_TASKS, SET_TASK } from '../actions/types.actions';
+import { GET_TASKS, SET_TASK, SWITCH_TASK } from '../actions/types.actions';
 
 const initialState = {
   tasks: [],
@@ -16,6 +16,12 @@ export default function (state = initialState, action) {
         isLoading: false,
       };
     case SET_TASK:
+      return {
+        ...state,
+        tasks: payload,
+        isLoading: false,
+      };
+    case SWITCH_TASK:
       return {
         ...state,
         tasks: payload,

@@ -13,6 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { renderCheckbox, renderField, renderSelect } from '../helpers/formHelpers';
 
+import ByAge from './ByAge';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
@@ -40,7 +42,6 @@ const selector = formValueSelector('tasks');
 const TasksForm = ({
   change, handleSubmit, onSubmit, initialize, jobType,
 }) => {
-  const [selectedDate, handleDateChange] = React.useState(new Date());
   const classes = useStyles();
   const hoursMinutes = (variable) => {
     const hours = [];
@@ -76,6 +77,7 @@ const TasksForm = ({
             name="time[hour]"
             options={hoursMinutes('hours').map((e) => <option key={e} value={e}>{e}</option>)}
             id="hour"
+            parse={(value) => Number(value)}
             className={classes.formControl}
             type="number"
             label="Hour"
@@ -85,6 +87,7 @@ const TasksForm = ({
           />
           <Field
             name="time[minute]"
+            parse={(value) => Number(value)}
             options={hoursMinutes('minutes').map((e) => <option key={e} value={e}>{e}</option>)}
             id="minute"
             className={classes.formControl}
@@ -96,6 +99,7 @@ const TasksForm = ({
           <Field
             name="time[dayOfWeek]"
             className={classes.formControl}
+            parse={(value) => JSON.parse(value)}
             options={(
               <>
                 <option value="null">Everyday</option>
@@ -109,7 +113,6 @@ const TasksForm = ({
               </>
           )}
             id="day"
-            type="number"
             label="Day"
             autoFocus
             component={renderSelect}
@@ -137,17 +140,7 @@ const TasksForm = ({
               <Field name="deleteFiles" defaultValue="true" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />
             </>
           ) : (
-            <>
-              <LocalizationProvider dateAdapter={DateFnsAdapter}>
-                <DatePicker
-                  label="Before"
-                  renderInput={(props) => (<TextField label fullWidth {...props} />)}
-                  value={selectedDate}
-                  onChange={(date) => { handleDateChange(date); change('variable', date); }}
-                />
-              </LocalizationProvider>
-              <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
-            </>
+            <ByAge Field={Field} change={change} />
           )}
           <Button
             type="submit"

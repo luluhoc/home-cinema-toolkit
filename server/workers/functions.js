@@ -122,6 +122,7 @@ exports.deleteByRating = async (variable) => {
       jobType: 'rating'
     }).assign({
       exTime: time,
+      lastEx: new Date(),
       deleted: deleted.length
     }).write()
     console.log(deleted.length);

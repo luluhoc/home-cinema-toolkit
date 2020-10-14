@@ -20,6 +20,7 @@ const scheduleJob = () => {
       console.log(jobs[0].on)
       if (jobs[0].on) {
         schedule.scheduleJob(jobs[0]?.time, (a) => {
+          console.log(a)
           deleteByRating(jobs[0]?.variable)
           console.log(jobs[0]?.jobType);
           console.log(jobs[0]?.variable)

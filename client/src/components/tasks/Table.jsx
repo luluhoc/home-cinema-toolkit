@@ -7,9 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Switch } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Moment from 'react-moment';
+import SwitchTask from './SwitchTask';
 
 const useStyles = makeStyles({
   table: {
@@ -32,16 +33,18 @@ const nextEx = (time) => {
     5: 'Friday',
     6: 'Sunday',
   };
-  if (time?.dayOfWeek) {
-    return `Every ${d[time.dayOfWeek]} at ${Number(time.hour) > 0 && Number(time.hour) < 10 ? `0${time.hour}` : time.hour}:${time.minute}`;
+  if (time.dayOfWeek) {
+    return `Every ${d[time.dayOfWeek]} at ${Number(time.hour) >= 0 && Number(time.hour) < 10 ? `0${time.hour}` : time.hour}:${Number(time.minute) >= 0 && Number(time.minute) < 10 ? `0${time.minute}` : `${time.minute}`}`;
   }
-  return `Today ${Number(time.hour) > 0 && Number(time.hour) < 10 ? `0${time.hour}` : time.hour}:
-  ${Number(time.minute) > 0 && Number(time.minute) < 10 ? `0${time.minute}` : `${time.minute}`}`;
+  return `Today ${Number(time.hour) >= 0 && Number(time.hour) < 10 ? `0${time.hour}` : time.hour}:${Number(time.minute) >= 0 && Number(time.minute) < 10 ? `0${time.minute}` : `${time.minute}`}`;
 };
 
 export default function BasicTable({ tasks }) {
   const classes = useStyles();
-
+  const rat = {
+    rating: 'Delete By Rating',
+    byAge: 'Delete By Age',
+  };
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -59,16 +62,14 @@ export default function BasicTable({ tasks }) {
           {tasks.map((t) => (
             <TableRow key={t.jobType}>
               <TableCell component="th" scope="row">
-                {t.jobType}
+                {rat[t.jobType]}
               </TableCell>
-              <TableCell align="right">{t.variable}</TableCell>
-              <TableCell align="right" />
+              <TableCell align="right">{t.variable && t.variable.length > 5 ? <Moment format="YYYY/MM/DD">{t.variable}</Moment> : t.variable}</TableCell>
+              <TableCell align="right"><Moment format="YYYY/MM/DD HH:mm">{t.lastEx}</Moment></TableCell>
               <TableCell align="right">{millisToMinutesAndSeconds(t.exTime)}</TableCell>
               <TableCell align="right">{nextEx(t.time)}</TableCell>
               <TableCell align="right">
-                <IconButton color="secondary" aria-label="add an alarm">
-                  <RefreshIcon />
-                </IconButton>
+                <SwitchTask on={t.on} jobType={t.jobType} />
               </TableCell>
             </TableRow>
           ))}
