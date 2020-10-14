@@ -50,6 +50,7 @@ export const deleteMovie = (movies, formValues, settings) => async (dispatch, ge
     },
   };
   try {
+    console.log(settings)
     if (movies?.data?.length === 1) {
       if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb) {
         return dispatch(setAlert('You must enter the settings', 'error'))
