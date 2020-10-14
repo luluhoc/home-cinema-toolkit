@@ -17,6 +17,7 @@ https://hub.docker.com/r/lulu45/home-cinema-toolkit
 docker run -d \
   --name HCT \
   -p 12400:12400 \
+  -v /path/to/db:/usr/src/app/db \
   --restart unless-stopped \
   lulu45/home-cinema-toolkit:latest
 ```

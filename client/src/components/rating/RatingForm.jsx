@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
-
+import { renderCheckbox, renderField } from '../helpers/formHelpers';
 import validate from './validate';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,65 +29,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
 }));
-
-const renderField = ({
-  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max, placeholder,
-}) => {
-  if (meta.error && meta.touched) {
-    return (
-      <TextField
-        error
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        {...input}
-        placeholder={placeholder}
-        label={label}
-        id="outlined-error-helper-text"
-        helperText={meta.error}
-        multiline={multiline}
-        rows={rows}
-      />
-    );
-  }
-  return (
-    <TextField
-      variant="outlined"
-      margin="normal"
-      required
-      fullWidth
-      {...input}
-      id={id}
-      placeholder={placeholder}
-      label={label}
-      autoFocus={autoFocus}
-      autoComplete={autoComplete}
-      type={type}
-      multiline={multiline}
-      rows={rows}
-    />
-  );
-};
-
-const renderCheckbox = ({
-  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max,
-}) => {
-  if (meta.error && meta.touched) {
-    return (
-      <FormControlLabel
-        control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
-        label={label}
-      />
-    );
-  }
-  return (
-    <FormControlLabel
-      control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
-      label={label}
-    />
-  );
-};
 
 const RatingForm = ({
   change, handleSubmit, onSubmit, initialize,

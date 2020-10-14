@@ -70,7 +70,6 @@ export const deleteMovie = (movies, formValues, settings) => async (dispatch, ge
         type: DELETE_MOVIE,
         payload: movies.data[0],
       });
-      console.log(deletedData)
       dispatch(setAlert(`Deleted ${deletedData.data.deleted} movie`, 'success'))
     } else {
       console.log('2')

@@ -1,18 +1,25 @@
 import { Box, Container } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Copyright from '../layout/Copyright';
 import Table from './Table';
 import TaskForm from './TaskForm';
 
-const Tasks = () => {
+import { getTasks, setTask } from '../../actions/tasks.actions';
+
+const Tasks = ({
+  getTasks, tasks, isLoading, setTask,
+}) => {
+  useEffect(() => {
+    getTasks();
+  }, [getTasks]);
   const onSubmit = (formValues) => {
-    console.log('findMovies');
+    setTask(formValues);
   };
   return (
     <Container maxWidth="lg" style={{ marginTop: 5 }}>
       <TaskForm onSubmit={onSubmit} />
-      <Table />
+      {!isLoading && <Table tasks={tasks} />}
       <Box mt={8}>
         <Copyright />
       </Box>
@@ -20,4 +27,12 @@ const Tasks = () => {
   );
 };
 
-export default connect(null)(Tasks);
+const mapStateToProps = (state) => ({
+  tasks: state.tasks.tasks,
+  isLoading: state.tasks.isLoading,
+});
+
+export default connect(mapStateToProps, {
+  getTasks,
+  setTask,
+})(Tasks);

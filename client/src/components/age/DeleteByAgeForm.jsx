@@ -10,6 +10,7 @@ import DateFnsAdapter from '@material-ui/pickers/adapter/date-fns'; // choose yo
 import {
   DatePicker, LocalizationProvider,
 } from '@material-ui/pickers';
+import { renderCheckbox } from '../helpers/formHelpers';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,25 +33,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
 }));
-
-const renderCheckbox = ({
-  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max,
-}) => {
-  if (meta.error && meta.touched) {
-    return (
-      <FormControlLabel
-        control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
-        label={label}
-      />
-    );
-  }
-  return (
-    <FormControlLabel
-      control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
-      label={label}
-    />
-  );
-};
 
 const DeleteByAgeForm = ({
   change, handleSubmit, onSubmit, initialize,

@@ -11,9 +11,7 @@ import {
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Checkbox, FormControl, FormControlLabel, FormHelperText, InputLabel, Select,
-} from '@material-ui/core';
+import { renderCheckbox, renderField, renderSelect } from '../helpers/formHelpers';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,94 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const renderField = ({
-  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max, placeholder,
-}) => {
-  if (meta.error && meta.touched) {
-    return (
-      <TextField
-        error
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        {...input}
-        placeholder={placeholder}
-        label={label}
-        id="outlined-error-helper-text"
-        helperText={meta.error}
-        multiline={multiline}
-        rows={rows}
-      />
-    );
-  }
-  return (
-    <TextField
-      variant="outlined"
-      margin="normal"
-      required
-      fullWidth
-      {...input}
-      id={id}
-      placeholder={placeholder}
-      label={label}
-      autoFocus={autoFocus}
-      autoComplete={autoComplete}
-      type={type}
-      multiline={multiline}
-      rows={rows}
-    />
-  );
-};
-
-const renderSelect = ({
-  input, label, meta, id, className, fullWidth,
-}) => {
-  if (meta.error && meta.touched) {
-    return (
-      <>
-        <FormControl fullWidth error variant="outlined" className={className} required>
-          <InputLabel htmlFor={id}>{label}</InputLabel>
-          <Select native {...input} id={id} label={label}>
-            <option value="rating">Rating</option>
-            <option value="byAge">Delete By Age</option>
-          </Select>
-          <FormHelperText id="my-helper-text">{meta.error}</FormHelperText>
-        </FormControl>
-      </>
-    );
-  }
-  return (
-    <>
-      <FormControl fullWidth variant="outlined" className={className} required>
-        <InputLabel htmlFor={id}>{label}</InputLabel>
-        <Select native {...input} id={id} label={label}>
-          <option value="rating">Rating</option>
-          <option value="byAge">Delete By Age</option>
-        </Select>
-      </FormControl>
-    </>
-  );
-};
-const renderCheckbox = ({
-  input, label, meta, id, autoFocus, autoComplete, type, multiline, rows, min, max,
-}) => {
-  if (meta.error && meta.touched) {
-    return (
-      <FormControlLabel
-        control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
-        label={label}
-      />
-    );
-  }
-  return (
-    <FormControlLabel
-      control={<Checkbox {...input} checked={typeof input.value === 'boolean' ? input.value : false} />}
-      label={label}
-    />
-  );
-};
-
 const selector = formValueSelector('tasks');
 
 const TasksForm = ({
@@ -132,8 +42,27 @@ const TasksForm = ({
 }) => {
   const [selectedDate, handleDateChange] = React.useState(new Date());
   const classes = useStyles();
+  const hoursMinutes = (variable) => {
+    const hours = [];
+    const minutes = [];
+    if (variable === 'hours') {
+      for (let i = 0; i < 24; i++) {
+        hours.push(i);
+      }
+      return hours;
+    }
+    for (let i = 0; i < 60; i++) {
+      minutes.push(i);
+    }
+    return minutes;
+  };
   useEffect(() => {
     initialize({
+      time: {
+        hour: 3,
+        minute: 0,
+        dayOfWeek: null,
+      },
       jobType: 'rating',
       addExclusion: true,
       deleteFiles: true,
@@ -143,10 +72,64 @@ const TasksForm = ({
     <>
       <div className={classes.paper}>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Field name="time[hour]" id="hour" type="number" label="Hour" placeholder="https://radarr.domain.com" autoFocus component={renderField} />
-          <Field name="time[minute]" id="minute" type="number" label="Minute" placeholder="https://radarr.domain.com" autoFocus component={renderField} />
-          <Field name="time[day]" id="day" type="number" label="Day" autoFocus component={renderField} />
-          <Field name="jobType" id="jobType" label="Job Type" autoFocus component={renderSelect} />
+          <Field
+            name="time[hour]"
+            options={hoursMinutes('hours').map((e) => <option key={e} value={e}>{e}</option>)}
+            id="hour"
+            className={classes.formControl}
+            type="number"
+            label="Hour"
+            placeholder="23"
+            autoFocus
+            component={renderSelect}
+          />
+          <Field
+            name="time[minute]"
+            options={hoursMinutes('minutes').map((e) => <option key={e} value={e}>{e}</option>)}
+            id="minute"
+            className={classes.formControl}
+            type="number"
+            label="Minute"
+            autoFocus
+            component={renderSelect}
+          />
+          <Field
+            name="time[dayOfWeek]"
+            className={classes.formControl}
+            options={(
+              <>
+                <option value="null">Everyday</option>
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </>
+          )}
+            id="day"
+            type="number"
+            label="Day"
+            autoFocus
+            component={renderSelect}
+          />
+          <Field
+            name="jobType"
+            className={classes.formControl}
+            options={
+            (
+              <>
+                <option value="rating">Rating</option>
+                <option value="byAge">Delete By Age</option>
+              </>
+            )
+          }
+            id="jobType"
+            label="Job Type"
+            autoFocus
+            component={renderSelect}
+          />
           {jobType && jobType === 'rating' ? (
             <>
               <Field name="variable" type="number" id="desiredRating" label="Desired Rating" autoFocus component={renderField} />
@@ -158,7 +141,7 @@ const TasksForm = ({
               <LocalizationProvider dateAdapter={DateFnsAdapter}>
                 <DatePicker
                   label="Before"
-                  renderInput={(props) => <TextField label fullWidth {...props} />}
+                  renderInput={(props) => (<TextField label fullWidth {...props} />)}
                   value={selectedDate}
                   onChange={(date) => { handleDateChange(date); change('variable', date); }}
                 />

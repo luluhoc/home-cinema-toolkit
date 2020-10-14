@@ -33,12 +33,36 @@ const pool = workerpool.pool('./server/workers/worker.js');
 router.post('/', async (req, res) => {
   const { jobType, time, variable } = req.body;
   if (jobType && (jobType === 'rating' || jobType === 'byAge')) {
-    db.read()
-    db.defaults({ jobs: []})
-    .write()
-    db.get('jobs')
-    .push({ time, jobType, variable })
-    .write()
+    try {
+      db.read()
+      db.defaults({ jobs: []})
+      .write()
+      db.get('jobs')
+      .find({ jobType })
+      .assign({ time, jobType, variable })
+      .write()
+      const jobs = db.get('jobs')
+      res.json(jobs)
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ errors: [{ msg: 'Server Error - Getting JOBS' }] });
+    }
+    
+  }
+})
+
+// @route GET api/jobs/
+// @desc GET JOBS
+// @access Public for users
+
+router.get('/', async (req, res) => {
+  db.read()
+  try {
+    const jobs = db.get('jobs').value();
+    res.json(jobs)
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ errors: [{ msg: 'Server Error - Getting JOBS' }] });
   }
 })
 

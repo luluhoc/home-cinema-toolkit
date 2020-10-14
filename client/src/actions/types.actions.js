@@ -12,3 +12,6 @@ export const NO_SETTINGS = 'NO_SETTINGS';
 
 export const FIND_MOVIES_BY_AGE = 'FIND_MOVIES_BY_AGE';
 export const START_BY_AGE = 'START_BY_AGE';
+
+export const GET_TASKS = 'GET_TASKS';
+export const SET_TASK = 'SET_TASK';

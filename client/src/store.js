@@ -9,7 +9,7 @@ import rootReducer from './reducers/index.reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['settings', 'rating', 'byage', 'alert', 'form'],
+  blacklist: ['settings', 'rating', 'byage', 'alert', 'form', 'tasks'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

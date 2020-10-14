@@ -9,28 +9,37 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { IconButton } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import Moment from 'react-moment';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
 });
-
-function createData(name, calories, fat, carbs, protein) {
-  return {
-    name, calories, fat, carbs, protein,
-  };
+function millisToMinutesAndSeconds(m) {
+  const minutes = Math.floor(m / 60000);
+  const seconds = ((m % 60000) / 1000).toFixed(0);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const nextEx = (time) => {
+  const d = {
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Sunday',
+  };
+  if (time?.dayOfWeek) {
+    return `Every ${d[time.dayOfWeek]} at ${Number(time.hour) > 0 && Number(time.hour) < 10 ? `0${time.hour}` : time.hour}:${time.minute}`;
+  }
+  return `Today ${Number(time.hour) > 0 && Number(time.hour) < 10 ? `0${time.hour}` : time.hour}:
+  ${Number(time.minute) > 0 && Number(time.minute) < 10 ? `0${time.minute}` : `${time.minute}`}`;
+};
 
-export default function BasicTable() {
+export default function BasicTable({ tasks }) {
   const classes = useStyles();
 
   return (
@@ -40,24 +49,22 @@ export default function BasicTable() {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell align="right">Variable</TableCell>
-            <TableCell align="right">Interval</TableCell>
             <TableCell align="right">Last Execution</TableCell>
             <TableCell align="right">Last Duration</TableCell>
-            <TableCell align="right">Next Execution</TableCell>
+            <TableCell align="right">Execution Time</TableCell>
             <TableCell align="right" />
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
+          {tasks.map((t) => (
+            <TableRow key={t.jobType}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {t.jobType}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{t.variable}</TableCell>
+              <TableCell align="right" />
+              <TableCell align="right">{millisToMinutesAndSeconds(t.exTime)}</TableCell>
+              <TableCell align="right">{nextEx(t.time)}</TableCell>
               <TableCell align="right">
                 <IconButton color="secondary" aria-label="add an alarm">
                   <RefreshIcon />
