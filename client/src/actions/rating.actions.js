@@ -87,7 +87,7 @@ export const deleteMovie = (movies, formValues, settings) => async (dispatch, ge
         keyOmdb: settings.keyOmdb,
         v3: settings?.v3,
         desiredRating: formValues.desiredRating,
-        addExclusions: formValues.addExclusion,
+        addExclusion: formValues.addExclusion,
         deleteFiles: formValues.deleteFiles,
         selectedArr
       });
