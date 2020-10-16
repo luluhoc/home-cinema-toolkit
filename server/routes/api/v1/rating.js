@@ -48,8 +48,14 @@ router.post('/', async (req, res) => {
     console.log('Got movies from radarr...');
   } catch (error) {
     console.log(error);
+    if (error && error.response && error.response.status === 404) {
+      return res.status(404).json({ errors: [{ msg: '404 NOT FOUND - Probably bad radarr link' }] });
+    }
     if (error && error.code === 'ETIMEDOUT') {
       return res.status(408).json({ errors: [{ msg: error.code }] });
+    }
+    if (error && error.code === 'ENOTFOUND') {
+      return res.status(404).json({ errors: [{ msg: `404 NOT FOUND - Probably bad radarr link - ${error.code}` }] });
     }
     if (error && error.response && error.response.status === 401) {
       return res.status(401).json({ errors: [{ msg: error.response.statusText }] });
