@@ -40,6 +40,13 @@ const SettingsForm = ({
         radarrApi: settings.radarrApi,
         v3: settings.v3,
         keyOmdb: settings.keyOmdb,
+        addExclusion: settings.addExclusion,
+        deleteFiles: settings.deleteFiles,
+      });
+    } else {
+      initialize({
+        addExclusion: true,
+        deleteFiles: true,
       });
     }
   }, [settings]);
@@ -51,6 +58,8 @@ const SettingsForm = ({
           <Field name="radarrApi" id="radarrApi" label="Radarr API" autoFocus component={renderField} />
           <Field name="v3" defaultValue="true" id="v3" label="API v3" autoFocus component={renderCheckbox} />
           <Field name="keyOmdb" id="keyOmdb" label="OMDB Key" autoFocus component={renderField} />
+          <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
+          <Field name="deleteFiles" defaultValue="true" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />
           <Button
             type="submit"
             fullWidth

@@ -17,7 +17,7 @@ const router = express.Router();
 // @access Public for users
 router.post('/', async (req, res) => {
   const {
-    radarrUrl, radarrApi, keyOmdb, v3
+    radarrUrl, radarrApi, keyOmdb, v3, addExclusion, deleteFiles
   } = req.body;
 
   try {
@@ -26,7 +26,9 @@ router.post('/', async (req, res) => {
       radarrUrl,
       radarrApi,
       keyOmdb,
-      v3
+      v3,
+      addExclusion,
+      deleteFiles
     }).write();
     const settings = db.get('settings').value();
     if (settings) {

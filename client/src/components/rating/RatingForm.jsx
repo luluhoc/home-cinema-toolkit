@@ -34,16 +34,11 @@ const RatingForm = ({
   change, handleSubmit, onSubmit, initialize,
 }) => {
   const classes = useStyles();
-  useEffect(() => {
-    initialize({ addExclusion: true, deleteFiles: true });
-  }, []);
   return (
     <>
       <div className={classes.paper}>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
           <Field name="desiredRating" type="number" id="desiredRating" label="Desired Rating" autoFocus component={renderField} />
-          <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
-          <Field name="deleteFiles" defaultValue="true" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />
           <Button
             type="submit"
             fullWidth

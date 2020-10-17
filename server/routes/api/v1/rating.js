@@ -2,6 +2,7 @@ import express from 'express';
 import axios from 'axios';
 import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
+import { check, validationResult } from 'express-validator';
 
 // DB CONFIG
 const FileSync = require('lowdb/adapters/FileSync');
@@ -9,6 +10,8 @@ const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db/rating.json');
 const db = low(adapter);
 
+const settingsAdapter = new FileSync('db/settings.json');
+const dbs = low(settingsAdapter);
 // router
 const router = express.Router();
 
@@ -125,21 +128,27 @@ router.post('/', async (req, res) => {
 // @desc DELETE MOVIES
 // @access Public for users
 
-router.post('/delete', async (req, res) => {
-  const {
-    radarrApi, addExclusion, deleteFiles, selectedArr, radarrUrl,v3
-  } = req.body;
+router.post('/delete',
+ async (req, res) => {
+  dbs.read()
+  const settings = await dbs.get('settings').value();
+  console.log(settings)
+  if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+    return res.status(400).json({ errors: [{ msg: 'No settings' }] });
+  }
+  const { selectedArr } = req.body;
   try {
     const promises = [];
     console.log(`Deleting ${selectedArr.length} movies`);
     for (let index = 0; index < selectedArr.length; index++) {
-      const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}/${selectedArr[index]}?deleteFiles=${deleteFiles}&${v3 ? 'addImportExclusion=' : 'addExclusion='}${addExclusion}`)
+      const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings.v3 ? '/api/v3/movie' : '/api/movie'}/${selectedArr[index]}?deleteFiles=${settings.deleteFiles}&${settings.v3 ? 'addImportExclusion=' : 'addExclusion='}${settings.addExclusion}`);
+      console.log(apiUrl)
       const options = {
         method: 'DELETE',
         url: apiUrl,
         headers: {
           'User-Agent': 'request',
-          'X-Api-Key': radarrApi,
+          'X-Api-Key': settings.radarrApi,
         },
       };
       promises.push(axios(options));
