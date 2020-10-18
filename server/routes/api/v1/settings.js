@@ -17,7 +17,12 @@ const router = express.Router();
 // @access Public for users
 router.post('/', async (req, res) => {
   const {
-    radarrUrl, radarrApi, keyOmdb, v3, addExclusion, deleteFiles
+    radarrUrl,
+    radarrApi,
+    keyOmdb,
+    v3,
+    addExclusion,
+    deleteFiles
   } = req.body;
 
   try {
@@ -36,7 +41,11 @@ router.post('/', async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+    return res.status(500).json({
+      errors: [{
+        msg: 'Server Error'
+      }]
+    });
   }
 })
 
@@ -54,7 +63,11 @@ router.get('/', async (req, res) => {
     res.json(null);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+    return res.status(500).json({
+      errors: [{
+        msg: 'Server Error'
+      }]
+    });
   }
 })
 

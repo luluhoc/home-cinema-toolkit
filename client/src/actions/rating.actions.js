@@ -15,15 +15,7 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
   if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || settings.addExclusion === undefined || settings.deleteFiles === undefined) {
     return dispatch(setAlert('You must enter the settings', 'error'))
   }
-  const body = JSON.stringify({
-    radarrUrl: settings.radarrUrl,
-    radarrApi: settings.radarrApi,
-    keyOmdb: settings.keyOmdb,
-    v3: settings?.v3,
-    desiredRating: formValues.desiredRating,
-    addExclusion: settings.addExclusions,
-    deleteFiles: settings.deleteFiles
-  });
+  const body = JSON.stringify(formValues);
   try {
     dispatch({
       type: START_MOVIES_SEARCH,

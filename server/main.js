@@ -1,5 +1,8 @@
 import express from 'express';
-import { urlencoded, json } from 'body-parser';
+import {
+  urlencoded,
+  json
+} from 'body-parser';
 import path from 'path'
 require('dotenv').config();
 
@@ -24,4 +27,5 @@ app.use('*', function (req, res) {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
-app.listen(PORT, () => console.log(`Home Cinema Toolkit has started on ${PORT}!`)); '';
+app.listen(PORT, () => console.log(`Home Cinema Toolkit has started on ${PORT}!`));
+'';

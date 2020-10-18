@@ -8,6 +8,10 @@ const db = low(adapter);
 
 db.read()
 
-var j = schedule.scheduleJob({hour: 14, minute: 30, dayOfWeek: 0}, function(){
+var j = schedule.scheduleJob({
+  hour: 14,
+  minute: 30,
+  dayOfWeek: 0
+}, function () {
   console.log('Time for tea!');
 });

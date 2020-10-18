@@ -45,6 +45,7 @@ const SettingsForm = ({
       });
     } else {
       initialize({
+        v3: true,
         addExclusion: true,
         deleteFiles: true,
       });
