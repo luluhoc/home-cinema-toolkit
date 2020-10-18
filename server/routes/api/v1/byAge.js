@@ -16,35 +16,35 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-(function(){
-  if (typeof Object.defineProperty === 'function'){
-    try{Object.defineProperty(Array.prototype,'sortBy',{value:sb}); }catch(e){}
+(function () {
+  if (typeof Object.defineProperty === 'function') {
+    try { Object.defineProperty(Array.prototype, 'sortBy', { value: sb }); } catch (e) {}
   }
   if (!Array.prototype.sortBy) Array.prototype.sortBy = sb;
 
-  function sb(f){
-    for (var i=this.length;i;){
-      var o = this[--i];
-      this[i] = [].concat(f.call(o,o,i),o);
+  function sb(f) {
+    for (var i = this.length; i;) {
+      const o = this[--i];
+      this[i] = [].concat(f.call(o, o, i), o);
     }
-    this.sort(function(a,b){
-      for (var i=0,len=a.length;i<len;++i){
-        if (a[i]!=b[i]) return a[i]<b[i]?-1:1;
+    this.sort((a, b) => {
+      for (let i = 0, len = a.length; i < len; ++i) {
+        if (a[i] != b[i]) return a[i] < b[i] ? -1 : 1;
       }
       return 0;
     });
-    for (var i=this.length;i;){
-      this[--i]=this[i][this[i].length-1];
+    for (var i = this.length; i;) {
+      this[--i] = this[i][this[i].length - 1];
     }
     return this;
   }
-})();
+}());
 
 router.post('/', async (req, res) => {
-  db.read()
+  db.read();
   console.log('Start');
   const {
-    radarrUrl, radarrApi, v3, date
+    radarrUrl, radarrApi, v3, date,
   } = req.body;
   const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`);
   const radarrGet = {
@@ -63,9 +63,9 @@ router.post('/', async (req, res) => {
   try {
     const moviesFromRadarr = await axios(radarrGet);
     movies = moviesFromRadarr.data;
-    const a = movies.filter(m => m.added < date)
-    const newArr = a.sortBy(function(o){ return o.added });
-    res.json({movies: newArr})
+    const a = movies.filter((m) => m.added < date);
+    const newArr = a.sortBy((o) => o.added);
+    res.json({ movies: newArr });
   } catch (error) {
     console.log(error);
     if (error.response.status === 401) {
@@ -77,7 +77,7 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/diskspace', async (req, res) => {
-  db.read()
+  db.read();
   console.log('Start');
   const {
     radarrUrl, radarrApi, v3,
@@ -95,8 +95,8 @@ router.post('/diskspace', async (req, res) => {
 
   try {
     const diskspace = await axios(radarrGet);
-    
-    console.log(diskspace)
+
+    console.log(diskspace);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ errors: [{ msg: 'Server Error' }] });

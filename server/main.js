@@ -1,9 +1,7 @@
 import express from 'express';
-import {
-  urlencoded,
-  json
-} from 'body-parser';
-import path from 'path'
+import { urlencoded, json } from 'body-parser';
+import path from 'path';
+
 require('dotenv').config();
 
 const app = express();
@@ -23,9 +21,8 @@ app.use('/api/settings', require('./routes/api/v1/settings'));
 app.use('/api/by-age', require('./routes/api/v1/byAge'));
 app.use('/api/tasks', require('./routes/api/v1/tasks'));
 
-app.use('*', function (req, res) {
+app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
 app.listen(PORT, () => console.log(`Home Cinema Toolkit has started on ${PORT}!`));
-'';

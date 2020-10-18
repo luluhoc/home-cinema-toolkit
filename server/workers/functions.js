@@ -19,14 +19,14 @@ function sleep(ms) {
 
 exports.deleteByRating = async (variable) => {
   const start = new Date().getTime();
-  dbs.read()
-  db.read()
+  dbs.read();
+  db.read();
   const settings = await dbs.get('settings').value();
-  console.log(settings)
+  console.log(settings);
   if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi) {
-    return console.log('NO SETTINGS')
+    return console.log('NO SETTINGS');
   }
-  const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings?.v3 ? '/api/v3/movie' : '/api/movie'}`)
+  const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings?.v3 ? '/api/v3/movie' : '/api/movie'}`);
   const desiredRating = Number(variable);
 
   const radarrGet = {
@@ -96,15 +96,15 @@ exports.deleteByRating = async (variable) => {
         })
         .write();
     }
-    console.log(desiredRating)
+    console.log(desiredRating);
     const returnedMovies = await dbsch.get('movies').filter((movie) => movie.imdbRating <= desiredRating).value();
-    console.log(returnedMovies)
+    console.log(returnedMovies);
     const promisesDelete = [];
     const deleteFiles = true;
     const addExclusion = true;
     console.log(`Deleting ${returnedMovies.length} movies`);
     for (let index = 0; index < returnedMovies.length; index++) {
-      const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings?.v3 ? '/api/v3/movie' : '/api/movie'}/${returnedMovies[index].rId}?deleteFiles=${deleteFiles}&${settings?.v3 ? 'addImportExclusion=' : 'addExclusion='}${addExclusion}`)
+      const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings?.v3 ? '/api/v3/movie' : '/api/movie'}/${returnedMovies[index].rId}?deleteFiles=${deleteFiles}&${settings?.v3 ? 'addImportExclusion=' : 'addExclusion='}${addExclusion}`);
       const options = {
         method: 'DELETE',
         url: apiUrl,
@@ -119,15 +119,15 @@ exports.deleteByRating = async (variable) => {
     const end = new Date().getTime();
     const time = end - start;
     await db.get('jobs').find({
-      jobType: 'rating'
+      jobType: 'rating',
     }).assign({
       exTime: time,
       lastEx: new Date(),
-      deleted: deleted.length
-    }).write()
+      deleted: deleted.length,
+    }).write();
     console.log(deleted.length);
     dbsch.unset('movies').write();
   } catch (error) {
     console.log(error);
   }
-}
+};

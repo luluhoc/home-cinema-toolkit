@@ -41,10 +41,9 @@ router.post('/', [
       }],
     });
   }
-  const { radarrUrl } = settings;
-  const { radarrApi } = settings;
-  const { keyOmdb } = settings;
-  const { v3 } = settings;
+  const {
+    radarrUrl, radarrApi, keyOmdb, v3,
+  } = settings;
   const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`);
   const desiredRating = Number(req.body.desiredRating);
 
@@ -103,7 +102,7 @@ router.post('/', [
     });
   }
 
-  for (let index = 0; index < movies.length; index++) {
+  for (let index = 0; index < movies.length; index += 1) {
     if (movies[index].imdbId) {
       const movie = {
         title: movies[index].title,
@@ -122,7 +121,7 @@ router.post('/', [
     console.log('Searching movies in OMDB...');
     const moviesFromDb = db.get('movies').value();
     const promises = [];
-    for (let index = 0; index < moviesFromDb.length; index++) {
+    for (let index = 0; index < moviesFromDb.length; index += 1) {
       // eslint-disable-next-line no-await-in-loop
       await sleep(10);
       promises.push(axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`));
@@ -139,13 +138,13 @@ router.post('/', [
     });
   }
 
-  for (let index = 0; index < data.length; index++) {
+  for (let index = 0; index < data.length; index += 1) {
     moviesOmdb.push(data[index].data);
   }
 
   console.log('Sending movies to Frontend');
   try {
-    for (let index = 0; index < moviesOmdb.length; index++) {
+    for (let index = 0; index < moviesOmdb.length; index += 1) {
       db.get('movies')
         .find({
           imdbId: moviesOmdb[index].imdbID,
@@ -180,7 +179,8 @@ router.post('/delete',
     dbs.read();
     const settings = await dbs.get('settings').value();
     console.log(settings);
-    if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+    if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
+      || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
       return res.status(400).json({
         errors: [{
           msg: 'No settings',
@@ -193,7 +193,7 @@ router.post('/delete',
     try {
       const promises = [];
       console.log(`Deleting ${selectedArr.length} movies`);
-      for (let index = 0; index < selectedArr.length; index++) {
+      for (let index = 0; index < selectedArr.length; index += 1) {
         const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings.v3 ? '/api/v3/movie' : '/api/movie'}/${selectedArr[index]}?deleteFiles=${settings.deleteFiles}&${settings.v3 ? 'addImportExclusion=' : 'addExclusion='}${settings.addExclusion}`);
         console.log(apiUrl);
         const options = {
@@ -207,12 +207,12 @@ router.post('/delete',
         promises.push(axios(options));
       }
       const deleted = await Promise.all(promises);
-      res.json({
+      return res.json({
         deleted: deleted.length,
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         errors: [{
           msg: 'Server Error - Deleting',
         }],
