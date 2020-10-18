@@ -23,12 +23,18 @@ const router = express.Router();
 // @route POST api/movies/
 // @desc FIND MOVIES
 // @access Public for users
-router.post('/', async (req, res) => {
-  console.log('Start');
+router.post('/', [
+  check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   dbs.read();
   const settings = await dbs.get('settings').value();
   console.log(settings);
-  if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+  if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
+    || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
     return res.status(400).json({
       errors: [{
         msg: 'No settings',
@@ -104,6 +110,7 @@ router.post('/', async (req, res) => {
         rId: movies[index].id,
         imdbId: movies[index].imdbId,
       };
+      // eslint-disable-next-line no-await-in-loop
       await db.get('movies')
         .push(movie)
         .write();
@@ -124,7 +131,7 @@ router.post('/', async (req, res) => {
     data = await Promise.all(promises);
     console.log('Parsing Data from OMDB');
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({
       errors: [{
         msg: 'Server Error - Fetching OMDB',
@@ -156,7 +163,7 @@ router.post('/', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       errors: [{
         msg: 'Server Error - Sending To FrontEnd',
       }],
