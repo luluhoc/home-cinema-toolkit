@@ -16,12 +16,12 @@
     ]
   },
   "dependencies": {
+    "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "esm": "^3.2.25"
   },
   "devDependencies": {
     "eslint": "6.6.0",
-    "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jsx-a11y": "^6.3.0",
     "eslint-plugin-react": "^7.20.0",

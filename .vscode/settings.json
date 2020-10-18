@@ -1,4 +1,7 @@
 {
   "git.ignoreLimitWarning": true,
-  "eslint.packageManager": "yarn"
+  "eslint.packageManager": "yarn",
+  "eslint.workingDirectories": [
+    { "mode": "auto" }
+]
 }

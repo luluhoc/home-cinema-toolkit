@@ -1,6 +1,4 @@
 import express from 'express';
-import axios from 'axios';
-import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
 
 // DB CONFIG
@@ -22,7 +20,7 @@ router.post('/', async (req, res) => {
     keyOmdb,
     v3,
     addExclusion,
-    deleteFiles
+    deleteFiles,
   } = req.body;
 
   try {
@@ -33,7 +31,7 @@ router.post('/', async (req, res) => {
       keyOmdb,
       v3,
       addExclusion,
-      deleteFiles
+      deleteFiles,
     }).write();
     const settings = db.get('settings').value();
     if (settings) {
@@ -43,17 +41,16 @@ router.post('/', async (req, res) => {
     console.log(error);
     return res.status(500).json({
       errors: [{
-        msg: 'Server Error'
-      }]
+        msg: 'Server Error',
+      }],
     });
   }
-})
+});
 
 // @route GET api/settings/
 // @desc Get Settings
 // @access Public for users
 router.get('/', async (req, res) => {
-
   try {
     db.read();
     const settings = db.get('settings').value();
@@ -65,10 +62,10 @@ router.get('/', async (req, res) => {
     console.log(error);
     return res.status(500).json({
       errors: [{
-        msg: 'Server Error'
-      }]
+        msg: 'Server Error',
+      }],
     });
   }
-})
+});
 
 module.exports = router;

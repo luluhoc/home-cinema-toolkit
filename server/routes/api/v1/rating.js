@@ -4,11 +4,11 @@ import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
 import {
   check,
-  validationResult
+  validationResult,
 } from 'express-validator';
 import {
-  sleep
-} from '../../../helpers/index'
+  sleep,
+} from '../../../helpers/index';
 // DB CONFIG
 const FileSync = require('lowdb/adapters/FileSync');
 
@@ -25,21 +25,21 @@ const router = express.Router();
 // @access Public for users
 router.post('/', async (req, res) => {
   console.log('Start');
-  dbs.read()
+  dbs.read();
   const settings = await dbs.get('settings').value();
-  console.log(settings)
+  console.log(settings);
   if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
     return res.status(400).json({
       errors: [{
-        msg: 'No settings'
-      }]
+        msg: 'No settings',
+      }],
     });
   }
-  const radarrUrl = settings.radarrUrl;
-  const radarrApi = settings.radarrApi;
-  const keyOmdb = settings.keyOmdb;
-  const v3 = settings.v3;
-  const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`)
+  const { radarrUrl } = settings;
+  const { radarrApi } = settings;
+  const { keyOmdb } = settings;
+  const { v3 } = settings;
+  const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`);
   const desiredRating = Number(req.body.desiredRating);
 
   const radarrGet = {
@@ -65,35 +65,35 @@ router.post('/', async (req, res) => {
     if (error && error.response && error.response.status === 404) {
       return res.status(404).json({
         errors: [{
-          msg: '404 NOT FOUND - Probably bad radarr link'
-        }]
+          msg: '404 NOT FOUND - Probably bad radarr link',
+        }],
       });
     }
     if (error && error.code === 'ETIMEDOUT') {
       return res.status(408).json({
         errors: [{
-          msg: error.code
-        }]
+          msg: error.code,
+        }],
       });
     }
     if (error && error.code === 'ENOTFOUND') {
       return res.status(404).json({
         errors: [{
-          msg: `404 NOT FOUND - Probably bad radarr link - ${error.code}`
-        }]
+          msg: `404 NOT FOUND - Probably bad radarr link - ${error.code}`,
+        }],
       });
     }
     if (error && error.response && error.response.status === 401) {
       return res.status(401).json({
         errors: [{
-          msg: error.response.statusText
-        }]
+          msg: error.response.statusText,
+        }],
       });
     }
     return res.status(500).json({
       errors: [{
-        msg: 'Server Error - Getting Movies from Radarr'
-      }]
+        msg: 'Server Error - Getting Movies from Radarr',
+      }],
     });
   }
 
@@ -116,6 +116,7 @@ router.post('/', async (req, res) => {
     const moviesFromDb = db.get('movies').value();
     const promises = [];
     for (let index = 0; index < moviesFromDb.length; index++) {
+      // eslint-disable-next-line no-await-in-loop
       await sleep(10);
       promises.push(axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`));
     }
@@ -126,8 +127,8 @@ router.post('/', async (req, res) => {
     console.log(error);
     res.status(500).json({
       errors: [{
-        msg: 'Server Error - Fetching OMDB'
-      }]
+        msg: 'Server Error - Fetching OMDB',
+      }],
     });
   }
 
@@ -157,8 +158,8 @@ router.post('/', async (req, res) => {
     console.log(error);
     res.status(500).json({
       errors: [{
-        msg: 'Server Error - Sending To FrontEnd'
-      }]
+        msg: 'Server Error - Sending To FrontEnd',
+      }],
     });
   }
 });
@@ -169,25 +170,25 @@ router.post('/', async (req, res) => {
 
 router.post('/delete',
   async (req, res) => {
-    dbs.read()
+    dbs.read();
     const settings = await dbs.get('settings').value();
-    console.log(settings)
+    console.log(settings);
     if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
       return res.status(400).json({
         errors: [{
-          msg: 'No settings'
-        }]
+          msg: 'No settings',
+        }],
       });
     }
     const {
-      selectedArr
+      selectedArr,
     } = req.body;
     try {
       const promises = [];
       console.log(`Deleting ${selectedArr.length} movies`);
       for (let index = 0; index < selectedArr.length; index++) {
         const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings.v3 ? '/api/v3/movie' : '/api/movie'}/${selectedArr[index]}?deleteFiles=${settings.deleteFiles}&${settings.v3 ? 'addImportExclusion=' : 'addExclusion='}${settings.addExclusion}`);
-        console.log(apiUrl)
+        console.log(apiUrl);
         const options = {
           method: 'DELETE',
           url: apiUrl,
@@ -200,14 +201,14 @@ router.post('/delete',
       }
       const deleted = await Promise.all(promises);
       res.json({
-        deleted: deleted.length
+        deleted: deleted.length,
       });
     } catch (error) {
       console.log(error);
       res.status(500).json({
         errors: [{
-          msg: 'Server Error - Deleting'
-        }]
+          msg: 'Server Error - Deleting',
+        }],
       });
     }
   });
