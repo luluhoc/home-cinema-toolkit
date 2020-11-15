@@ -131,13 +131,19 @@ router.post('/', [
     console.log('Parsing Data from OMDB');
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       errors: [{
         msg: 'Server Error - Fetching OMDB',
       }],
     });
   }
-
+  if (!data) {
+    return res.status(500).json({
+      errors: [{
+        msg: 'Server Error - data from OMDB UNDEFINED',
+      }],
+    });
+  }
   for (let index = 0; index < data.length; index += 1) {
     moviesOmdb.push(data[index].data);
   }
