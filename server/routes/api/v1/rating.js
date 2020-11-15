@@ -120,6 +120,7 @@ router.post('/', [
   try {
     console.log('Searching movies in OMDB...');
     const moviesFromDb = db.get('movies').value();
+    console.log(`DB LENGTH ${moviesFromDb.length}`);
     const promises = [];
     for (let index = 0; index < moviesFromDb.length; index += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -137,6 +138,7 @@ router.post('/', [
       }],
     });
   }
+  
   if (!data) {
     return res.status(500).json({
       errors: [{
@@ -144,6 +146,7 @@ router.post('/', [
       }],
     });
   }
+  
   for (let index = 0; index < data.length; index += 1) {
     moviesOmdb.push(data[index].data);
   }
