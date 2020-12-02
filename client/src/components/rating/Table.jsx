@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
-optimizationimport { CircularProgress, makeStyles, Typography } from '@material-ui/core';
+import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
 
 import { deleteMovie } from '../../actions/rating.actions';
 
