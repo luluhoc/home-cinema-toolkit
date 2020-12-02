@@ -19,13 +19,10 @@ const settingsAdapter = new FileSync('db/settings.json');
 const dbs = low(settingsAdapter);
 // router
 const router = express.Router();
-
 // @route POST api/movies/
 // @desc FIND MOVIES
 // @access Public for users
-router.post('/', [
-  check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
-], async (req, res) => {
+router.post('/radarr', async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -45,7 +42,6 @@ router.post('/', [
     radarrUrl, radarrApi, keyOmdb, v3,
   } = settings;
   const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`);
-  const desiredRating = Number(req.body.desiredRating);
 
   const radarrGet = {
     method: 'get',
@@ -57,7 +53,6 @@ router.post('/', [
   };
 
   let movies;
-  const moviesOmdb = [];
   db.unset('movies').write();
   db.set('movies', []).write();
 
@@ -115,20 +110,57 @@ router.post('/', [
         .write();
     }
   }
+  movies = null;
+  res.json({ success: true });
+});
 
-  let data;
+// @route POST api/movies/
+// @desc FIND MOVIES
+// @access Public for users
+router.post('/', [
+  check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  dbs.read();
+  const settings = await dbs.get('settings').value();
+  console.log(settings);
+  if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
+    || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+    return res.status(400).json({
+      errors: [{
+        msg: 'No settings',
+      }],
+    });
+  }
+  const {
+    radarrUrl, radarrApi, keyOmdb, v3,
+  } = settings;
+  const desiredRating = Number(req.body.desiredRating);
   try {
     console.log('Searching movies in OMDB...');
     const moviesFromDb = db.get('movies').value();
     console.log(`DB LENGTH ${moviesFromDb.length}`);
-    const promises = [];
     for (let index = 0; index < moviesFromDb.length; index += 1) {
       // eslint-disable-next-line no-await-in-loop
-      await sleep(10);
-      promises.push(axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`));
+      await sleep(1);
+      // eslint-disable-next-line no-await-in-loop
+      const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
+      // eslint-disable-next-line no-await-in-loop
+      await db.get('movies')
+        .find({
+          imdbId: d.data.imdbID,
+        })
+        .assign({
+          imdbVotes: d.data.imdbVotes,
+          imdbRating: d.data.imdbRating,
+          Poster: d.data.Poster,
+        })
+        .write();
     }
     console.log('Waiting for OMDB');
-    data = await Promise.all(promises);
     console.log('Parsing Data from OMDB');
   } catch (error) {
     console.error(error);
@@ -138,33 +170,9 @@ router.post('/', [
       }],
     });
   }
-  
-  if (!data) {
-    return res.status(500).json({
-      errors: [{
-        msg: 'Server Error - data from OMDB UNDEFINED',
-      }],
-    });
-  }
-  
-  for (let index = 0; index < data.length; index += 1) {
-    moviesOmdb.push(data[index].data);
-  }
 
   console.log('Sending movies to Frontend');
   try {
-    for (let index = 0; index < moviesOmdb.length; index += 1) {
-      db.get('movies')
-        .find({
-          imdbId: moviesOmdb[index].imdbID,
-        })
-        .assign({
-          imdbVotes: moviesOmdb[index].imdbVotes,
-          imdbRating: moviesOmdb[index].imdbRating,
-          Poster: moviesOmdb[index].Poster,
-        })
-        .write();
-    }
     const returnedMovies = db.get('movies').filter((movie) => movie.imdbRating <= desiredRating);
     return res.json({
       returnedMovies,

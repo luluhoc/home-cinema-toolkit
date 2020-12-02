@@ -1,10 +1,11 @@
 import update from 'immutability-helper';
 import {
-  FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES,
+  FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR,
 } from '../actions/types.actions';
 
 const initialState = {
   isLoading: false,
+  message: null,
   movies: [],
 };
 
@@ -16,7 +17,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: true,
+        message: 'Getting movies from radarr',
         movies: [],
+      };
+    case GOT_MOVIES_FROM_RADARR:
+      return {
+        ...state,
+        isLoading: true,
+        message: 'Getting IMDB RATING',
       };
     case FIND_MOVIES:
       return {

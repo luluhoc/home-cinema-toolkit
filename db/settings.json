@@ -1,0 +1,10 @@
+{
+  "settings": {
+    "radarrUrl": "radarr.plexlulu.com",
+    "radarrApi": "c970acdf1c394cf68a5439e0e389578f",
+    "keyOmdb": "thewdb",
+    "v3": true,
+    "addExclusion": true,
+    "deleteFiles": true
+  }
+}

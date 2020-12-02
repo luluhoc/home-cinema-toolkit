@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAlert from './alert.actions';
-import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES } from './types.actions';
+import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR } from './types.actions';
 
 import returnStoreAndPersistor from '../store';
 
@@ -20,6 +20,10 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
     dispatch({
       type: START_MOVIES_SEARCH,
     });
+    const res1 = await axios.post('/api/movies/radarr', body, config);
+    dispatch({
+      type: GOT_MOVIES_FROM_RADARR,
+    })
     const res = await axios.post('/api/movies', body, config);
     dispatch({
       type: FIND_MOVIES,

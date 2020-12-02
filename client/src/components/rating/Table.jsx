@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
-import { CircularProgress, makeStyles } from '@material-ui/core';
+optimizationimport { CircularProgress, makeStyles, Typography } from '@material-ui/core';
 
 import { deleteMovie } from '../../actions/rating.actions';
 
@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 const TableRating = ({
-  movies, isLoading, deleteMovie, formValues, settings,
+  movies, isLoading, deleteMovie, formValues, settings, message,
 }) => {
   const classes = useStyles();
   const renderImage = (value, meta, update) => (
@@ -25,6 +25,8 @@ const TableRating = ({
     }}
     >
       <CircularProgress size={24} />
+      <br />
+      <Typography component="h5" variant="h5">{message}</Typography>
     </div>
   );
   const on = (rows) => {
@@ -98,6 +100,7 @@ const TableRating = ({
 
 const mapStateToProps = (state) => ({
   movies: state.rating.movies,
+  message: state.rating.message,
   isLoading: state.rating.isLoading,
   settings: state.settings,
 });
