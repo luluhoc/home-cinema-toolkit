@@ -139,12 +139,10 @@ router.post('/', [
     radarrUrl, radarrApi, keyOmdb, v3,
   } = settings;
   const desiredRating = Number(req.body.desiredRating);
-  try {
-    console.log('Searching movies in OMDB...');
-    const moviesFromDb = db.get('movies').value();
-    console.log(`DB LENGTH ${moviesFromDb.length}`);
-    for (let index = 0; index < moviesFromDb.length; index += 1) {
-      // eslint-disable-next-line no-await-in-loop
+  console.log('Searching movies in OMDB...');
+
+  for (let index = 0; index < moviesFromDb.length; index += 1) {
+    try {
       await sleep(1);
       // eslint-disable-next-line no-await-in-loop
       const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
@@ -159,18 +157,25 @@ router.post('/', [
           Poster: d.data.Poster,
         })
         .write();
+    } catch (error) {
+      console.log(error);
+      if (error.code === 'ECONNRESET') {
+        // eslint-disable-next-line no-await-in-loop
+        const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
+        // eslint-disable-next-line no-await-in-loop
+        await db.get('movies')
+          .find({
+            imdbId: d.data.imdbID,
+          })
+          .assign({
+            imdbVotes: d.data.imdbVotes,
+            imdbRating: d.data.imdbRating,
+            Poster: d.data.Poster,
+          })
+          .write();
+      }
     }
-    console.log('Waiting for OMDB');
-    console.log('Parsing Data from OMDB');
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      errors: [{
-        msg: 'Server Error - Fetching OMDB',
-      }],
-    });
   }
-
   console.log('Sending movies to Frontend');
   try {
     const returnedMovies = db.get('movies').filter((movie) => movie.imdbRating <= desiredRating);
