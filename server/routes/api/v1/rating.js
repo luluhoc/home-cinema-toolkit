@@ -124,6 +124,7 @@ router.post('/', [
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
+  const { io } = req.app.locals;
   dbs.read();
   const settings = await dbs.get('settings').value();
   console.log(settings);
@@ -142,6 +143,8 @@ router.post('/', [
   console.log('Searching movies in OMDB...');
   const moviesFromDb = db.get('movies').value();
   console.log(`DB LENGTH ${moviesFromDb.length}`);
+  let progress = 0;
+  const oneMovieProgress = 100 / moviesFromDb.length;
   for (let index = 0; index < moviesFromDb.length; index += 1) {
     try {
       await sleep(1);
@@ -158,6 +161,9 @@ router.post('/', [
           Poster: d.data.Poster,
         })
         .write();
+      io.emit('FromAPI', d.data.Title);
+      progress += oneMovieProgress;
+      io.emit('Progress', progress);
     } catch (error) {
       console.log(error);
       if (error.code === 'ECONNRESET') {

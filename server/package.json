@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "eslint": "^7.11.0",
     "esm": "^3.2.25",
@@ -14,6 +15,7 @@
     "lowdb": "^1.0.0",
     "node-schedule": "^1.3.2",
     "normalize-url": "^5.1.0",
+    "socket.io": "^3.0.3",
     "workerpool": "^6.0.2"
   },
   "devDependencies": {

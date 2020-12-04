@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
-import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
-
+import {
+  CircularProgress, LinearProgress, makeStyles, Typography,
+} from '@material-ui/core';
+import socketIOClient from 'socket.io-client';
 import { deleteMovie } from '../../actions/rating.actions';
+
+const ENDPOINT = 'http://127.0.0.1:12400';
 
 const useStyles = makeStyles({
   poster: {
@@ -19,15 +23,32 @@ const TableRating = ({
       <img src={value} className={classes.poster} alt="poster" />
     </>
   );
+  const [response, setResponse] = useState('');
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on('FromAPI', (data) => {
+      setResponse(data);
+    });
+    socket.on('Progress', (data) => {
+      setProgress(Number(data));
+    });
+  }, []);
   const loadingComponent = (
-    <div style={{
-      position: 'absolute', zIndex: 110, top: 0, left: 0, width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(28,28,28,0.8)',
-    }}
-    >
-      <CircularProgress size={24} />
-      <br />
-      <Typography component="h5" variant="h5">{message}</Typography>
-    </div>
+    <>
+      <div style={{
+        position: 'absolute', zIndex: 110, top: 5, left: 0, width: '100%', height: '99%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'rgba(28,28,28,0.8)',
+      }}
+      >
+        <CircularProgress size={24} />
+        <br />
+        <Typography component="h5" variant="h5">
+          {message}
+        </Typography>
+        <Typography paragraph>{response}</Typography>
+      </div>
+    </>
   );
   const on = (rows) => {
     deleteMovie(rows, settings);
@@ -88,12 +109,14 @@ const TableRating = ({
   return (
     <div style={{ position: 'relative' }}>
       {isLoading && loadingComponent}
+      <LinearProgress variant="determinate" value={progress} />
       <MUIDataTable
         title="Movies"
         data={movies}
         columns={columns}
         options={options}
       />
+
     </div>
   );
 };

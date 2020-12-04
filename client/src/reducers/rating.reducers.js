@@ -24,7 +24,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: true,
-        message: 'Getting IMDB RATING',
+        message: 'Getting IMDB RATING for:',
       };
     case FIND_MOVIES:
       return {
