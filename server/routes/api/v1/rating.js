@@ -140,7 +140,8 @@ router.post('/', [
   } = settings;
   const desiredRating = Number(req.body.desiredRating);
   console.log('Searching movies in OMDB...');
-
+  const moviesFromDb = db.get('movies').value();
+  console.log(`DB LENGTH ${moviesFromDb.length}`);
   for (let index = 0; index < moviesFromDb.length; index += 1) {
     try {
       await sleep(1);
