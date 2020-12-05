@@ -167,7 +167,7 @@ router.post('/', [
           imdbId: d.data.imdbID,
         })
         .assign({
-          imdbVotes: d.data.imdbVotes,
+          imdbVotes: parseFloat(d.data.imdbVotes.replace(/,/g, '')),
           imdbRating: d.data.imdbRating,
           Poster: d.data.Poster,
         })
