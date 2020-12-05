@@ -144,6 +144,17 @@ router.post('/', [
   const moviesFromDb = db.get('movies').value();
   console.log(`DB LENGTH ${moviesFromDb.length}`);
   let progress = 0;
+  io.on('connection', (socket) => {
+    console.log('New client connected');
+    socket.on('disconnect', () => {
+      console.log('Client disconnected');
+      return res.status(500).json({
+        errors: [{
+          msg: 'Server Error - ended on disconnect',
+        }],
+      });
+    });
+  });
   const oneMovieProgress = 100 / moviesFromDb.length;
   for (let index = 0; index < moviesFromDb.length; index += 1) {
     try {
@@ -219,34 +230,37 @@ router.post('/delete',
     const {
       selectedArr,
     } = req.body;
-    try {
-      const promises = [];
-      console.log(`Deleting ${selectedArr.length} movies`);
-      for (let index = 0; index < selectedArr.length; index += 1) {
-        const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings.v3 ? '/api/v3/movie' : '/api/movie'}/${selectedArr[index]}?deleteFiles=${settings.deleteFiles}&${settings.v3 ? 'addImportExclusion=' : 'addExclusion='}${settings.addExclusion}`);
-        console.log(apiUrl);
-        const options = {
-          method: 'DELETE',
-          url: apiUrl,
-          headers: {
-            'User-Agent': 'request',
-            'X-Api-Key': settings.radarrApi,
-          },
-        };
-        promises.push(axios(options));
+    const promises = [];
+    console.log(`Deleting ${selectedArr.length} movies`);
+    for (let index = 0; index < selectedArr.length; index += 1) {
+      const apiUrl = normalizeUrl(`${settings.radarrUrl}${settings.v3 ? '/api/v3/movie' : '/api/movie'}/${selectedArr[index]}?deleteFiles=${settings.deleteFiles}&${settings.v3 ? 'addImportExclusion=' : 'addExclusion='}${settings.addExclusion}`);
+      const options = {
+        method: 'DELETE',
+        url: apiUrl,
+        headers: {
+          'User-Agent': 'request',
+          'X-Api-Key': settings.radarrApi,
+        },
+      };
+      try {
+        const del = await axios(options);
+        promises.push(del);
+      } catch (error) {
+        console.error(error);
+        if (error.code === 'ECONNRESET') {
+          const del = await axios(options);
+          return promises.push(del);
+        }
+        return res.status(500).json({
+          errors: [{
+            msg: 'Server Error - Deleting',
+          }],
+        });
       }
-      const deleted = await Promise.all(promises);
-      return res.json({
-        deleted: deleted.length,
-      });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({
-        errors: [{
-          msg: 'Server Error - Deleting',
-        }],
-      });
     }
+    return res.json({
+      deleted: promises.length,
+    });
   });
 
 module.exports = router;
