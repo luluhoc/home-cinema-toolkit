@@ -2,6 +2,7 @@ import express from 'express';
 import axios from 'axios';
 import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
+import moment from 'moment';
 import {
   check,
   validationResult,
@@ -53,9 +54,10 @@ router.post('/radarr', async (req, res) => {
   };
 
   let movies;
-  db.unset('movies').write();
-  db.set('movies', []).write();
-
+  const m = await db.get('movies').value();
+  if (!m) {
+    db.set('movies', []).write();
+  }
   try {
     const moviesFromRadarr = await axios(radarrGet);
     movies = moviesFromRadarr.data;
@@ -99,15 +101,20 @@ router.post('/radarr', async (req, res) => {
 
   for (let index = 0; index < movies.length; index += 1) {
     if (movies[index].imdbId) {
-      const movie = {
-        title: movies[index].title,
+      const a = await db.get('movies').find({
         rId: movies[index].id,
-        imdbId: movies[index].imdbId,
-      };
-      // eslint-disable-next-line no-await-in-loop
-      await db.get('movies')
-        .push(movie)
-        .write();
+      }).value();
+      if (!a) {
+        const movie = {
+          title: movies[index].title,
+          rId: movies[index].id,
+          imdbId: movies[index].imdbId,
+        };
+        // eslint-disable-next-line no-await-in-loop
+        await db.get('movies')
+          .push(movie)
+          .write();
+      }
     }
   }
   movies = null;
@@ -125,6 +132,7 @@ router.post('/', [
     return res.status(400).json({ errors: errors.array() });
   }
   const { io } = req.app.locals;
+  db.read();
   dbs.read();
   const settings = await dbs.get('settings').value();
   console.log(settings);
@@ -157,7 +165,10 @@ router.post('/', [
   });
   const oneMovieProgress = 100 / moviesFromDb.length;
   for (let index = 0; index < moviesFromDb.length; index += 1) {
-    try {
+    const diff = 43800;
+    const a = moviesFromDb[index];
+    // eslint-disable-next-line no-await-in-loop
+    const func = async () => {
       await sleep(1);
       // eslint-disable-next-line no-await-in-loop
       const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
@@ -170,11 +181,23 @@ router.post('/', [
           imdbVotes: parseFloat(d.data.imdbVotes.replace(/,/g, '')),
           imdbRating: d.data.imdbRating,
           Poster: d.data.Poster,
+          expires: new Date(new Date().getTime() + diff * 60000),
         })
         .write();
       io.emit('FromAPI', d.data.Title);
       progress += oneMovieProgress;
       io.emit('Progress', progress);
+    };
+    try {
+      if (a && !a.expires) {
+        console.log(a);
+        await func();
+      } else if (Date.parse(a.expires) < new Date()) {
+        console.log(a);
+        await func();
+      } else {
+        continue;
+      }
     } catch (error) {
       console.log(error);
       if (error.code === 'ECONNRESET') {
@@ -189,6 +212,7 @@ router.post('/', [
             imdbVotes: d.data.imdbVotes,
             imdbRating: d.data.imdbRating,
             Poster: d.data.Poster,
+            expires: new Date(new Date().getTime() + diff * 60000),
           })
           .write();
       }
@@ -246,14 +270,15 @@ router.post('/delete',
         const del = await axios(options);
         promises.push(del);
       } catch (error) {
-        console.error(error);
+        console.log(error);
         if (error.code === 'ECONNRESET') {
           const del = await axios(options);
           return promises.push(del);
         }
+
         return res.status(500).json({
           errors: [{
-            msg: 'Server Error - Deleting',
+            msg: 'Server Error - Delete',
           }],
         });
       }
