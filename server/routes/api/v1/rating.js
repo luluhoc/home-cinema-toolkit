@@ -30,7 +30,6 @@ router.post('/radarr', async (req, res) => {
   }
   dbs.read();
   const settings = await dbs.get('settings').value();
-  console.log(settings);
   if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
     || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
     return res.status(400).json({
@@ -135,7 +134,6 @@ router.post('/', [
   db.read();
   dbs.read();
   const settings = await dbs.get('settings').value();
-  console.log(settings);
   if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
     || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
     return res.status(400).json({
@@ -190,10 +188,8 @@ router.post('/', [
     };
     try {
       if (a && !a.expires) {
-        console.log(a);
         await func();
       } else if (Date.parse(a.expires) < new Date()) {
-        console.log(a);
         await func();
       } else {
         continue;
@@ -241,8 +237,8 @@ router.post('/', [
 router.post('/delete',
   async (req, res) => {
     dbs.read();
+    db.read();
     const settings = await dbs.get('settings').value();
-    console.log(settings);
     if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
       || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
       return res.status(400).json({
@@ -269,6 +265,7 @@ router.post('/delete',
       try {
         const del = await axios(options);
         promises.push(del);
+        await db.get('movies').remove({ rId: selectedArr[index] }).write();
       } catch (error) {
         console.log(error);
         if (error.code === 'ECONNRESET') {
@@ -287,5 +284,20 @@ router.post('/delete',
       deleted: promises.length,
     });
   });
+
+router.get('/clear-db', async (req, res) => {
+  db.read();
+  try {
+    db.set('movies', []).write();
+    return res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      errors: [{
+        msg: 'Server Error - Clearing DB',
+      }],
+    });
+  }
+});
 
 module.exports = router;

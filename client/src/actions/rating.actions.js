@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAlert from './alert.actions';
-import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR } from './types.actions';
+import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB } from './types.actions';
 
 import returnStoreAndPersistor from '../store';
 
@@ -38,6 +38,22 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
     }
   }
 };
+
+export const clearDB = (settings) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || settings.addExclusion === undefined || settings.deleteFiles === undefined) {
+    return dispatch(setAlert('You must enter the settings', 'error'))
+  }
+  await axios.get('/api/movies/clear-db');
+  dispatch({
+    type: CLEAR_DB
+  });
+  dispatch(setAlert(`Rating DB cleared`, 'success'))
+}
 
 export const deleteMovie = (movies, settings) => async (dispatch, getState) => {
   const config = {

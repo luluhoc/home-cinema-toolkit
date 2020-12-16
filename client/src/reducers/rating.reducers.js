@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 import {
-  FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR,
+  FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB,
 } from '../actions/types.actions';
 
 const initialState = {
@@ -31,6 +31,11 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: false,
         movies: payload.returnedMovies,
+      };
+    case CLEAR_DB:
+      return {
+        ...state,
+        movies: [],
       };
     case DELETE_MOVIE:
       return {

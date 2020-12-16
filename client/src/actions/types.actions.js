@@ -6,6 +6,7 @@ export const START_MOVIES_SEARCH = 'START_MOVIES_SEARCH';
 export const GOT_MOVIES_FROM_RADARR = 'GOT_MOVIES_FROM_RADARR';
 export const DELETE_MOVIE = 'DELETE_MOVIE';
 export const DELETE_MOVIES = 'DELETE_MOVIES';
+export const CLEAR_DB = 'CLEAR_DB';
 
 export const SET_SETTINGS = 'SET_SETTINGS';
 export const GET_SETTINGS = 'GET_SETTINGS';

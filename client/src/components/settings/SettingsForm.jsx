@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SettingsForm = ({
-  change, handleSubmit, onSubmit, initialize, settings,
+  change, handleSubmit, onSubmit, initialize, settings, clear,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -61,6 +61,7 @@ const SettingsForm = ({
           <Field name="keyOmdb" id="keyOmdb" label="OMDB Key" autoFocus component={renderField} />
           <Field name="addExclusion" defaultValue="true" id="addExclusion" label="Add Exclusions" autoFocus component={renderCheckbox} />
           <Field name="deleteFiles" defaultValue="true" id="deleteFiles" label="Delete Files" autoFocus component={renderCheckbox} />
+          <Button style={{ position: 'relative', right: 0 }} variant="contained" color="primary" onClick={() => { clear(settings); }}>Clear Rating DB</Button>
           <Button
             type="submit"
             fullWidth
