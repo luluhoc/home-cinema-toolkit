@@ -35,6 +35,7 @@ const Header = () => {
             HCT
           </Typography>
           <Button color="inherit" to="/" component={Link}>Rating</Button>
+          <Button color="inherit" to="/tasks" component={Link}>Tasks</Button>
           <Button color="inherit" to="/age" component={Link}>By Age</Button>
           <IconButton aria-label="delete" color="inherit" to="/settings" component={Link}>
             <SettingsIcon />

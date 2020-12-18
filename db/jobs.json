@@ -2,26 +2,16 @@
   "jobs": [
     {
       "time": {
-        "hour": 17,
-        "minute": 55,
-        "dayOfWeek": null
-      },
-      "jobType": "rating",
-      "on": false,
-      "exTime": 16540,
-      "deleted": 0,
-      "variable": "6",
-      "lastEx": "2020-10-14T15:55:16.550Z"
-    },
-    {
-      "time": {
         "hour": 3,
         "minute": 0,
         "dayOfWeek": null
       },
-      "jobType": "byAge",
-      "on": false,
-      "variable": "2020-10-14T15:09:09.578Z"
+      "jobType": "rating",
+      "on": true,
+      "exTime": 2342,
+      "deleted": 0,
+      "lastEx": "2020-12-18T17:19:02.358Z",
+      "variable": "6"
     }
   ]
 }

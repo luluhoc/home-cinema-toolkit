@@ -40,7 +40,7 @@ router.post('/radarr', async (req, res) => {
     });
   }
   const {
-    radarrUrl, radarrApi, keyOmdb, v3,
+    radarrUrl, radarrApi, v3,
   } = settings;
   const apiUrl = normalizeUrl(`${radarrUrl}${v3 ? '/api/v3/movie' : '/api/movie'}`);
 
@@ -143,9 +143,7 @@ router.post('/', [
       }],
     });
   }
-  const {
-    radarrUrl, radarrApi, keyOmdb, v3,
-  } = settings;
+  const { keyOmdb } = settings;
   const desiredRating = Number(req.body.desiredRating);
   console.log('Searching movies in OMDB...');
   const moviesFromDb = db.get('movies').value();

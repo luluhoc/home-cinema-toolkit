@@ -9,30 +9,47 @@ const {
   deleteByRating,
 } = require('./functions');
 
+let active = false;
+function tickForward(func, jobs) {
+  if (!active) {
+    active = true;
+
+    func(jobs);
+    active = false;
+  }
+}
+const jobsObj = {
+  job1(jobs) {
+    schedule.scheduleJob(jobs[0]?.time, (a) => {
+      deleteByRating(jobs[0]?.variable);
+    });
+  },
+  // job2(jobs) {
+  //   schedule.scheduleJob(jobs[1]?.time, (a) => {
+  //     console.log(a);
+  //     console.log(jobs[1]?.jobType);
+  //     console.log(jobs[1]?.variable);
+  //   });
+  // },
+};
 const adapter = new FileSync('db/jobs.json');
 const db = low(adapter);
 const scheduleJob = () => {
+  db.read();
+  const jobs = db.get('jobs').value();
+  if (jobs) {
+    if (jobs[0].on) {
+      tickForward(jobsObj.job1, jobs);
+    }
+  }
   fs.watchFile(path.join(__dirname, '../../', 'db', 'jobs.json'), {
     interval: 1000,
-  }, (curr, prev) => {
+  }, () => {
     db.read();
-    const jobs = db.get('jobs').value();
-    if (jobs) {
-      console.log(jobs[0].on);
-      if (jobs[0].on) {
-        schedule.scheduleJob(jobs[0]?.time, (a) => {
-          console.log(a);
-          deleteByRating(jobs[0]?.variable);
-          console.log(jobs[0]?.jobType);
-          console.log(jobs[0]?.variable);
-        });
-      }
-      if (jobs[1].on) {
-        schedule.scheduleJob(jobs[1]?.time, (a) => {
-          console.log(a);
-          console.log(jobs[1]?.jobType);
-          console.log(jobs[1]?.variable);
-        });
+    const jobsa = db.get('jobs').value();
+    if (jobsa) {
+      if (jobsa[0].on) {
+        tickForward(jobsObj.job1, jobsa);
       }
     }
   });

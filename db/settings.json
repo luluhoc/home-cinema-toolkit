@@ -1,0 +1,10 @@
+{
+  "settings": {
+    "radarrUrl": "",
+    "radarrApi": "",
+    "keyOmdb": "",
+    "v3": true,
+    "addExclusion": true,
+    "deleteFiles": true
+  }
+}

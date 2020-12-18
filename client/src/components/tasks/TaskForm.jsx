@@ -75,7 +75,7 @@ const TasksForm = ({
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
           <Field
             name="time[hour]"
-            options={hoursMinutes('hours').map((e) => <option key={e} value={e}>{e}</option>)}
+            options={hoursMinutes('hours').map((e) => <option key={e} value={e}>{e <= 9 ? `0${e}` : e}</option>)}
             id="hour"
             parse={(value) => Number(value)}
             className={classes.formControl}
@@ -88,7 +88,7 @@ const TasksForm = ({
           <Field
             name="time[minute]"
             parse={(value) => Number(value)}
-            options={hoursMinutes('minutes').map((e) => <option key={e} value={e}>{e}</option>)}
+            options={hoursMinutes('minutes').map((e) => <option key={e} value={e}>{e <= 9 ? `0${e}` : e}</option>)}
             id="minute"
             className={classes.formControl}
             type="number"
@@ -161,8 +161,32 @@ TasksForm.propTypes = {
 
 };
 
+const validate = (formValues) => {
+  const errors = {};
+
+  if (!formValues.variable) {
+    // only if the user did not enter a title;
+    errors.variable = 'You need to enter a value';
+  }
+
+  if (formValues.variable) {
+    if (isNaN(formValues.variable)) {
+      errors.variable = 'Variable must be a number';
+    }
+  }
+
+  if (formValues.variable) {
+    if (formValues.variable < 0 || formValues.variable > 10) {
+      errors.variable = 'Desired Rating must be in range 0 to 10';
+    }
+  }
+
+  return errors;
+};
+
 const redForm = reduxForm({
   form: 'tasks',
+  validate,
 })(TasksForm);
 
 const mapStateToProps = (state) => ({

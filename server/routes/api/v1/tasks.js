@@ -17,15 +17,15 @@ const db = low(adapter);
 // router
 const router = express.Router();
 
-// const pool = workerpool.pool('./server/workers/worker.js');
-// (async () => {
-//   try {
-//     const worker = await pool.proxy();
-//     await worker.scheduleJob();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+const pool = workerpool.pool('./server/workers/worker.js');
+(async () => {
+  try {
+    const worker = await pool.proxy();
+    await worker.scheduleJob();
+  } catch (error) {
+    console.log(error);
+  }
+})();
 
 // @route POST api/jobs/
 // @desc ADD NEW JOB
@@ -33,6 +33,9 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { jobType, time, variable } = req.body;
+  if (jobType && jobType === 'byAge') {
+    return res.status(500).json({ errors: [{ msg: 'This is not supported yet :)' }] });
+  }
   if (jobType && (jobType === 'rating' || jobType === 'byAge')) {
     console.log(req.body);
     try {
