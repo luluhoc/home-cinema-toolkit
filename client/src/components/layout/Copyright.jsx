@@ -13,7 +13,7 @@ const Copyright = () => (
       {new Date().getFullYear()}
       .
     </Typography>
-    <Typography variant="body2" color="textSecondary" align="center">v.1.1</Typography>
+    <Typography variant="body2" color="textSecondary" align="center">v.1.1.1</Typography>
   </>
 );
 

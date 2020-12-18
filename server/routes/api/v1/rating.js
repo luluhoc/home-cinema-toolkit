@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import express from 'express';
 import axios from 'axios';
 import normalizeUrl from 'normalize-url';
@@ -168,15 +169,17 @@ router.post('/', [
     // eslint-disable-next-line no-await-in-loop
     const func = async () => {
       await sleep(1);
-      // eslint-disable-next-line no-await-in-loop
       const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
-      // eslint-disable-next-line no-await-in-loop
+      let b = 0;
+      if (d && d.data && d.data.imdbVotes) {
+        b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
+      }
       await db.get('movies')
         .find({
           imdbId: d.data.imdbID,
         })
         .assign({
-          imdbVotes: parseFloat(d.data.imdbVotes.replace(/,/g, '')),
+          imdbVotes: b,
           imdbRating: d.data.imdbRating,
           Poster: d.data.Poster,
           expires: new Date(new Date().getTime() + diff * 60000),
