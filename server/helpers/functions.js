@@ -19,7 +19,9 @@ export const getMoviesFromRadarr = async () => {
     || settings.deleteFiles === undefined || settings.addExclusion === undefined) {
     return {
       error: true,
-      msg: 'No settings',
+      errors: [{
+        msg: 'No settings',
+      }],
       code: 400,
     };
   }

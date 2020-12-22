@@ -76,92 +76,67 @@ router.post('/', [
     });
   });
   const oneMovieProgress = 100 / moviesFromDb.length;
-  for (let index = 0; index < moviesFromDb.length; index += 1) {
-    const diff = 43800;
-    const a = moviesFromDb[index];
-    // eslint-disable-next-line no-await-in-loop
-    const func = async () => {
-      await sleep(1);
-      const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
-      let b = 0;
-      if (!d) {
-        console.error('Error with response from OMDB');
-        return;
-      }
-      if (d && d.data && d.data.imdbVotes) {
-        b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
-      }
-      let g = [];
-      if (d && d.data && d.data.Genre) {
-        g = d.data.Genre.split(',').map((item) => item.trim());
-      }
-      let i = 0;
-      if (d && d.data && d.data.imdbID) {
-        i = d.data.imdbID;
-      }
-      let rat = 0;
-      if (d && d.data && d.data.imdbRating) {
-        rat = d.data.imdbRating;
-      }
-      let pos = '';
-      if (d && d.data && d.data.Poster) {
-        pos = d.data.Poster;
-      }
+  const diff = 43800;
+  const func = async (m) => {
+    await sleep(1);
+    const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${m}`);
+    let b = 0;
+    if (!d) {
+      console.error('Error with response from OMDB');
+      return;
+    }
+    if (d && d.data && d.data.imdbVotes) {
+      b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
+    }
+    let g = [];
+    if (d && d.data && d.data.Genre) {
+      g = d.data.Genre.split(',').map((item) => item.trim());
+    }
+    let i = 0;
+    if (d && d.data && d.data.imdbID) {
+      i = d.data.imdbID;
+    }
+    let rat = 0;
+    if (d && d.data && d.data.imdbRating) {
+      rat = d.data.imdbRating;
+    }
+    let pos = '';
+    if (d && d.data && d.data.Poster) {
+      pos = d.data.Poster;
+    }
 
-      await db.get('movies')
-        .find({
-          imdbId: i,
-        })
-        .assign({
-          imdbVotes: b,
-          imdbRating: rat,
-          Genre: g,
-          Poster: pos,
-          expires: new Date(new Date().getTime() + diff * 60000),
-        })
-        .write();
-      io.emit('FromAPI', d.data.Title);
-      progress += oneMovieProgress;
-      io.emit('Progress', progress);
-    };
+    await db.get('movies')
+      .find({
+        imdbId: i,
+      })
+      .assign({
+        imdbVotes: b,
+        imdbRating: rat,
+        Genre: g,
+        Poster: pos,
+        expires: new Date(new Date().getTime() + diff * 60000),
+      })
+      .write();
+    io.emit('FromAPI', d.data.Title);
+    progress += oneMovieProgress;
+    io.emit('Progress', progress);
+  };
+  for (let index = 0; index < moviesFromDb.length; index += 1) {
+    const a = moviesFromDb[index];
     try {
       if (a && !a.expires) {
-        await func();
+        // eslint-disable-next-line no-await-in-loop
+        await func(a.imdbId);
       } else if (a && Date.parse(a.expires) < new Date()) {
-        await func();
+        // eslint-disable-next-line no-await-in-loop
+        await func(a.imdbId);
       } else {
         continue;
       }
     } catch (error) {
       console.log(error);
       if (error.code === 'ECONNRESET') {
-        // eslint-disable-next-line no-await-in-loop
-        const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
-        let b = 0;
-        if (d && d.data && d.data.imdbVotes) {
-          b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
-        }
-        if (!d) {
-          console.error('Error with response from OMDB');
-          return;
-        }
-        let g = [];
-        if (d && d.data && d.data.Genre) {
-          g = d.data.Genre.split(',').map((item) => item.trim());
-        }
-        // eslint-disable-next-line no-await-in-loop
-        await db.get('movies')
-          .find({
-            imdbId: d.data.imdbID,
-          })
-          .assign({
-            imdbVotes: b,
-            imdbRating: d.data.imdbRating,
-            Genre: g,
-            Poster: d.data.Poster,
-            expires: new Date(new Date().getTime() + diff * 60000),
-          })
-          .write();
+        await func(a.imdbId);
       }
     }
   }
