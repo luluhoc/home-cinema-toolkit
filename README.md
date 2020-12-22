@@ -11,7 +11,8 @@
 
 It will be a toolkit with several useful tools for home server enthusiasts.
 
-For now, you can get movies from radarr and delete them according to the IMDB ratings.
+You can delete movies based on IMDB Rating, the program fetches IMDb ratings for movies and keeps them in DB for one month, after the expiring it fetches them again.
+You can also delete movies by age, and use the tasks to program deleting movies at the given time. There is a lot to do more in it.
 
 To install with docker
 -------
