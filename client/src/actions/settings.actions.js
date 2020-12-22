@@ -19,7 +19,7 @@ export const setSettings = (formValues) => async (dispatch) => {
     dispatch(setAlert('Settings Saved', 'success'))
   } catch (err) {
     console.log(err);
-    if (err && err.response && err.response.data) {
+    if (err && err.response && err.response.data && err.response.data.errors) {
       const { errors } = err?.response?.data;
 
       if (errors) {
@@ -43,7 +43,7 @@ export const getSettings = () => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
-    if (err && err.response && err.response.data) {
+    if (err && err.response && err.response.data && err.response.data.errors) {
       const { errors } = err?.response?.data;
 
       if (errors) {
