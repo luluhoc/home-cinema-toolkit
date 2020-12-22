@@ -19,10 +19,12 @@ export const setSettings = (formValues) => async (dispatch) => {
     dispatch(setAlert('Settings Saved', 'success'))
   } catch (err) {
     console.log(err);
-    const { errors } = err?.response?.data;
+    if (err && err.response && err.response.data) {
+      const { errors } = err?.response?.data;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      }
     }
   }
 };
@@ -41,10 +43,12 @@ export const getSettings = () => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
-    const { errors } = err?.response?.data;
+    if (err && err.response && err.response.data) {
+      const { errors } = err?.response?.data;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      }
     }
   }
 };

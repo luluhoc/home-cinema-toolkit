@@ -19,10 +19,12 @@ export const setTask = (formValues) => async (dispatch) => {
     dispatch(setAlert('Task Saved', 'success'))
   } catch (err) {
     console.log(err);
-    const { errors } = err?.response?.data;
+    if (err && err.response && err.response.data) {
+      const { errors } = err?.response?.data;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      }
     }
   }
 };
@@ -36,10 +38,12 @@ export const getTasks = () => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
-    const { errors } = err?.response?.data;
+    if (err && err.response && err.response.data) {
+      const { errors } = err?.response?.data;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      }
     }
   }
 };
@@ -60,10 +64,12 @@ export const switchTask = (formValues) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
-    const { errors } = err?.response?.data;
+    if (err && err.response && err.response.data) {
+      const { errors } = err?.response?.data;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+      }
     }
   }
 };
