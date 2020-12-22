@@ -95,15 +95,28 @@ router.post('/', [
       if (d && d.data && d.data.Genre) {
         g = d.data.Genre.split(',').map((item) => item.trim());
       }
+      let i = 0;
+      if (d && d.data && d.data.imdbID) {
+        i = d.data.imdbID;
+      }
+      let rat = 0;
+      if (d && d.data && d.data.imdbRating) {
+        rat = d.data.imdbRating;
+      }
+      let pos = '';
+      if (d && d.data && d.data.Poster) {
+        pos = d.data.Poster;
+      }
+
       await db.get('movies')
         .find({
-          imdbId: d.data.imdbID,
+          imdbId: i,
         })
         .assign({
           imdbVotes: b,
-          imdbRating: d.data.imdbRating,
+          imdbRating: rat,
           Genre: g,
-          Poster: d.data.Poster,
+          Poster: pos,
           expires: new Date(new Date().getTime() + diff * 60000),
         })
         .write();
