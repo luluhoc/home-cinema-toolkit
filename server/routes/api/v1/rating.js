@@ -27,7 +27,7 @@ router.post('/radarr', async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   const obj = await getMoviesFromRadarr();
-  if (obj && obj.error) {
+  if (obj.error) {
     return res.status(obj.code).json({ errors: obj.errors });
   }
   return res.json({ success: true });
@@ -44,7 +44,7 @@ router.post('/', [
     return res.status(400).json({ errors: errors.array() });
   }
   const obj = await getRatingFromOmdb(req);
-  if (obj && obj.error) {
+  if (obj.error) {
     return res.status(obj.code).json({ errors: obj.errors });
   }
   const desiredRating = Number(req.body.desiredRating);
