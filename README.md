@@ -28,3 +28,4 @@ docker run -d \
 *The Script fetches all the movies, you have in the database, then fetches rating from IMDB for every movie, and compares *the movie rating with the rating set up by User.*
 
 *I recommend running this script every month if you wish to have movies based on real IMDB rating in your collection.*
+[![DeepScan grade](https://deepscan.io/api/teams/12204/projects/15203/branches/300475/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12204&pid=15203&bid=300475)
