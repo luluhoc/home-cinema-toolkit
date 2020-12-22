@@ -32,7 +32,7 @@ router.post('/radarr', async (req, res) => {
   dbs.read();
   const settings = await dbs.get('settings').value();
   if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
-    || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+    || settings.deleteFiles === undefined || settings.addExclusion === undefined) {
     return res.status(400).json({
       errors: [{
         msg: 'No settings',
@@ -136,7 +136,7 @@ router.post('/', [
   dbs.read();
   const settings = await dbs.get('settings').value();
   if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
-    || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+    || settings.deleteFiles === undefined || settings.addExclusion === undefined) {
     return res.status(400).json({
       errors: [{
         msg: 'No settings',
@@ -241,7 +241,7 @@ router.post('/delete',
     db.read();
     const settings = await dbs.get('settings').value();
     if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
-      || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+      || settings.deleteFiles === undefined || settings.addExclusion === undefined) {
       return res.status(400).json({
         errors: [{
           msg: 'No settings',

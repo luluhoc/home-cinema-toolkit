@@ -24,7 +24,7 @@ const getRadarrMovies = async () => {
   dbsch.read();
   const settings = await dbs.get('settings').value();
   if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
-    || settings.deleteFiles === undefined || !settings.addExclusion === undefined) {
+    || settings.deleteFiles === undefined || settings.addExclusion === undefined) {
     console.error('Set the settings to run the job');
     return false;
   }
