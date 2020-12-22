@@ -62,6 +62,7 @@ router.post('/', async (req, res) => {
     const a = movies.filter((m) => m.added < date);
     const newArr = a.sortBy((o) => o.added);
     res.json({ movies: newArr });
+    movies = null;
   } catch (error) {
     console.log(error);
     if (error.response.status === 401) {
