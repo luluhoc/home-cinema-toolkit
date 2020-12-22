@@ -10,11 +10,6 @@ import returnStoreAndPersistor from '../store';
 const { store } = returnStoreAndPersistor();
 
 export const getFreeSpace = (settings) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
   if (!settings || !settings.radarrUrl || !settings.radarrApi) {
     return dispatch(setAlert('You must enter the settings', 'error'));
   }

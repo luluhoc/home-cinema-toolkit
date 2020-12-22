@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Switch } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { switchTask } from '../../actions/tasks.actions';

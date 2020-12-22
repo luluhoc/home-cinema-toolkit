@@ -1,4 +1,3 @@
-import update from 'immutability-helper';
 import {
   FIND_MOVIES_BY_AGE, START_BY_AGE, DELETE_MOVIE, DELETE_MOVIES,
 } from '../actions/types.actions';

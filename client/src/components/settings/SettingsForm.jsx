@@ -50,7 +50,7 @@ const SettingsForm = ({
         deleteFiles: true,
       });
     }
-  }, [settings]);
+  }, [settings, initialize]);
   return (
     <>
       <div className={classes.paper}>
@@ -78,7 +78,8 @@ const SettingsForm = ({
 };
 
 SettingsForm.propTypes = {
-
+  change: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 const redForm = reduxForm({

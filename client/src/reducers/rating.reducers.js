@@ -1,4 +1,3 @@
-import update from 'immutability-helper';
 import {
   FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB,
 } from '../actions/types.actions';

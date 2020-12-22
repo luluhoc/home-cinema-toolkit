@@ -1,7 +1,6 @@
-import { Box, Container, Typography } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Line, Circle } from 'rc-progress';
 import DeleteByAgeForm from './DeleteByAgeForm';
 import Copyright from '../layout/Copyright';
 import Table from './Table';

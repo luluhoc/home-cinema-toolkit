@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import MUIDataTable from 'mui-datatables';
 import {
-  CircularProgress, LinearProgress, makeStyles, Typography, useMediaQuery,
+  CircularProgress, LinearProgress, makeStyles, Typography,
 } from '@material-ui/core';
 import socketIOClient from 'socket.io-client';
 import { deleteMovie } from '../../actions/rating.actions';
@@ -35,7 +35,6 @@ const TableRating = ({
       setProgress(Number(data));
     });
   }, []);
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const loadingComponent = (
     <>
       <div style={{

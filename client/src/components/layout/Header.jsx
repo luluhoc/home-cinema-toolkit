@@ -3,11 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { Box } from '@material-ui/core';
+import logo from './logo.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    display: 'none',
   },
-  title: {
+  logo: {
     flexGrow: 1,
   },
   button: {
@@ -34,9 +36,10 @@ const Header = () => {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            HCT
-          </Typography>
+          <Box component={Link} to="/">
+            <img src={logo} width={60} alt="Logo" />
+          </Box>
+          <div className={classes.logo} />
           <Button className={classes.button} color="inherit" to="/" component={Link}>Rating</Button>
           <Button className={classes.button} color="inherit" to="/tasks" component={Link}>Tasks</Button>
           <Button className={classes.button} color="inherit" to="/age" component={Link}>By Age</Button>

@@ -2,9 +2,6 @@ import axios from 'axios';
 import setAlert from './alert.actions';
 import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB } from './types.actions';
 
-import returnStoreAndPersistor from '../store';
-
-const { store } = returnStoreAndPersistor();
 
 export const findMovies = (formValues, settings) => async (dispatch) => {
   const config = {
@@ -20,7 +17,7 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
     dispatch({
       type: START_MOVIES_SEARCH,
     });
-    const res1 = await axios.post('/api/movies/radarr', body, config);
+    await axios.post('/api/movies/radarr', body, config);
     dispatch({
       type: GOT_MOVIES_FROM_RADARR,
     })
@@ -40,11 +37,6 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
 };
 
 export const clearDB = (settings) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
   if (!settings || !settings.radarrUrl || !settings.radarrApi || !settings.keyOmdb || settings.addExclusion === undefined || settings.deleteFiles === undefined) {
     return dispatch(setAlert('You must enter the settings', 'error'))
   }

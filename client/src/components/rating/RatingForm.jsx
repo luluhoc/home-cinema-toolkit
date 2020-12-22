@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { renderCheckbox, renderField } from '../helpers/formHelpers';
+import { renderField } from '../helpers/formHelpers';
 import validate from './validate';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +55,7 @@ const RatingForm = ({
 };
 
 RatingForm.propTypes = {
-
+  change: PropTypes.func.isRequired,
 };
 
 const redForm = reduxForm({

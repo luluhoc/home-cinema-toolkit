@@ -2,14 +2,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Field, reduxForm, formValueSelector, formValues,
+  Field, reduxForm, formValueSelector,
 } from 'redux-form';
-import DateFnsAdapter from '@material-ui/pickers/adapter/date-fns'; // choose your lib
-import {
-  DatePicker, LocalizationProvider,
-} from '@material-ui/pickers';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { renderCheckbox, renderField, renderSelect } from '../helpers/formHelpers';
 
@@ -68,7 +63,7 @@ const TasksForm = ({
       addExclusion: true,
       deleteFiles: true,
     });
-  }, []);
+  }, [initialize]);
   return (
     <>
       <div className={classes.paper}>
@@ -158,7 +153,7 @@ const TasksForm = ({
 };
 
 TasksForm.propTypes = {
-
+  change: PropTypes.func.isRequired,
 };
 
 const validate = (formValues) => {

@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
 import DateFnsAdapter from '@material-ui/pickers/adapter/date-fns'; // choose your lib
 import {
   DatePicker, LocalizationProvider,
@@ -41,7 +39,7 @@ const DeleteByAgeForm = ({
   const [selectedDate, handleDateChange] = React.useState(new Date());
   useEffect(() => {
     initialize({ addExclusion: true, date: selectedDate });
-  }, []);
+  }, [initialize, selectedDate]);
   const formSub = (formValues) => {
     change('date', selectedDate);
     onSubmit(formValues);

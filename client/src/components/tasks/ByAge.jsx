@@ -14,7 +14,7 @@ const ByAge = ({ Field, change }) => {
       change('variable', '');
       change('deleteFiles', true);
     };
-  }, [change]);
+  }, [change, selectedDate]);
   return (
     <>
       <LocalizationProvider dateAdapter={DateFnsAdapter}>

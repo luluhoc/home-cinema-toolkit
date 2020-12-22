@@ -30,10 +30,10 @@ const Copyright = () => (
           justifyContent: 'center',
         }}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         href="https://www.buymeacoffee.com/lulu45"
       >
-        <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=lulu45&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" />
+        <img alt="buy me a coffee" src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=lulu45&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" />
       </a>
 
       <Typography variant="body2" color="textSecondary" align="center">
