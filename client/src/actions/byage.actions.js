@@ -35,7 +35,7 @@ export const findByDate = (formValues, settings) => async (dispatch) => {
     radarrUrl: settings.radarrUrl,
     radarrApi: settings.radarrApi,
     keyOmdb: settings.keyOmdb,
-    v3: settings?.v3,
+    v3: settings.v3,
     date: formValues.date,
   });
   try {
@@ -71,7 +71,7 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         radarrUrl: settings.radarrUrl,
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
-        v3: settings?.v3,
+        v3: settings.v3,
         addExclusion: formValues.addExclusion,
         deleteFiles: true,
         selectedArr: [getState()?.byage?.movies[movies?.data?.[0]?.dataIndex]?.id],
@@ -97,7 +97,7 @@ export const deleteMovie = (movies, formValues) => async (dispatch, getState) =>
         radarrUrl: settings.radarrUrl,
         radarrApi: settings.radarrApi,
         keyOmdb: settings.keyOmdb,
-        v3: settings?.v3,
+        v3: settings.v3,
         addExclusions: formValues.addExclusion,
         deleteFiles: true,
         selectedArr
