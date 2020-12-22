@@ -1,6 +1,6 @@
 <img src="https://github.com/luluhoc/home-cinema-toolkit/blob/master/client/src/components/layout/logo.png?raw=true" style="width: 30%;" alt="HOME CINEMA TOOLKIT"/>
 
-# HCT - Home Cinema Toolkit
+# HCT - Home Cinema Toolkit [![DeepScan grade](https://deepscan.io/api/teams/12204/projects/15203/branches/300475/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12204&pid=15203&bid=300475)
 <a href="https://www.buymeacoffee.com/lulu45" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 <img src="https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/ss.png?raw=true" style="width: 100%;" alt="HOME CINEMA TOOLKIT"/>
 
@@ -28,4 +28,3 @@ docker run -d \
 *The Script fetches all the movies, you have in the database, then fetches rating from IMDB for every movie, and compares *the movie rating with the rating set up by User.*
 
 *I recommend running this script every month if you wish to have movies based on real IMDB rating in your collection.*
-[![DeepScan grade](https://deepscan.io/api/teams/12204/projects/15203/branches/300475/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12204&pid=15203&bid=300475)
