@@ -12,10 +12,6 @@ const db = low(adapter);
 // router
 const router = express.Router();
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 (function () {
   if (typeof Object.defineProperty === 'function') {
     try { Object.defineProperty(Array.prototype, 'sortBy', { value: sb }); } catch (e) {}
