@@ -40,7 +40,7 @@ const Copyright = () => (
         Buying me a coffee helps me to develop more tools, repair bugs, and warms my heart. Thanks
         <span role="img" aria-label="heart">❤️</span>
       </Typography>
-      <Typography variant="body2" color="textSecondary" align="center">v.1.2.0</Typography>
+      <Typography variant="body2" color="textSecondary" align="center">v.1.2.1</Typography>
       <div style={{
         display: 'flex',
         alignItems: 'center',
