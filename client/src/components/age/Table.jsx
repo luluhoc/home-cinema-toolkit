@@ -101,8 +101,8 @@ const TableRating = ({
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.byage.movies,
-  isLoading: state.byage.isLoading,
+  movies: state?.byage.movies,
+  isLoading: state?.byage.isLoading,
   formValues: state?.form?.byage?.values,
 });
 

@@ -73,7 +73,7 @@ export const deleteMovie = (movies, settings) => async (dispatch, getState) => {
       const deletedData = await axios.post('/api/movies/delete', body, config);
       dispatch({
         type: DELETE_MOVIE,
-        payload: movies.data[0],
+        payload: movies?.data[0],
       });
       dispatch(setAlert(`Deleted ${deletedData.data.deleted} movie`, 'success'))
     } else {

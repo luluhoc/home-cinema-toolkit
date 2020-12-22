@@ -134,7 +134,7 @@ exports.deleteByRating = async (variable) => {
     try {
       if (a && !a.expires) {
         await func();
-      } else if (Date.parse(a.expires) < new Date()) {
+      } else if (a && Date.parse(a.expires) < new Date()) {
         await func();
       } else {
         continue;
