@@ -9372,10 +9372,10 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-rc-progress@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/rc-progress/-/rc-progress-3.1.0.tgz#cd4a5a7853db3e0c10918ad2c170688a68e3cebd"
-  integrity sha512-DIe9CFkGA4R/pLZ/4nPChQFmIeB8/4tVCr2knlSf9he71j8Fky469zZHhtCFyNwvNGjw/GVDeoTn4BqU4S0ylw==
+rc-progress@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/rc-progress/-/rc-progress-3.1.1.tgz#f7ba5eb33cc438862513ab5a71739feaf6b3ef4f"
+  integrity sha512-1ns3pW7ll9bHfdXtlVLF+vngdvlxiCDtiqwXnZFEdurst11JTiPxVdeqnCNbhWx5hP4kCKkAPqG1N0FVfTSUGA==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.6"
