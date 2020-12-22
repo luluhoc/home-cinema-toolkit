@@ -3,5 +3,6 @@
   "eslint.packageManager": "yarn",
   "eslint.workingDirectories": [
     { "mode": "auto" }
-]
+],
+"deepscan.enable": true
 }
