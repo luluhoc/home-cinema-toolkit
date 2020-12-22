@@ -16,11 +16,11 @@ export const setTask = (formValues) => async (dispatch) => {
       type: SET_TASK,
       payload: res.data,
     });
-    dispatch(setAlert('Task Saved', 'success'))
+    dispatch(setAlert('Task Saved', 'success'));
   } catch (err) {
     console.log(err);
     if (err && err.response && err.response.data && err.response.data.errors) {
-      const { errors } = err?.response?.data;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
@@ -39,7 +39,7 @@ export const getTasks = () => async (dispatch) => {
   } catch (err) {
     console.log(err);
     if (err && err.response && err.response.data && err.response.data.errors) {
-      const { errors } = err?.response?.data;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
@@ -65,7 +65,7 @@ export const switchTask = (formValues) => async (dispatch) => {
   } catch (err) {
     console.log(err);
     if (err && err.response && err.response.data && err.response.data.errors) {
-      const { errors } = err?.response?.data;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));

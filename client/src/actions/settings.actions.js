@@ -16,11 +16,11 @@ export const setSettings = (formValues) => async (dispatch) => {
       type: SET_SETTINGS,
       payload: res.data,
     });
-    dispatch(setAlert('Settings Saved', 'success'))
+    dispatch(setAlert('Settings Saved', 'success'));
   } catch (err) {
     console.log(err);
     if (err && err.response && err.response.data && err.response.data.errors) {
-      const { errors } = err?.response?.data;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
@@ -35,7 +35,7 @@ export const getSettings = () => async (dispatch) => {
     if (res.data === null) {
       return dispatch({
         type: NO_SETTINGS,
-      })
+      });
     }
     dispatch({
       type: GET_SETTINGS,
@@ -44,7 +44,7 @@ export const getSettings = () => async (dispatch) => {
   } catch (err) {
     console.log(err);
     if (err && err.response && err.response.data && err.response.data.errors) {
-      const { errors } = err?.response?.data;
+      const { errors } = err.response.data;
 
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
