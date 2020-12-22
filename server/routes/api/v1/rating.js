@@ -10,17 +10,20 @@ import {
 import { getMoviesFromRadarr, getRatingFromOmdb } from '../../../helpers/functions';
 // DB CONFIG
 const FileSync = require('lowdb/adapters/FileSync');
-
+// RATING
 const adapter = new FileSync('db/rating.json');
 const db = low(adapter);
-
+// SETTINGS
 const settingsAdapter = new FileSync('db/settings.json');
 const dbs = low(settingsAdapter);
+
 // router
 const router = express.Router();
+
 // @route POST api/movies/
 // @desc FIND MOVIES
 // @access Public for users
+
 router.post('/radarr', async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -36,6 +39,7 @@ router.post('/radarr', async (req, res) => {
 // @route POST api/movies/
 // @desc FIND MOVIES
 // @access Public for users
+
 router.post('/', [
   check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
 ], async (req, res) => {
@@ -119,6 +123,10 @@ router.post('/delete',
       deleted: promises.length,
     });
   });
+
+// @route GET api/movies/clear-db
+// @desc Clear DB
+// @access Public for users
 
 router.get('/clear-db', async (req, res) => {
   db.read();
