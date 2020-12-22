@@ -172,6 +172,9 @@ router.post('/', [
       if (d && d.data && d.data.imdbVotes) {
         b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
       }
+      if (!d) {
+        return;
+      }
       await db.get('movies')
         .find({
           imdbId: d.data.imdbID,
