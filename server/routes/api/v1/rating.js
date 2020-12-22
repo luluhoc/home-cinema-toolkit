@@ -3,7 +3,6 @@ import express from 'express';
 import axios from 'axios';
 import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
-import moment from 'moment';
 import {
   check,
   validationResult,

@@ -1,12 +1,7 @@
 import express from 'express';
-import axios from 'axios';
-import normalizeUrl from 'normalize-url';
 import low from 'lowdb';
-import fs from 'fs';
-import path from 'path';
 import workerpool from 'workerpool';
 
-const { spawn } = require('child_process');
 // DB CONFIG
 
 const FileSync = require('lowdb/adapters/FileSync');

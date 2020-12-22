@@ -21,10 +21,7 @@ export const setSettings = (formValues) => async (dispatch) => {
     console.log(err);
     if (err && err.response && err.response.data && err.response.data.errors) {
       const { errors } = err.response.data;
-
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
-      }
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
   }
 };
@@ -45,10 +42,7 @@ export const getSettings = () => async (dispatch) => {
     console.log(err);
     if (err && err.response && err.response.data && err.response.data.errors) {
       const { errors } = err.response.data;
-
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
-      }
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
   }
 };

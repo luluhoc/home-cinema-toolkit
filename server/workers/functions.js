@@ -2,7 +2,6 @@
 const axios = require('axios');
 const normalizeUrl = require('normalize-url');
 const low = require('lowdb');
-const chalk = require('chalk');
 
 const FileSync = require('lowdb/adapters/FileSync');
 
