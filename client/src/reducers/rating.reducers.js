@@ -1,5 +1,5 @@
 import {
-  FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB,
+  FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB, ERROR_GETTING_MOVIES,
 } from '../actions/types.actions';
 
 const initialState = {
@@ -35,6 +35,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         movies: [],
+      };
+    case ERROR_GETTING_MOVIES:
+      return {
+        ...state,
+        isLoading: false,
       };
     case DELETE_MOVIE:
       return {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAlert from './alert.actions';
-import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB } from './types.actions';
+import { FIND_MOVIES, START_MOVIES_SEARCH, DELETE_MOVIE, DELETE_MOVIES, GOT_MOVIES_FROM_RADARR, CLEAR_DB, ERROR_GETTING_MOVIES } from './types.actions';
 
 
 export const findMovies = (formValues, settings) => async (dispatch) => {
@@ -31,6 +31,9 @@ export const findMovies = (formValues, settings) => async (dispatch) => {
     const { errors } = err.response.data;
 
     if (errors) {
+      dispatch({
+        type: ERROR_GETTING_MOVIES
+      })
       errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
   }
