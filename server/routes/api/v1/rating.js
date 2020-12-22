@@ -84,12 +84,12 @@ router.post('/', [
       await sleep(1);
       const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${moviesFromDb[index].imdbId}`);
       let b = 0;
-      if (d && d.data && d.data.imdbVotes) {
-        b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
-      }
-      if (!d && !d.data) {
+      if (!d) {
         console.error('Error with response from OMDB');
         return;
+      }
+      if (d && d.data && d.data.imdbVotes) {
+        b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
       }
       let g = [];
       if (d && d.data && d.data.Genre) {
