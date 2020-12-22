@@ -85,23 +85,23 @@ router.post('/', [
       console.error('Error with response from OMDB');
       return;
     }
-    if (d && d.data && d.data.imdbVotes) {
+    if (d.data && d.data.imdbVotes) {
       b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
     }
     let g = [];
-    if (d && d.data && d.data.Genre) {
+    if (d.data && d.data.Genre) {
       g = d.data.Genre.split(',').map((item) => item.trim());
     }
     let i = 0;
-    if (d && d.data && d.data.imdbID) {
+    if (d.data && d.data.imdbID) {
       i = d.data.imdbID;
     }
     let rat = 0;
-    if (d && d.data && d.data.imdbRating) {
+    if (d.data && d.data.imdbRating) {
       rat = d.data.imdbRating;
     }
     let pos = '';
-    if (d && d.data && d.data.Poster) {
+    if (d.data && d.data.Poster) {
       pos = d.data.Poster;
     }
 
