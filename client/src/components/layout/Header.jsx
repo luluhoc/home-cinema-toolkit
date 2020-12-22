@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  button: {
+    fontWeight: 700,
+  },
 }));
 
 const Header = () => {
@@ -34,9 +37,9 @@ const Header = () => {
           <Typography variant="h6" className={classes.title}>
             HCT
           </Typography>
-          <Button color="inherit" to="/" component={Link}>Rating</Button>
-          <Button color="inherit" to="/tasks" component={Link}>Tasks</Button>
-          <Button color="inherit" to="/age" component={Link}>By Age</Button>
+          <Button className={classes.button} color="inherit" to="/" component={Link}>Rating</Button>
+          <Button className={classes.button} color="inherit" to="/tasks" component={Link}>Tasks</Button>
+          <Button className={classes.button} color="inherit" to="/age" component={Link}>By Age</Button>
           <IconButton aria-label="delete" color="inherit" to="/settings" component={Link}>
             <SettingsIcon />
           </IconButton>
