@@ -18,7 +18,7 @@
     "node-schedule": "^1.3.2",
     "normalize-url": "^5.1.0",
     "socket.io": "^3.0.3",
-    "workerpool": "^6.0.2"
+    "workerpool": "^6.0.3"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^14.2.0",
