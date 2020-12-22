@@ -87,7 +87,7 @@ router.post('/', [
       if (d && d.data && d.data.imdbVotes) {
         b = parseFloat(d.data.imdbVotes.replace(/,/g, ''));
       }
-      if (!d) {
+      if (!d && !d.data) {
         console.error('Error with response from OMDB');
         return;
       }
