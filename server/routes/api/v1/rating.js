@@ -73,7 +73,7 @@ router.post('/', [
 // @desc FIND MOVIES
 // @access Public for users
 
-router.post('/', [
+router.post('/genre', [
   check('genre', 'Genre can\'t be empty').not().isEmpty(),
   check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
 ], async (req, res) => {
