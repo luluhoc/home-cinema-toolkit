@@ -715,13 +715,13 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-express-validator@^6.6.1:
-  version "6.6.1"
-  resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.6.1.tgz#c53046f615d27fcb78be786e018dcd60bd9c6c5c"
-  integrity sha512-+MrZKJ3eGYXkNF9p9Zf7MS7NkPJFg9MDYATU5c80Cf4F62JdLBIjWxy6481tRC0y1NnC9cgOw8FuN364bWaGhA==
+express-validator@^6.8.1:
+  version "6.8.1"
+  resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.8.1.tgz#d7eaa0c605cbb29cd07f592c9ad03b457e75dc75"
+  integrity sha512-aBUdiMl7Nm36vh2nG9pmX6Mj+zQLeUtNfSrfh5i9nDAScazAzF+wS3euaBELRDW1LQbQ8/+XazcQ9TLM0IZqsg==
   dependencies:
-    lodash "^4.17.19"
-    validator "^13.1.1"
+    lodash "^4.17.20"
+    validator "^13.5.2"
 
 express@^4.17.1:
   version "4.17.1"
@@ -1766,10 +1766,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-validator@^13.1.1:
-  version "13.1.17"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-13.1.17.tgz#ad677736950adddd3c37209484a6b2e0966579ad"
-  integrity sha512-zL5QBoemJ3jYFb2/j38y7ljhwYGXVLUp8H6W1nVxadnAOvUOytec+L7BHh1oBQ82/TzWXHd+GSaxUWp4lROkLg==
+validator@^13.5.2:
+  version "13.5.2"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.5.2.tgz#c97ae63ed4224999fb6f42c91eaca9567fe69a46"
+  integrity sha512-mD45p0rvHVBlY2Zuy3F3ESIe1h5X58GPfAtslBjY7EtTqGquZTj+VX/J4RnHWN8FKq0C9WRVt1oWAcytWRuYLQ==
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"
