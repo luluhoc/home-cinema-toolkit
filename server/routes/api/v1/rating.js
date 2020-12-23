@@ -69,6 +69,41 @@ router.post('/', [
   }
 });
 
+// @route POST api/movies/genre
+// @desc FIND MOVIES
+// @access Public for users
+
+router.post('/', [
+  check('genre', 'Genre can\'t be empty').not().isEmpty(),
+  check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const obj = await getRatingFromOmdb(req);
+  if (obj.error) {
+    return res.status(obj.code).json({ errors: obj.errors });
+  }
+  const desiredRating = Number(req.body.desiredRating);
+  const { genre } = req.body;
+  db.read();
+  console.log('Sending movies to Frontend');
+  try {
+    const returnedMovies = db.get('movies').filter((movie) => movie.imdbRating <= desiredRating);
+    return res.json({
+      returnedMovies,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errors: [{
+        msg: 'Server Error - Sending To FrontEnd',
+      }],
+    });
+  }
+});
+
 // @route POST api/movies/delete
 // @desc DELETE MOVIES
 // @access Public for users
