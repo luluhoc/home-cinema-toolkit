@@ -21,6 +21,15 @@ https://hub.docker.com/r/lulu45/home-cinema-toolkit
 docker run -d \
   --name HCT \
   -p 12400:12400 \
+  --restart unless-stopped \
+  lulu45/home-cinema-toolkit:latest
+```
+
+If you want to put DB on the mount use this
+```
+docker run -d \
+  --name HCT \
+  -p 12400:12400 \
   -v /path/to/db:/usr/src/app/db \
   --restart unless-stopped \
   lulu45/home-cinema-toolkit:latest

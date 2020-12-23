@@ -57,7 +57,7 @@ export default function BasicTable({ tasks }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tasks.map((t) => (
+          {tasks && tasks.map((t) => (
             <TableRow key={t.jobType}>
               <TableCell component="th" scope="row">
                 {rat[t.jobType]}
