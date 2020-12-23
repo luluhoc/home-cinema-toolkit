@@ -1,4 +1,4 @@
-<img src="https://github.com/luluhoc/home-cinema-toolkit/blob/master/client/src/components/layout/logo.png?raw=true" style="width: 30%;" alt="HOME CINEMA TOOLKIT"/>
+<img src="https://github.com/luluhoc/home-cinema-toolkit/blob/master/screenshots/logogit.png?raw=true" style="width: 30%;" alt="HOME CINEMA TOOLKIT"/>
 
 # HCT - Home Cinema Toolkit [![DeepScan grade](https://deepscan.io/api/teams/12204/projects/15203/branches/300475/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12204&pid=15203&bid=300475)
 <a href="https://www.buymeacoffee.com/lulu45" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
@@ -11,7 +11,7 @@
 
 It will be a toolkit with several useful tools for home server enthusiasts.
 
-You can delete movies based on IMDB Rating, the program fetches IMDb ratings for movies and keeps them in DB for one month, after the expiring it fetches them again.
+You can delete movies based on IMDB Rating, the program fetches IMDb ratings for movies and keeps them in DB for one month, after expiring it fetches them again.
 You can also delete movies by age, and use the tasks to program deleting movies at the given time. There is a lot to do more in it.
 
 To install with docker
