@@ -95,7 +95,22 @@ const TableRating = ({
         print: false,
       },
     },
-
+    {
+      name: 'Genre',
+      label: 'Genre',
+      options: {
+        filter: true,
+        display: false,
+        sort: true,
+        download: false,
+        print: false,
+        customBodyRender: (value) => (
+          <>
+            {value && value.join(', ')}
+          </>
+        ),
+      },
+    },
   ];
 
   const options = {

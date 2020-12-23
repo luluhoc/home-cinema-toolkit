@@ -42,40 +42,7 @@ router.post('/radarr', async (req, res) => {
 
 router.post('/', [
   check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
-], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  const obj = await getRatingFromOmdb(req);
-  if (obj.error) {
-    return res.status(obj.code).json({ errors: obj.errors });
-  }
-  const desiredRating = Number(req.body.desiredRating);
-  db.read();
-  console.log('Sending movies to Frontend');
-  try {
-    const returnedMovies = db.get('movies').filter((movie) => movie.imdbRating <= desiredRating);
-    return res.json({
-      returnedMovies,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      errors: [{
-        msg: 'Server Error - Sending To FrontEnd',
-      }],
-    });
-  }
-});
-
-// @route POST api/movies/genre
-// @desc FIND MOVIES
-// @access Public for users
-
-router.post('/genre', [
   check('genre', 'Genre can\'t be empty').not().isEmpty(),
-  check('desiredRating', 'Desired Rating can\'t be empty').not().isEmpty(),
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -90,9 +57,15 @@ router.post('/genre', [
   db.read();
   console.log('Sending movies to Frontend');
   try {
-    const returnedMovies = db.get('movies').filter((movie) => movie.imdbRating <= desiredRating);
+    const returnedMovies = await db.get('movies').filter((movie) => movie.imdbRating <= desiredRating).value();
+    if (genre === 'None') {
+      return res.json({
+        returnedMovies,
+      });
+    }
+    const byGenre = returnedMovies.filter((e) => e.Genre.includes(genre));
     return res.json({
-      returnedMovies,
+      returnedMovies: byGenre,
     });
   } catch (error) {
     console.log(error);

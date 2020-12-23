@@ -8,6 +8,7 @@ export const DELETE_MOVIE = 'DELETE_MOVIE';
 export const DELETE_MOVIES = 'DELETE_MOVIES';
 export const CLEAR_DB = 'CLEAR_DB';
 export const ERROR_GETTING_MOVIES = 'ERROR_GETTING_MOVIES';
+export const FIND_GENRE = 'FIND_GENRE';
 
 export const SET_SETTINGS = 'SET_SETTINGS';
 export const GET_SETTINGS = 'GET_SETTINGS';
