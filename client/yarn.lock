@@ -1468,11 +1468,6 @@
     redux-thunk "^2.3.0"
     reselect "^4.0.0"
 
-"@scarf/scarf@^1.0.5":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.1.0.tgz#b84b4a91cd938a688d36245b7a7db6fbc476a499"
-  integrity sha512-b2iE8kjjzzUo2WZ0xuE2N77kfnTds7ClrDxcz3Atz7h2XrNVoAPUoT75i7CY0st5x++70V91Y+c6RpBX9MX7Jg==
-
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
@@ -7281,12 +7276,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-"lodash@>=3.5 <5", lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
-
-lodash@^4.17.19:
+"lodash@>=3.5 <5", lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.5:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
@@ -9740,13 +9730,12 @@ redux-devtools-extension@^2.13.8:
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
   integrity sha512-8qlpooP2QqPtZHQZRhx3x3OP5skEV1py/zUdMY28WNAocbafxdG2tRD1MWE7sp8obGMNYuLWanhhQ7EQvT1FBg==
 
-redux-form@^8.3.6:
-  version "8.3.6"
-  resolved "https://registry.yarnpkg.com/redux-form/-/redux-form-8.3.6.tgz#c098dcd0b9d8c38e2e443dab91033ea0e74d4609"
-  integrity sha512-PfDdi+9JtNdr29Pv+9123TiojJlFB6+qczCRfP++cVT4nO2tEv4tDJHSV1l/Ol3Qh9z2cRg1QeLMhShNtRZ3+g==
+redux-form@^8.3.7:
+  version "8.3.7"
+  resolved "https://registry.yarnpkg.com/redux-form/-/redux-form-8.3.7.tgz#24eb6d8b8b37098b4702fc4c52b6596b01a71c82"
+  integrity sha512-CUv6z5Gpog3shB3Ptsd+x6dmeQ1AzIlx1Tniri3j7Gf+oBBtLrD7dHMLOcTbJKsaEwG49SB/z1Pik3Hy04mNcQ==
   dependencies:
     "@babel/runtime" "^7.9.2"
-    "@scarf/scarf" "^1.0.5"
     es6-error "^4.1.1"
     hoist-non-react-statics "^3.3.2"
     invariant "^2.2.4"
