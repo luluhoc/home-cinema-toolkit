@@ -705,10 +705,10 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-express-validator@^6.9.0:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.9.0.tgz#0cc5e5814a900f5ae63c55dd5627434cb6fb02ca"
-  integrity sha512-jScWCo5PwzfmgXhD7bXKWoMSMHttrsN1FpCxuuPby5umeIN1cSKaSV2vQkGinmjdWTRDKRPcU2BlWSXZxNmWYg==
+express-validator@^6.9.1:
+  version "6.9.1"
+  resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.9.1.tgz#e7dc22fdaad51b3a8294c64c537d19ad0b4e8958"
+  integrity sha512-JBImvtvCxCbqFmmRhHfY8yC0BBJeHjvh8gPt/ielH6ZZO43sAVMT63yxdt7ngKfw4N/EYIio5Pkz7BGBGlnKpQ==
   dependencies:
     lodash "^4.17.20"
     validator "^13.5.2"
