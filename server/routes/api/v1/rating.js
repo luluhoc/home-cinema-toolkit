@@ -16,6 +16,10 @@ const db = low(adapter);
 // SETTINGS
 const settingsAdapter = new FileSync('db/settings.json');
 const dbs = low(settingsAdapter);
+// WHITELIST
+// SETTINGS
+const whiteListAdapter = new FileSync('db/whitelist.json');
+const white = low(whiteListAdapter);
 
 // router
 const router = express.Router();
@@ -29,7 +33,7 @@ router.post('/radarr', async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const obj = await getMoviesFromRadarr();
+  const obj = await getMoviesFromRadarr('rating');
   if (obj.error) {
     return res.status(obj.code).json({ errors: obj.errors });
   }
@@ -48,7 +52,7 @@ router.post('/', [
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const obj = await getRatingFromOmdb(req);
+  const obj = await getRatingFromOmdb(req, 'rating');
   if (obj.error) {
     return res.status(obj.code).json({ errors: obj.errors });
   }
@@ -131,6 +135,39 @@ router.post('/delete',
       deleted: promises.length,
     });
   });
+
+// @route POST api/movies/whitelist
+// @desc Whitelist
+// @access Public for users
+
+router.post('/whitelist', async (req, res) => {
+  dbs.read();
+  db.read();
+  white.read();
+  const settings = await dbs.get('settings').value();
+  if (!settings || !settings.keyOmdb || !settings.radarrUrl || !settings.radarrApi
+      || settings.deleteFiles === undefined || settings.addExclusion === undefined) {
+    return res.status(400).json({
+      errors: [{
+        msg: 'No settings',
+      }],
+    });
+  }
+
+  try {
+    const m = await white.get('whitelist').value();
+    if (!m) {
+      await white.set('whitelist', []).write();
+    }
+    const { movie } = req.body;
+    const whiteList = await white.get('whitelist').value();
+    const newArr = whiteList.filter((f) => f !== movie).concat([movie]);
+    await white.set('whitelist', newArr).write();
+    res.json({ newArr });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // @route GET api/movies/clear-db
 // @desc Clear DB

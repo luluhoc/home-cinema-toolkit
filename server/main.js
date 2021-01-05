@@ -27,6 +27,7 @@ app.use('/api/movies', require('./routes/api/v1/rating'));
 app.use('/api/settings', require('./routes/api/v1/settings'));
 app.use('/api/by-age', require('./routes/api/v1/byAge'));
 app.use('/api/tasks', require('./routes/api/v1/tasks'));
+app.use('/api/lib', require('./routes/api/v1/lib'));
 
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));

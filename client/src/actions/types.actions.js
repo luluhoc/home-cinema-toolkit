@@ -9,6 +9,9 @@ export const DELETE_MOVIES = 'DELETE_MOVIES';
 export const CLEAR_DB = 'CLEAR_DB';
 export const ERROR_GETTING_MOVIES = 'ERROR_GETTING_MOVIES';
 export const FIND_GENRE = 'FIND_GENRE';
+export const GET_ALL_MOVIES = 'GET_ALL_MOVIES';
+export const START_ALL_MOVIES_SEARCH = 'START_ALL_MOVIES_SEARCH';
+export const WHITELIST = 'WHITELIST';
 
 export const SET_SETTINGS = 'SET_SETTINGS';
 export const GET_SETTINGS = 'GET_SETTINGS';

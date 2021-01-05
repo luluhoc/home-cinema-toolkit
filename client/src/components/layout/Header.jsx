@@ -43,6 +43,7 @@ const Header = () => {
           <Button className={classes.button} color="inherit" to="/" component={Link}>Rating</Button>
           <Button className={classes.button} color="inherit" to="/tasks" component={Link}>Tasks</Button>
           <Button className={classes.button} color="inherit" to="/age" component={Link}>By Age</Button>
+          {/* <Button className={classes.button} color="inherit" to="/movies" component={Link}>Lib</Button> */}
           <IconButton aria-label="delete" color="inherit" to="/settings" component={Link}>
             <SettingsIcon />
           </IconButton>

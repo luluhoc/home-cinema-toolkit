@@ -8,13 +8,13 @@ import {
 
 const FileSync = require('lowdb/adapters/FileSync');
 
-const adapter = new FileSync('db/rating.json');
-const db = low(adapter);
-
 const settingsAdapter = new FileSync('db/settings.json');
 const dbs = low(settingsAdapter);
 
-export const getMoviesFromRadarr = async () => {
+export const getMoviesFromRadarr = async (dbChoose) => {
+  const adapter = new FileSync(`db/${dbChoose}.json`);
+  const db = low(adapter);
+
   db.read();
   dbs.read();
   const settings = await dbs.get('settings').value();
@@ -124,7 +124,9 @@ export const getMoviesFromRadarr = async () => {
   };
 };
 
-export const getRatingFromOmdb = async (req) => {
+export const getRatingFromOmdb = async (req, dbChoose) => {
+  const adapter = new FileSync(`db/${dbChoose}.json`);
+  const db = low(adapter);
   const { io } = req.app.locals;
   db.read();
   dbs.read();
