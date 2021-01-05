@@ -24,6 +24,7 @@ import { getSettings } from '../actions/settings.actions';
 import DeleteByAge from './age/Page';
 
 import Tasks from './tasks/Tasks';
+import ShowAllMovies from './movies/ShowMovies';
 
 const darkTheme = {
   palette: {
@@ -104,6 +105,7 @@ const App = ({ getSettings }) => {
             <Route path="/age" exact component={DeleteByAge} />
             <Route path="/settings" exact component={Settings} />
             <Route path="/tasks" exact component={Tasks} />
+            {/* <Route path="/movies" exact component={ShowAllMovies} /> */}
           </Switch>
         </ThemeProvider>
       </Router>
