@@ -21,7 +21,7 @@
     "esm": "^3.2.25"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "eslint": "^7.21.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
