@@ -1775,10 +1775,10 @@ word-wrap@^1.2.3:
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
   integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
 
-workerpool@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.0.3.tgz#3f80ba4d914fe7bb8d933628c26e5d7ff820c703"
-  integrity sha512-meU8ZzO+ipcx/njxtKUcbu2K95085q5WYDo8fR6PMW3hCY4driteIsNsEowYV7dzOtvq0HotUKsReJkK8gKXgg==
+workerpool@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.1.2.tgz#52bb8c05d89e9b699b68d39f9687419cb2f6ca5c"
+  integrity sha512-I/gDW4LwV3bslk4Yiqd4XoNYlnvV03LON7KuIjmQ90yDnKND1sR2LK/JA1g1tmd71oe6KPSvN0JpBzXIH6xAgA==
 
 wrappy@1:
   version "1.0.2"
