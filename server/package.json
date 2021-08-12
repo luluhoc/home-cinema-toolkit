@@ -16,7 +16,7 @@
     "lowdb": "^1.0.0",
     "moment": "^2.29.1",
     "node-schedule": "^2.0.0",
-    "normalize-url": "^5.3.0",
+    "normalize-url": "^7.0.1",
     "socket.io": "^4.0.0",
     "workerpool": "^6.1.2"
   },
