@@ -1,4 +1,4 @@
-FROM node:14.11
+FROM node:lts
 
 WORKDIR /usr/src/app
 COPY . .
