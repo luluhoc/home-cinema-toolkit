@@ -7,7 +7,7 @@
         "dayOfWeek": null
       },
       "jobType": "rating",
-      "on": false,
+      "on": true,
       "exTime": 2342,
       "deleted": 0,
       "lastEx": "2020-12-18T17:19:02.358Z",

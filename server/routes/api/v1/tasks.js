@@ -39,7 +39,9 @@ router.post('/', async (req, res) => {
         .write();
       db.get('jobs')
         .find({ jobType })
-        .assign({ time, jobType, variable })
+        .assign({
+          time, jobType, variable, on: true,
+        })
         .write();
       const jobs = db.get('jobs');
       res.json(jobs);
