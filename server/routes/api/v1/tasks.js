@@ -37,12 +37,21 @@ router.post('/', async (req, res) => {
       db.read();
       db.defaults({ jobs: [] })
         .write();
-      db.get('jobs')
+      const checkIfJobExists = await db.get('jobs').find({ jobType }).value();
+      if (checkIfJobExists) {
+        await db.get('jobs')
         .find({ jobType })
         .assign({
           time, jobType, variable, on: true,
         })
         .write();
+      } else {
+        await db.get('jobs')
+        .push({
+          time, jobType, variable, on: true,
+        })
+        .write();
+      }
       const jobs = db.get('jobs');
       res.json(jobs);
     } catch (error) {
@@ -73,7 +82,6 @@ router.get('/', async (req, res) => {
 
 router.patch('/switch', async (req, res) => {
   const { jobType, on } = req.body;
-  console.log(on);
   db.read();
   try {
     db.get('jobs')

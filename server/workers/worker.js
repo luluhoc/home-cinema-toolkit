@@ -38,7 +38,7 @@ const scheduleJob = () => {
   db.read();
   const jobs = db.get('jobs').value();
   if (jobs) {
-    if (jobs[0].on) {
+    if (jobs[0] && jobs[0].on) {
       tickForward(jobsObj.job1, jobs);
     }
   }
@@ -48,7 +48,7 @@ const scheduleJob = () => {
     db.read();
     const jobsa = db.get('jobs').value();
     if (jobsa) {
-      if (jobsa[0].on) {
+      if (jobsa[0] && jobsa[0].on) {
         tickForward(jobsObj.job1, jobsa);
       }
     }

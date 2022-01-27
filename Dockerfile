@@ -1,5 +1,5 @@
-FROM node:14.11
-
+FROM node:17
+ENV DISABLE_ESLINT_PLUGIN=true
 WORKDIR /usr/src/app
 COPY . .
 
