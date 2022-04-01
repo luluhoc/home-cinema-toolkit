@@ -1710,10 +1710,10 @@
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^7.28.1"
 
-"@testing-library/user-event@^7.1.2":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-7.2.1.tgz#2ad4e844175a3738cb9e7064be5ea070b8863a1c"
-  integrity sha512-oZ0Ib5I4Z2pUEcoo95cT1cr6slco9WY7yiPpG+RGNkj8YcYgJnM7pXmYmorNOReh8MIGcKSqXyeGjxnr8YiZbA==
+"@testing-library/user-event@^14.0.3":
+  version "14.0.3"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.0.3.tgz#463667596122c13d997f70b73426947ab71de962"
+  integrity sha512-zIgBG5CxfXbMsm4wBS6iQC3TBNMZk16O25i4shS9MM+eSG7PZHrsBF6LFIesUkepkZ3QKKgstB2/Nola6nvy4A==
 
 "@tootallnate/once@1":
   version "1.1.2"
