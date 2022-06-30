@@ -7,7 +7,7 @@ import {
 import socketIOClient from 'socket.io-client';
 import { deleteMovie } from '../../actions/rating.actions';
 
-const ENDPOINT = 'http://127.0.0.1:12400';
+const ENDPOINT = window.location.href;
 
 const useStyles = makeStyles({
   poster: {
