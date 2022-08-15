@@ -14,7 +14,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
-    "eslint": "^8.6.0",
+    "eslint": "^8.22.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.21.2",
