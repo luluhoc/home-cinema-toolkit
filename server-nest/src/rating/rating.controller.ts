@@ -1,9 +1,14 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Post, Get } from '@nestjs/common';
+import { RatingService } from './rating.service';
 
-@Controller('movies')
+@Controller('rating')
 export class RatingController {
-  @Post('radarr')
-  getMovies(): string {
-    return 'This action returns all cats';
+  constructor(private ratingService: RatingService) {}
+
+  @Get('radarr')
+  async getRating(): Promise<string> {
+    const a: any = await this.ratingService.checkRedis();
+    console.log(a);
+    return a;
   }
 }
