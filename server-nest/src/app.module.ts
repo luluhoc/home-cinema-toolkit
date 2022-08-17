@@ -4,18 +4,20 @@ import { AppService } from './app.service';
 import { RatingService } from './rating/rating.service';
 import { RatingController } from './rating/rating.controller';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
+import { SettingsController } from './settings/settings.controller';
+import { SettingsService } from './settings/settings.service';
 
 @Module({
   imports: [
     RedisModule.forRoot({
       config: {
         host: 'localhost',
-        port: 6379,
+        port: 49154,
         password: 'redispw',
       },
     }),
   ],
-  controllers: [AppController, RatingController],
-  providers: [AppService, RatingService],
+  controllers: [AppController, RatingController, SettingsController],
+  providers: [AppService, RatingService, SettingsService],
 })
 export class AppModule {}

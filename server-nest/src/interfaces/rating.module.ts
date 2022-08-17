@@ -1,4 +1,9 @@
 declare module 'radarr' {
+  export interface Rating {
+    title: string;
+    rId: number;
+    imdbId: string;
+  }
   export interface OriginalLanguage {
     id: number;
     name: string;

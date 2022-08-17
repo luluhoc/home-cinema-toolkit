@@ -7,8 +7,7 @@ export class RatingController {
 
   @Get('radarr')
   async getRating(): Promise<string> {
-    const a: any = await this.ratingService.checkRedis();
-    console.log(a);
+    const a: any = await this.ratingService.getMoviesFromRadarr();
     return a;
   }
 }
