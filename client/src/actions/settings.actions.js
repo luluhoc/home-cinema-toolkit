@@ -19,9 +19,9 @@ export const setSettings = (formValues) => async (dispatch) => {
     dispatch(setAlert('Settings Saved', 'success'));
   } catch (err) {
     console.log(err);
-    if (err && err.response && err.response.data && err.response.data.errors) {
-      const { errors } = err.response.data;
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+    if (err && err.response && err.response.data && err.response.data.message) {
+      const { message } = err.response.data;
+      message.forEach((error) => dispatch(setAlert(error, 'error')));
     }
   }
 };

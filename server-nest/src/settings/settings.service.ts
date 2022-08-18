@@ -1,5 +1,5 @@
 import { RedisService } from '@liaoliaots/nestjs-redis';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Settings } from 'src/interfaces/settings.module';
 import { SettingsController } from './settings.controller';
 
@@ -15,12 +15,20 @@ export class SettingsService {
     v3: true,
   };
   async getSettings(): Promise<Settings> {
-    const client = this.redisService.getClient();
-    return JSON.parse(await client.get('settings'));
+    try {
+      const client = this.redisService.getClient();
+      return JSON.parse(await client.get('settings'));
+    } catch (error) {
+      throw new ForbiddenException('No settings found');
+    }
   }
   async setSettings(settings: Settings) {
-    const client = this.redisService.getClient();
-    await client.set('settings', JSON.stringify(settings));
-    return JSON.parse(await client.get('settings'));
+    try {
+      const client = this.redisService.getClient();
+      await client.set('settings', JSON.stringify(settings));
+      return JSON.parse(await client.get('settings'));
+    } catch (error) {
+      throw new ForbiddenException('No settings found');
+    }
   }
 }
