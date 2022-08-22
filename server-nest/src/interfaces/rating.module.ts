@@ -3,6 +3,11 @@ declare module 'radarr' {
     title: string;
     rId: number;
     imdbId: string;
+    imdbVotes?: number;
+    imdbRating?: number;
+    Genre?: string;
+    Poster?: string;
+    expires?: string;
   }
   export interface OriginalLanguage {
     id: number;

@@ -10,7 +10,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-
   switch (type) {
     case START_MOVIES_SEARCH:
       return {
@@ -29,7 +28,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        movies: payload.returnedMovies,
+        movies: payload,
       };
     case CLEAR_DB:
       return {

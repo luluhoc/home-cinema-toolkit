@@ -6,14 +6,6 @@ import { SettingsController } from './settings.controller';
 @Injectable()
 export class SettingsService {
   constructor(private readonly redisService: RedisService) {}
-  private readonly settings: Settings = {
-    keyOmdb: 'wdb',
-    radarrUrl: 'localhost:7878/',
-    radarrApi: '2389bdc157804ac1a1e0c6aa5516d100',
-    deleteFiles: true,
-    addExclusion: true,
-    v3: true,
-  };
   async getSettings(): Promise<Settings> {
     try {
       const client = this.redisService.getClient();

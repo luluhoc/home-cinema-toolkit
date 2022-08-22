@@ -14,11 +14,15 @@ import { TerminusModule } from '@nestjs/terminus';
     RedisModule.forRoot({
       config: {
         host: 'localhost',
-        port: 49155,
+        port: 49156,
         password: 'redispw',
         enableReadyCheck: true,
         onClientCreated(client) {
-          client.on('error', (err) => console.log(err));
+          client.on('error', (err) => {
+            console.log(err);
+            console.log('Closing Server');
+            return process.exit(0);
+          });
           client.on('ready', () => console.log('Redis is ready'));
         },
       },
