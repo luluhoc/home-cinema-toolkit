@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { createClient } from 'redis';
 import { Rating, RootObject } from 'radarr';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 import { Settings } from 'src/interfaces/settings.module';
@@ -10,6 +9,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { RatingException } from './rating.exception';
 
 const importDynamic = Function('return import("normalize-url")')() as Promise<
   typeof import('normalize-url')
@@ -42,6 +42,7 @@ export class RatingService {
   }
   @WebSocketServer()
   server: Server;
+
   async getMoviesFromRadarr() {
     const client = await this.redisService.getClient();
     const settings: Settings = JSON.parse(
@@ -72,15 +73,10 @@ export class RatingService {
     } catch (error) {
       console.log(error);
       if (error && error.response && error.response.status === 404) {
-        return {
-          error: true,
-          errors: [
-            {
-              msg: '404 NOT FOUND - Probably bad radarr link',
-            },
-          ],
-          code: 404,
-        };
+        return new RatingException(
+          404,
+          '404 NOT FOUND - Probably bad radarr link',
+        );
       }
       if (error && error.code === 'ETIMEDOUT') {
         return {
@@ -167,24 +163,6 @@ export class RatingService {
     const settings: Settings = JSON.parse(
       await client.get('settings'),
     ) as unknown as Settings;
-    if (
-      !settings ||
-      !settings.keyOmdb ||
-      !settings.radarrUrl ||
-      !settings.radarrApi ||
-      settings.deleteFiles === undefined ||
-      settings.addExclusion === undefined
-    ) {
-      return {
-        error: true,
-        errors: [
-          {
-            msg: 'No settings',
-          },
-        ],
-        code: 400,
-      };
-    }
     const { keyOmdb } = settings;
     console.log('Searching movies in OMDB...');
     const moviesFromDb: Rating[] = JSON.parse(await client.get('movies'));
@@ -270,6 +248,90 @@ export class RatingService {
       error: false,
       errors: [],
       code: 200,
+    };
+  }
+  async getRatingMovies(
+    rating: string,
+    g: string,
+  ): Promise<Rating[] | RatingException> {
+    const movies = await this.getMoviesFromOmdb();
+    if (movies instanceof RatingException) {
+      return movies;
+    }
+    const desiredRating = +rating;
+    const genre = g;
+    const client = this.redisService.getClient();
+    const moviesFromRedis: Rating[] = await JSON.parse(
+      await client.get('movies'),
+    );
+    try {
+      const returnedMovies = moviesFromRedis.filter(
+        (movie) => movie.imdbRating <= desiredRating,
+      );
+      if (genre === 'None') {
+        return returnedMovies;
+      }
+      const byGenre = returnedMovies.filter((e) => e.Genre.includes(genre));
+      return byGenre;
+    } catch (error) {
+      throw new RatingException(500, 'Error During Filtering');
+    }
+  }
+  async deleteMovies(selectedArr: number[]) {
+    const client = await this.redisService.getClient();
+    // const s = await client.get('settings');
+    // const settings: Settings = {
+    //   keyOmdb: 'thewdb',
+    //   radarrUrl: 'localhost:7878/',
+    //   radarrApi: '2389bdc157804ac1a1e0c6aa5516d100',
+    //   deleteFiles: true,
+    //   addExclusion: true,
+    //   v3: true,
+    // };
+
+    const settings: Settings = JSON.parse(
+      await client.get('settings'),
+    ) as unknown as Settings;
+    const movies: Rating[] = JSON.parse(await client.get('movies'));
+    const promises = [];
+    console.log(`Deleting ${selectedArr.length} movies`);
+    for (let index = 0; index < selectedArr.length; index += 1) {
+      const apiUrl = await normalizeUrl(
+        `${settings.radarrUrl}${settings.v3 ? '/api/v3/movie' : '/api/movie'}/${
+          selectedArr[index]
+        }?deleteFiles=${settings.deleteFiles}&${
+          settings.v3 ? 'addImportExclusion=' : 'addExclusion='
+        }${settings.addExclusion}`,
+      );
+      try {
+        const del = await axios.delete(apiUrl, {
+          headers: {
+            'User-Agent': 'request',
+            'X-Api-Key': settings.radarrApi,
+          },
+        });
+        promises.push(del);
+      } catch (error) {
+        console.log(error);
+        if (error.code === 'ECONNRESET') {
+          const del = await axios(apiUrl, {
+            headers: {
+              'User-Agent': 'request',
+              'X-Api-Key': settings.radarrApi,
+            },
+          });
+          return promises.push(del);
+        }
+
+        return new RatingException(500, 'Server Error');
+      }
+    }
+    const newMovies = movies.filter(
+      (i) => !selectedArr.some((j) => j === i.rId),
+    );
+    await client.set('movies', JSON.stringify(newMovies));
+    return {
+      deleted: promises.length,
     };
   }
 }

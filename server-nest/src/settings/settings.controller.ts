@@ -4,10 +4,10 @@ import { Settings } from 'src/interfaces/settings.module';
 import { SettingsService } from './settings.service';
 
 @Controller('settings')
+@UseFilters(new HttpExceptionFilter())
 export class SettingsController {
   constructor(private settingService: SettingsService) {}
   @Post()
-  @UseFilters(new HttpExceptionFilter())
   async settings(@Body() body: Settings): Promise<Settings> {
     return this.settingService.setSettings(body);
   }
