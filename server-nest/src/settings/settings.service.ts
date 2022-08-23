@@ -1,8 +1,6 @@
 import { RedisService } from '@liaoliaots/nestjs-redis';
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { Settings } from 'src/interfaces/settings.module';
-import { SettingsController } from './settings.controller';
-
 @Injectable()
 export class SettingsService {
   constructor(private readonly redisService: RedisService) {}

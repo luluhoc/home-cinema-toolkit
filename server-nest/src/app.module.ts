@@ -1,22 +1,21 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RatingService } from './rating/rating.service';
 import { RatingController } from './rating/rating.controller';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
-import { SettingsController } from './settings/settings.controller';
-import { SettingsService } from './settings/settings.service';
 import { RedisHealthModule } from '@liaoliaots/nestjs-redis-health';
 import { TerminusModule } from '@nestjs/terminus';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { SettingsModule } from './settings/settings.module';
+import { RatingModule } from './rating/rating.module';
 @Module({
   imports: [
     RedisModule.forRoot({
       config: {
         host: 'localhost',
-        port: 49156,
+        port: 55001,
         password: 'redispw',
         enableReadyCheck: true,
         onClientCreated(client) {
@@ -32,12 +31,13 @@ import { SettingsModule } from './settings/settings.module';
     TerminusModule,
     RedisHealthModule,
     SettingsModule,
+    RatingModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
     }),
   ],
   controllers: [AppController, RatingController],
-  providers: [AppService, RatingService],
+  providers: [AppService, RatingService, Logger],
 })
 export class AppModule {}
