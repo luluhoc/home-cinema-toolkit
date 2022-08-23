@@ -8,7 +8,9 @@ import { SettingsController } from './settings/settings.controller';
 import { SettingsService } from './settings/settings.service';
 import { RedisHealthModule } from '@liaoliaots/nestjs-redis-health';
 import { TerminusModule } from '@nestjs/terminus';
-
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { SettingsModule } from './settings/settings.module';
 @Module({
   imports: [
     RedisModule.forRoot({
@@ -29,8 +31,13 @@ import { TerminusModule } from '@nestjs/terminus';
     }),
     TerminusModule,
     RedisHealthModule,
+    SettingsModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
   ],
-  controllers: [AppController, RatingController, SettingsController],
-  providers: [AppService, RatingService, SettingsService],
+  controllers: [AppController, RatingController],
+  providers: [AppService, RatingService],
 })
 export class AppModule {}

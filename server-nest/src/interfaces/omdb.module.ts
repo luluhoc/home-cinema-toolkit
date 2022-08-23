@@ -4,8 +4,14 @@ import { IsNotEmpty } from 'class-validator';
 export class PostOmdb {
   @ApiProperty()
   @IsNotEmpty()
-  desiredRating: number;
+  desiredRating: string;
   @ApiProperty()
   @IsNotEmpty()
   genre: string;
+}
+
+export class DeleteArr {
+  @ApiProperty()
+  @IsNotEmpty()
+  selectedArr: number[];
 }
