@@ -136,7 +136,7 @@ export class RatingService {
             imdbId: movies[index].imdbId,
           };
           // eslint-disable-next-line no-await-in-loop
-          await alreadyInDb.push(movie);
+          alreadyInDb.push(movie);
         }
       }
     }

@@ -20,7 +20,7 @@ import { TasksModule } from './tasks/tasks.module';
     RedisModule.forRoot({
       config: {
         host: 'localhost',
-        port: 49156,
+        port: 55001,
         password: 'redispw',
         enableReadyCheck: true,
         onClientCreated(client) {

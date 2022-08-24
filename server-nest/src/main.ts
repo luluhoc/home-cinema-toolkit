@@ -4,7 +4,6 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { WinstonModule, WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import * as winston from 'winston';
-
 const PORT = process.env.PORT || 12400;
 
 async function bootstrap() {
