@@ -40,7 +40,7 @@ export class RatingResolver {
     }
     return movies;
   }
-  @Mutation((returns) => Rating)
+  @Mutation((returns) => [Rating])
   async getRatingFinal(
     @Args('ratingInput') ratingInput: RatingInput,
   ): Promise<Rating[] | RatingException> {

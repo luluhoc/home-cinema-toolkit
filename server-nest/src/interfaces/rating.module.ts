@@ -5,7 +5,7 @@ declare module 'radarr' {
     imdbId: string;
     imdbVotes?: number;
     imdbRating?: number;
-    Genre?: string;
+    Genre?: string[];
     Poster?: string;
     expires?: string;
   }

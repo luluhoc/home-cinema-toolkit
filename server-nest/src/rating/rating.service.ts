@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Rating, RootObject } from 'radarr';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 import { Settings } from 'src/interfaces/settings.module';
@@ -31,13 +31,15 @@ const normalizeUrl = async (...args: any[]) => {
 export class RatingService {
   private readonly ratings: RootObject[] = [];
 
-  constructor(private readonly redisService: RedisService) {}
+  constructor(
+    private readonly redisService: RedisService,
+    private readonly logger: Logger,
+  ) {}
 
   async checkRedis() {
     const client = await this.redisService.getClient();
     await client.set('test', JSON.stringify([{ test: { a: 'b' } }]));
     const json = await client.get('test');
-    console.log(json); // [{"a":1}]
     return json;
   }
   @WebSocketServer()
@@ -69,9 +71,9 @@ export class RatingService {
     try {
       const moviesFromRadarr = await axios(radarrGet);
       movies = moviesFromRadarr.data;
-      console.log('Got movies from radarr...');
+      this.logger.log('Got movies from radarr...');
     } catch (error) {
-      console.log(error);
+      this.logger.error(error);
       if (error && error.response && error.response.status === 404) {
         return new RatingException(
           404,
@@ -164,10 +166,10 @@ export class RatingService {
       await client.get('settings'),
     ) as unknown as Settings;
     const { keyOmdb } = settings;
-    console.log('Searching movies in OMDB...');
+    this.logger.log('Searching movies in OMDB...');
     const moviesFromDb: Rating[] = JSON.parse(await client.get('movies'));
 
-    console.log(`DB LENGTH ${moviesFromDb.length}`);
+    this.logger.log(`DB LENGTH ${moviesFromDb.length}`);
     let progress = 0;
     // io.on('connection', (socket) => {
     //   console.log('New client connected');
@@ -182,7 +184,7 @@ export class RatingService {
       const d = await axios(`http://www.omdbapi.com/?apikey=${keyOmdb}&i=${m}`);
       let b = 0;
       if (!d) {
-        console.error('Error with response from OMDB');
+        this.logger.error('Error with response from OMDB');
         return;
       }
       if (d.data && d.data.imdbVotes) {
@@ -237,7 +239,7 @@ export class RatingService {
           continue;
         }
       } catch (error) {
-        console.log(error);
+        this.logger.error(error);
         if (error.code === 'ECONNRESET') {
           await func(a.imdbId);
         }
@@ -294,7 +296,7 @@ export class RatingService {
     ) as unknown as Settings;
     const movies: Rating[] = JSON.parse(await client.get('movies'));
     const promises = [];
-    console.log(`Deleting ${selectedArr.length} movies`);
+    this.logger.log(`Deleting ${selectedArr.length} movies`);
     for (let index = 0; index < selectedArr.length; index += 1) {
       const apiUrl = await normalizeUrl(
         `${settings.radarrUrl}${settings.v3 ? '/api/v3/movie' : '/api/movie'}/${
@@ -312,7 +314,7 @@ export class RatingService {
         });
         promises.push(del);
       } catch (error) {
-        console.log(error);
+        this.logger.error(error);
         if (error.code === 'ECONNRESET') {
           const del = await axios(apiUrl, {
             headers: {

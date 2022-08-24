@@ -10,12 +10,17 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { SettingsModule } from './settings/settings.module';
 import { RatingModule } from './rating/rating.module';
+import { AgeController } from './age/age.controller';
+import { AgeResolver } from './age/age.resolver';
+import { AgeService } from './age/age.service';
+import { AgeModule } from './age/age.module';
+import { TasksModule } from './tasks/tasks.module';
 @Module({
   imports: [
     RedisModule.forRoot({
       config: {
         host: 'localhost',
-        port: 55001,
+        port: 49156,
         password: 'redispw',
         enableReadyCheck: true,
         onClientCreated(client) {
@@ -36,8 +41,10 @@ import { RatingModule } from './rating/rating.module';
       driver: ApolloDriver,
       autoSchemaFile: true,
     }),
+    AgeModule,
+    TasksModule,
   ],
-  controllers: [AppController, RatingController],
-  providers: [AppService, RatingService, Logger],
+  controllers: [AppController],
+  providers: [AppService, Logger],
 })
 export class AppModule {}

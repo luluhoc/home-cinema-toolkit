@@ -12,8 +12,8 @@ export class Rating {
   imdbVotes?: number;
   @Field({ nullable: true })
   imdbRating?: number;
-  @Field({ nullable: true })
-  Genre?: string;
+  @Field(() => [String], { nullable: true })
+  Genre?: string[];
   @Field({ nullable: true })
   Poster?: string;
   @Field({ nullable: true })

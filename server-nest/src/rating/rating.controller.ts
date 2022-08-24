@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Body,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { DeleteArr, PostOmdb } from 'src/interfaces/omdb.module';
 import { RatingService } from './rating.service';
@@ -20,6 +21,7 @@ export class RatingController {
   constructor(
     private ratingService: RatingService,
     private readonly redisService: RedisService,
+    private readonly logger: Logger,
   ) {}
 
   @Post('radarr')
